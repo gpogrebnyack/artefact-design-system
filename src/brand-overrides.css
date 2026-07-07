@@ -50,8 +50,18 @@ body {
        heavier override than colors/shadows, but still no component edits. --- */
 [data-slot="button"] {
   min-height: 40px;              /* --layout-control-height */
-  border-radius: 9999px;         /* our pill CTA (--pill on a 40px control) */
   padding-inline: 16px;
+}
+/* Pill radius is scoped OUT of ButtonGroup on purpose: a button inside a
+   group must keep its own rounded-l-none/rounded-r-none Tailwind classes so
+   the group can fuse into one segmented control. An unconditional rule here
+   (or `unset`, which still WINS the cascade slot — it doesn't fall through
+   to those classes) would flatten the whole group into round pills with a
+   visible seam. This selector simply doesn't match grouped buttons, so
+   there's no competing declaration and Tailwind's own classes decide, same
+   as vanilla shadcn. */
+[data-slot="button"]:not([data-slot="button-group"] [data-slot="button"]) {
+  border-radius: 9999px;         /* our pill CTA (--pill on a 40px control) */
 }
 [data-slot="input"],
 [data-slot="select-trigger"] {

@@ -42,11 +42,14 @@
 
 ### shadcn/vendored (стандартный API — см. shadcn-документацию)
 
-`Avatar`, `Badge`, `Button`, `Checkbox`, `Input`, `RadioGroup`, `Select`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `NavigationMenu`, `Progress`, `Separator`, `Dialog`.
+`Avatar`, `Badge`, `Button`, `ButtonGroup`/`ButtonGroupText`/`ButtonGroupSeparator`, `Checkbox`, `Input`, `Textarea`, `Label`, `RadioGroup`, `Select`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `NavigationMenu`, `Progress`, `Separator`, `Spinner`, `Dialog`.
 
 Используются как есть, без правки исходников. Наши оверрайды — на уровне темы/атрибутов, не пропсов:
 - `[data-slot="button"]`/`[data-slot="input"]`/`[data-slot="select-trigger"]` — высота/радиус пересчитаны в `brand-overrides.css` (см. `DESIGN.md` → Components).
 - Если конкретному месту нужно другое поведение (например, `Select`, который умеет очищаться крестиком) — это уже не «просто shadcn Select», это новый Components-тир композит (см. `FilterSelect` ниже), а не проп на самом `Select`.
+- **`ButtonGroup` — тут наш pill-оверрайд явно выключен.** `[data-slot="button"]` обычно всегда pill (`border-radius: 9999px`), но кнопка внутри `ButtonGroup` — исключение (`brand-overrides.css`, селектор с двумя `[data-slot]`): иначе pill-радиус на каждой кнопке перебивает `ButtonGroup`'ы собственные `rounded-l-none`/`rounded-r-none`, и сегментированный контрол просто не получается — так и было до этой правки (проверялось вживую при первой же попытке отрендерить компонент). Если понадобится третье радиус-исключение — паттерн такой же: два `[data-slot]` в селекторе побеждают одиночный независимо от порядка подключения файлов.
+- **`Spinner`** — единственное намеренное исключение из правила «иконки только через `Icon`/`REGISTRY`»: это `Loader2Icon` из `lucide-react`, не Phosphor — фиксированный анимированный глиф, не элемент управляемого словаря.
+- **`variant="outline"` у `Item` (и вообще любой shadcn `border-border`) рендерится без видимой границы** — `color.border` в этой системе прозрачен намеренно (то же правило, что у осей чартов, см. `BarChart` ниже). Нужна видимая обводка/подложка ряда — бери `variant="muted"`.
 
 `recharts` — реальная, объявленная зависимость этого пакета (не только внутренняя деталь реализации чартов ниже). Если для какой-то задачи не хватает ни одного из готовых чарт-компонентов — можно писать напрямую на `recharts`, но объявляй его явной зависимостью в своём `package.json`, не рассчитывай, что он долетит транзитивно через хойстинг node_modules (он долетает сегодня, но это случайность конкретного дерева зависимостей, не гарантия).
 
@@ -76,9 +79,13 @@ Primitives + Foundation, собранные в конкретную повтор
 
 ### shadcn/vendored, но на уровне Components (не Primitives)
 
-`Card`, `EmptyState` (`empty.tsx`), `Tabs`, `Alert`, `Menu` (`dropdown-menu.tsx`), `Pagination`, `Table`, `Notification` (`sonner.tsx`).
+`Card`, `EmptyState` (`empty.tsx`), `Tabs`, `Alert`, `Menu` (`dropdown-menu.tsx`), `Pagination`, `Table`, `Notification` (`sonner.tsx`), `Item` (см. отдельную строку ниже).
 
 Это тоже стандартные shadcn-компоненты, но они — композиционные оболочки (слоты Header/Content/Footer, список пунктов и т.п.), а не атомарный контрол — поэтому классифицированы как Components, не Primitives. API — см. shadcn-документацию.
+
+| Компонент | Что делает | Когда брать / не брать |
+|---|---|---|
+| `Item` + `ItemGroup`/`ItemSeparator`/`ItemMedia`/`ItemContent`/`ItemTitle`/`ItemDescription`/`ItemActions`/`ItemHeader`/`ItemFooter` | Governed строка списка: иконка/медиа + заголовок + описание + trailing-действия. `variant("default"\|"outline"\|"muted")`, `size("default"\|"sm"\|"xs")`. | Любой список строк одной формы — диалоги ассистента, уведомления, activity feed. Не собирай flex-строку + свой `<hr>` вручную под этот же паттерн, `ItemGroup`/`ItemSeparator` уже это делают. `variant="outline"` — см. предупреждение про `color.border` выше. |
 
 **⚠️ Карточка-метрика (`Card` + `Text` + `Sparkline`) — не компонент.** Демонстрационный код в `src/stories/MetricCard.stories.tsx` показывает такую композицию вручную — не экспортируется, есть только как образец, скопируй руками, если нужен такой паттерн. Живёт в `Components/MetricCard`, не в `Components/Chart/*` — по сути это карточка (Card-композиция), встроенный график — не главное в её категоризации, а один из ингредиентов.
 
