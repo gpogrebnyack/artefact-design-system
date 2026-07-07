@@ -1,4 +1,4 @@
-// Public API of @artefact/design-system. Wildcard re-exports on purpose —
+// Public API of artefact-design-system. Wildcard re-exports on purpose —
 // the barrel tracks the source automatically instead of a second hand-kept
 // name list that can drift (same reasoning as context/AGENTS.md's
 // self-generating-stories rule, one level up).

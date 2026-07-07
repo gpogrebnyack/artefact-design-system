@@ -1,10 +1,10 @@
 {
-  "name": "@artefact/design-system",
+  "name": "artefact-design-system",
   "version": "0.1.0",
   "description": "Артефакт design system — Foundation/Primitives/Components/Sections on top of shadcn/ui + Radix, published as an installable package.",
   "type": "module",
   "private": false,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "files": [
     "dist",
     "/AGENTS.md",
@@ -31,7 +31,8 @@
     "dev:css": "tailwindcss -i src/index.css -o dist/style.css --watch",
     "storybook": "storybook dev -p 6009 --no-open",
     "build-storybook": "storybook build",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "npm run build"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint:design && npm run check:context && npm run typecheck"
