@@ -5,6 +5,10 @@
   "type": "module",
   "private": false,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpogrebnyack/artefact-design-system.git"
+  },
   "files": [
     "dist",
     "/AGENTS.md",
