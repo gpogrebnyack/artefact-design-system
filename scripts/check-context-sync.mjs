@@ -87,7 +87,7 @@ reportTokenDiff("typography", codeType, designType)
 // --- 2. component coverage: our own tiers vs context/COMPONENTS.md ---
 // Scoped to code we fully own (Foundation, custom Primitives, composed
 // Components, Sections) — NOT shadcn-vendored components/ui/*, which change
-// rarely and deliberately (see context/AGENTS.md).
+// rarely and deliberately (via `npx shadcn add`, checked by eye when added).
 
 function findExportedComponents(dir) {
   const names = []
