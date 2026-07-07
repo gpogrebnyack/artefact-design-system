@@ -6,7 +6,10 @@
   "private": false,
   "license": "UNLICENSED",
   "files": [
-    "dist"
+    "dist",
+    "/AGENTS.md",
+    "context/DESIGN.md",
+    "context/COMPONENTS.md"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
