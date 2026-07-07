@@ -1,0 +1,193 @@
+/*
+ * SidebarNav — the app-shell left rail. This is THE ONE block that stays a
+ * bespoke SECTION (not composed from generic primitives): it's a fixed layout
+ * fixture, not content. Styles are hand-authored CSS mirroring komanda.html's
+ * `.sidebar` verbatim — full-height glass rail, sticky, custom hover tooltips
+ * with a hover-bridge, and a real mobile collapse. Doing this in CSS (not
+ * Tailwind arbitrary classes) keeps it pixel-faithful and dodges JIT scanning.
+ *
+ * Colors reference the REAL tokens declared once in index.css (Foundation
+ * layer, see src/foundation/tokens.ts `color`/`brand`) — never local hex
+ * copies. --card/--secondary/--muted/--muted-foreground/--foreground are
+ * shadcn's contract vars; --brand-* are komanda's own orange/green tokens
+ * that have no shadcn equivalent.
+ */
+.sidebar {
+  width: 74px;
+  flex: none;
+  background: var(--card);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  padding: 18px 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  /* self-owned 8px detachment, matching komanda.html/dashboard-prototype.html's
+     own `.sidebar{margin:8px}` verbatim — the sidebar owns this itself rather
+     than relying on whatever shell wraps it (a page hand-rolling its own
+     wrapper padding instead of using AppShell is exactly what drifted from
+     the source's real 8px into 32px — see Foundation/AppShell). */
+  margin: 8px;
+  height: calc(100vh - 16px);
+  position: sticky;
+  top: 8px;
+  z-index: 40;
+}
+
+/* brand mark — orange accent, NOT ink */
+.sidebar .brand {
+  width: 44px;
+  height: 44px;
+  color: var(--brand-accent);
+  margin-bottom: 6px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar .brand-logo {
+  height: 28px;
+  width: auto;
+}
+
+/* client chip — WHITE (paper) backing, green inner badge */
+.sidebar .client {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--secondary);
+  cursor: pointer;
+  margin-bottom: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.sidebar .client .bd {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-green-bg);
+  color: var(--brand-green);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* nav items */
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.sidebar .nav a {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+  border-radius: var(--radius-lg);
+  position: relative;
+  transition: background 0.12s, color 0.12s;
+  cursor: pointer;
+}
+.sidebar .nav a:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+.sidebar .nav a.active {
+  background: var(--secondary);
+  color: var(--foreground);
+}
+
+/* foot cluster — pushed to the bottom, splits nav from avatar/settings */
+.sidebar .side-foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--brand-accent-bg);
+  color: var(--brand-accent);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+.sidebar .ico-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background 0.12s, color 0.12s;
+}
+.sidebar .ico-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* custom tooltip — appears to the right on hover */
+.sidebar .tip {
+  position: absolute;
+  left: calc(100% + 22px);
+  top: 50%;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 9px 15px;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  transform: translateY(-50%) translateX(10px);
+  transition: opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sidebar .client:hover .tip,
+.sidebar .nav a:hover .tip,
+.sidebar .ico-btn:hover .tip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(6px);
+}
+
+/* invisible bridge so the tooltip zone stays hoverable just off the rail */
+.sidebar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 200px;
+  pointer-events: none;
+}
+.sidebar:hover::after {
+  pointer-events: auto;
+}
+
+/* mobile — the rail collapses away entirely */
+@media (max-width: 760px) {
+  .sidebar {
+    display: none;
+  }
+}

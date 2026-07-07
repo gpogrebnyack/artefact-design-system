@@ -1,0 +1,19 @@
+/* Toolbar — [data-state] styling can't be expressed as an inline style
+   (React style objects don't support attribute selectors), and Tailwind
+   arbitrary-bracket classes are avoided project-wide (JIT won't regenerate
+   them until a Storybook restart) — so this one small rule is plain CSS,
+   same pattern as SidebarNav.css. Colors reference the real tokens.
+   Both states live here, not split with an inline default — an inline
+   style on the same element would always beat this rule regardless of
+   specificity, permanently hiding the [data-state="on"] override. */
+.toolbar-toggle-item {
+  background: transparent;
+  color: var(--muted-foreground);
+}
+/* dashboard-prototype.html's own `.period-seg button.on{background:var(--ink);
+   color:var(--cream)}` — dark ink pill, not white. Found by direct comparison
+   against the source; was wrong (used --secondary/--foreground, i.e. white). */
+.toolbar-toggle-item[data-state="on"] {
+  background: var(--foreground);
+  color: var(--background);
+}

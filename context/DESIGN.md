@@ -1,0 +1,242 @@
+---
+name: Артефакт
+version: "1.0"
+description: >
+  Дизайн-система «Артефакт» для аналитических продуктов. Тёплый, спокойный,
+  без визуального шума интерфейс поверх shadcn/Radix — токенами и одним
+  override-слоем, без правки исходников компонентов. Источник правды для
+  этого файла: src/index.css + src/foundation/tokens.ts +
+  src/brand-overrides.css.
+colors:
+  # --- страница / поверхности ---
+  background: "#f9f6f0"
+  foreground: "#2c2c2a"
+  card: "rgba(255, 255, 255, 0.6)"
+  card-foreground: "#2c2c2a"
+  popover: "#fffdf8"
+  popover-foreground: "#2c2c2a"
+  ink-3: "#a3a094"
+
+  # --- контролы ---
+  primary: "#2c2c2a"
+  primary-foreground: "#f9f6f0"
+  secondary: "#ffffff"
+  secondary-foreground: "#2c2c2a"
+  muted: "#f1ece1"
+  muted-foreground: "#6c6a63"
+  border: "transparent"
+  input: "#e4e2da"
+  ring: "#f75506"
+  destructive: "#b23a2e"  # shadcn-слот, всегда == danger, отдельного значения нет
+
+  # --- brand + semantic roles (каждая: base/foreground/hover/soft/soft-foreground) ---
+  accent: "#f75506"
+  accent-foreground: "#ffffff"
+  accent-hover: "color-mix(in srgb, #f75506 85%, black)"
+  accent-soft: "#fdeee5"
+  accent-soft-foreground: "#f75506"
+
+  green: "#1f7a54"
+  green-foreground: "#ffffff"
+  green-hover: "color-mix(in srgb, #1f7a54 85%, black)"
+  green-soft: "#eaf2ea"
+  green-soft-foreground: "#1f7a54"
+
+  warn: "#b8862f"
+  warn-foreground: "#2c2c2a"
+  warn-hover: "color-mix(in srgb, #b8862f 85%, black)"
+  warn-soft: "#f6edda"
+  warn-soft-foreground: "#b8862f"
+
+  plum: "#7a4d7d"
+  plum-foreground: "#ffffff"
+  plum-hover: "color-mix(in srgb, #7a4d7d 85%, black)"
+  plum-soft: "#f1e6f0"
+  plum-soft-foreground: "#7a4d7d"
+
+  danger: "#b23a2e"
+  danger-foreground: "#ffffff"
+  danger-hover: "color-mix(in srgb, #b23a2e 85%, black)"
+  danger-soft: "#f6e1df"
+  danger-soft-foreground: "#b23a2e"
+
+  # --- data-viz ---
+  chart-1: "#f75506"
+  chart-2: "#1f7a54"
+  chart-3: "#c9805e"
+  chart-4: "#b3a48f"
+  chart-5: "#6c6a63"
+  chart-surface: "#fbfaf7"
+
+  # --- оверлеи ---
+  scrim: "rgba(0, 0, 0, 0.1)"
+typography:
+  footnote:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 12px
+    fontWeight: "400"
+    lineHeight: 1.45
+  caption:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 14px
+    fontWeight: "400"
+    lineHeight: 1.45
+  body:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 16px
+    fontWeight: "400"
+    lineHeight: 1.55
+  subhead:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 18px
+    fontWeight: "400"
+    lineHeight: 1.35
+  title:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 20px
+    fontWeight: "400"
+    lineHeight: 1.3
+  headline:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 24px
+    fontWeight: "400"
+    lineHeight: 1.25
+  display:
+    fontFamily: "Struve, system-ui, sans-serif"
+    fontSize: 32px
+    fontWeight: "400"
+    lineHeight: 1.15
+rounded:
+  sm: 8.4px
+  md: 11.2px
+  lg: 14px
+  xl: 19.6px
+  2xl: 25.2px
+  pill: 9999px
+spacing:
+  none: 0px
+  xs: 4px
+  sm: 8px
+  md: 12px
+  base: 16px
+  lg: 20px
+  xl: 24px
+  2xl: 32px
+  3xl: 40px
+  4xl: 56px
+components:
+  surface-glass:
+    backgroundColor: "{colors.card}"
+    rounded: "{rounded.xl}"
+  surface-paper:
+    backgroundColor: "{colors.secondary}"
+    rounded: "{rounded.xl}"
+  surface-muted:
+    backgroundColor: "{colors.muted}"
+    rounded: "{rounded.xl}"
+  surface-plain:
+    backgroundColor: transparent
+    rounded: "{rounded.xl}"
+  surface-scrim:
+    backgroundColor: "{colors.scrim}"
+    rounded: "{rounded.xl}"
+  control:
+    height: 40px
+    rounded: "{rounded.lg}"
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.primary-foreground}"
+    rounded: "{rounded.pill}"
+    height: 40px
+    padding: 0 16px
+  button-accent:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.accent-foreground}"
+    rounded: "{rounded.pill}"
+    height: 40px
+    padding: 0 16px
+  # Единственный градиент во всей системе — сюда, а не в `colors`: та карта
+  # проверяется линтером как чистые CSS-цвета, градиент туда не проходит
+  # (`design.md lint` кидал ошибку на colors.accent-gradient). В коде это
+  # тот же токен, `color.accentGradient` в tokens.ts — здесь он просто
+  # переехал под конкретный компонент, который его использует.
+  assistant-dock-btn:
+    backgroundColor: "linear-gradient(135deg, #ffb88c 0%, #f75506 50%, #ff5e62 100%)"
+    textColor: "{colors.accent-foreground}"
+    rounded: "{rounded.pill}"
+    height: 40px
+  toolbar-toggle-active:
+    backgroundColor: "{colors.foreground}"
+    textColor: "{colors.background}"
+  assistant-dock-panel:
+    backgroundColor: "{colors.scrim}"
+    rounded: "{rounded.2xl}"
+---
+
+# Артефакт — правила дизайна
+
+Токены во frontmatter выше дают агенту точные значения. Ниже — *почему* они такие и как их применять. Меняешь систему на уровне значений — правишь frontmatter; меняешь правило — правишь прозу. Страницы правишь только после того, как поправлен этот файл, а не параллельно с ним.
+
+## Overview
+
+Тёплый, спокойный интерфейс с минимумом визуального шума: кремовая нейтральная база, тёмно-серый (не чёрный) текст, и **один** громкий акцентный цвет — оранжевый, используемый редко и целенаправленно (одна filled-CTA такого цвета на экран, не больше). Каждый токен либо реально используется где-то в системе, либо явно помечен как осознанное расширение (см. `danger`, `accent-gradient`, `scrim` ниже) — никаких «запасных» значений на будущее.
+
+Технически система лежит **на shadcn/ui + Radix**, не заменяет их: токены и один override-слой (`src/brand-overrides.css`) дают наш вид без единой правки исходников компонентов — так система остаётся синхронизируемой с апстримом shadcn, а не форкает его.
+
+## Colors
+
+- **Нейтральная база — тёплая, не серая.** `background`/`card`/`popover` — оттенки cream/paper, не белый и не серый. `card` — 60%-стекло (`rgba(255,255,255,.6)`), а не сплошной белый: острова на странице должны просвечивать фон.
+- **`primary` (дефолтная filled-кнопка) — тёмный ink, не оранжевый.** Обычное заметное действие — тёмное. Оранжевый — это отдельная, более редкая роль.
+- **`accent` — редкость: одна на экран, максимум пара.** Каждая brand/semantic-роль (`accent`, `green`, `warn`, `plum`, `danger`) несёт полный набор из пяти токенов — `base/foreground/hover/soft/soft-foreground` — никогда просто `base` + произвольный фон.
+  - `foreground` подобран по **измеренному** WCAG-контрасту, не по предположению «всегда белый» (у `warn` это тёмный ink, а не белый — белый давал хуже контраст).
+  - `hover` всегда через `color-mix()` от `base` — пересчитывается сам, никогда не второй захардкоженный hex, который может разойтись с базой.
+  - `soft`/`soft-foreground` — бледная плашка-беджик (светлый фон + текст цветом базы).
+- **`danger` (красный) — осознанное расширение палитры.** Подобран так, чтобы читаться как отдельный цвет, а не «грустный оранжевый» (другой тон и насыщенность, приземлённая к семье `accent/green/warn`, а не к выбивающейся насыщенности `accent`).
+- **Единственный градиент во всей системе** — `components.assistant-dock-btn` (кнопка AI-ассистента). Живёт в `components`, не в `colors` — градиент не проходит как CSS-цвет (см. `Do's and Don'ts`). Не заводи второй градиент без такой же осознанной причины — иначе это быстро превращается в декоративный шум.
+- **`scrim` — тёмная подложка низкой прозрачности позади тяжёлого блюра** (панель ассистента). Отличается от `card` (светлое стекло) — не путать.
+- **`border: transparent` — правило, не забытое значение.** Разделение поверхностей — прозрачностью/тенью фона, а не рамкой. Если разделитель реально нужен видимым (инпут, `<hr>`-подобный разделитель) — используй `input` (единственный «настоящий» hairline-токен), никогда не включай `border` обратно.
+- **Известный пробел: тёмная тема не оформлена.** В коде она существует (`.dark` в `index.css`), но это дефолтные нейтральные серые shadcn, не тема бренда — их пока не трогали, при работе с dark mode это нужно сделать осознанно, а не считать готовым.
+
+## Typography
+
+- **Один семейный шрифт — Struve**, self-hosted (`public/fonts/`, `src/brand-overrides.css`), подключён ПОВЕРХ дефолтного пресета Geist (Geist — то, что даёт `shadcn`/Tailwind-тема по умолчанию; Struve грузится позже и выигрывает каскад через `--font-sans`). На данный момент самохостятся только два начертания — 400 и 600 (полужирный); отдельного Medium (500) файла нет (CDN-ссылка отдавала 404) — не проси третье начертание, пока файл не появится.
+  - Начертание **не** запечено в шкалу размеров — по умолчанию 400, полужирный (600) ставится на конкретных местах через `weight` пропу примитива `Text`, а не как атрибут самого шага шкалы.
+  - Глобальная фича шрифта: `font-feature-settings: "ss10" 1` (одноэтажная «a») — включена на `body`, это правило бренда, не убирать.
+- **Шкала — 7 шагов** (`footnote/caption/body/subhead/title/headline/display`, 12–32px). `body` (16px) — «самый важный текст блока»: если решаешь показать что-то крупнее — сначала проверь, действительно ли его смысловой вес выше, чем у остального `body`-текста на этой же поверхности, а не просто «чтобы выделялось».
+- `subhead/title/headline` — реальные, используемые шаги (`Foundation/Row`, страничные шапки, `AssistantDock`), а не проектные заготовки на будущее.
+
+## Layout & Spacing
+
+- Шкала отступов (`spacing` во frontmatter) — единый согласованный шаг (0/4/8/12/16/20/24/32/40/56) — бери значение из шкалы, не изобретай промежуточный пиксель под конкретный случай.
+- Радиус (`rounded`) — все шаги производные от одного `--radius` (14px, роль `lg`): `sm`/`md` — доли базового, `xl`/`2xl` — кратные. `pill` — это настоящий pill (9999px), не отдельное число — используется на CTA-кнопках и переключателях.
+- Основная страничная сетка — сайдбар слева (см. `Foundation/AppShell`) + колонка контента `max-width: 1280px`, `padding: 26px 24px 90px` — это инвариант для ЛЮБОЙ страницы продукта, не одноразовое решение под одну конкретную страницу.
+
+## Elevation & Depth
+
+- **Тени выключены глобально**, кроме фокус-кольца. Реализовано не через `box-shadow: none` (это убило бы и ring — в Tailwind v4 drop-shadow и focus-ring компилируются в один и тот же `box-shadow` через разные CSS-переменные), а точечно: `--tw-shadow: 0 0 #0000 !important` на `[data-slot]`, оставляя `--tw-ring-shadow` живым.
+- **Фокус всегда виден**: focus-ring — `ring` (брендовый оранжевый). Не убирай ring вместе с тенями — это разные слои одного CSS-свойства.
+- **Стеклянные острова**: `card`-поверхности получают `backdrop-filter: blur(10px) saturate(1.1)` — это про физическую многослойность (полупрозрачный остров над фоном), не декоративный эффект сам по себе.
+- **`scrim` (панель ассистента)** — гораздо сильнее: `blur(40px) saturate(1.4)` на тёмной, почти прозрачной (`rgba(0,0,0,.1)`) подложке — самый глубокий уровень в системе, использовать только для оверлея, который реально перекрывает контент под собой.
+
+## Shapes
+
+- Скругления консервативные и последовательные (`sm→2xl`, одна прогрессия от одного базового числа) — не смешивай острые (`radius:0`) и pill-элементы на соседних по смыслу поверхностях.
+- **Pill-радиус — только для действий/переключателей** (кнопки, toggle-групп), не для контентных карточек — карточки используют `xl`/`2xl`.
+
+## Components
+
+Компоненты строятся на Radix-примитивах (через `shadcn`, где для задачи есть готовый рецепт, либо напрямую через пакет `radix-ui`, где рецепта нет — например, `Toolbar`) плюс токены этого файла, применяемые СНАРУЖИ через тему и `data-slot`-атрибуты, без правки исходников самих компонентов:
+
+- `[data-slot="button"]`/`[data-slot="input"]`/`[data-slot="select-trigger"]` — высота и радиус подтянуты к нашим 40px/pill и 40px/14px соответственно (shadcn ставит собственную шкалу — 32px, туже — по умолчанию, мы её переопределяем на уровне атрибута, не в разметке).
+- `[data-slot="separator"]` — единственное место, где `border` намеренно подменяется на `input`: иначе все внутренние разделители (в `DropdownMenu`, `Select`, `Field`) стали бы невидимыми из-за правила «border transparent».
+- Полный перечень готовых Primitives/Components/Sections, что каждый принимает и когда его брать/не брать — не здесь, это отдельный каталог (`context/COMPONENTS.md`), этот файл описывает только токены и правила их применения.
+
+## Do's and Don'ts
+
+- **Don't** — заводить второй захардкоженный hex-цвет там, где нужен brand или semantic оттенок. Всегда через `color.<role>` — единственное исключение — `danger`, который явно помечен как добавленный, а не извлечённый.
+- **Don't** — возвращать `box-shadow` на карточки/острова. Единственный штатный «глубокий» эффект — `backdrop-filter` на `glass`/`scrim`.
+- **Don't** — включать `border` обратно ради видимого разделителя. Нужен видимый — бери `input`.
+- **Don't** — заводить второй градиент без такой же осознанной причины, как у `assistant-dock-btn`; сейчас в системе он ровно один. И держи градиент в `components`, не в `colors` — линтер (`npm run lint:design`) не пропускает нецветовые значения в `colors`.
+- **Don't** — использовать больше одной `accent`-кнопки одновременно на экране — это обесценивает акцент.
+- **Do** — для тёмной темы: явно спроектировать её значения, а не полагаться на дефолтные серые shadcn, которые сейчас там лежат нетронутыми.
+- **Do** — при добавлении нового цвета/варианта сразу проверить, что он реально показан в Storybook-демо (см. `context/AGENTS.md` — там про историю с `scrim`/`accent-gradient`, которые были в коде, но не в витрине).

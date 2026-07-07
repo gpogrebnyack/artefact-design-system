@@ -1,0 +1,58 @@
+/*
+ * Foundation — TitledRow. The primary page-composition primitive BOTH real
+ * source pages use for nearly every section (komanda.html's `.srow`,
+ * dashboard-prototype.html's `.srow`/`.srow.no-side` — identical pattern in
+ * both, not a one-off): a sticky title-rail, main content, and an optional
+ * sticky side-rail, collapsing to a plain stacked column below ~1120px
+ * (title/side lose their stickiness there — a floating title over stacked
+ * content would look broken).
+ *
+ * This needs a real breakpoint toggle (position: sticky → static), which
+ * can't be expressed in inline styles — same reason SidebarNav.css and
+ * Toolbar.css exist as real CSS instead of Foundation's usual inline-style
+ * convention.
+ */
+.foundation-row {
+  display: grid;
+  grid-template-columns: var(--foundation-row-rail, 180px) minmax(0, 1fr) var(--foundation-row-rail, 180px);
+  column-gap: var(--foundation-row-gap, 20px);
+  align-items: start;
+}
+.foundation-row.foundation-row--no-side {
+  grid-template-columns: var(--foundation-row-rail, 180px) minmax(0, 1fr);
+}
+/* explicit grid-column per slot — NOT DOM order — so omitting the title
+   (a no-title row still needs `main` in column 2, not wherever it falls) */
+.foundation-row > .foundation-row-title {
+  grid-column: 1;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+.foundation-row > .foundation-row-main {
+  grid-column: 2;
+  min-width: 0;
+}
+.foundation-row > .foundation-row-side {
+  grid-column: 3;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+
+@media (max-width: 1120px) {
+  .foundation-row,
+  .foundation-row.foundation-row--no-side {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
+  .foundation-row > .foundation-row-title,
+  .foundation-row > .foundation-row-main,
+  .foundation-row > .foundation-row-side {
+    grid-column: 1;
+  }
+  .foundation-row > .foundation-row-title,
+  .foundation-row > .foundation-row-side {
+    position: static;
+  }
+}

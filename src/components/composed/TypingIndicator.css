@@ -1,0 +1,15 @@
+/* TypingIndicator — the pulse can't be expressed as an inline style (no
+   @keyframes in a React style object), same reason Toolbar.css/SidebarNav.css
+   exist as real CSS. Colors reference the real token. */
+@keyframes typing-blink {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-ink-3);
+  display: inline-block;
+  animation: typing-blink 1.2s infinite;
+}

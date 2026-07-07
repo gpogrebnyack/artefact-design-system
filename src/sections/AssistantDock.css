@@ -1,0 +1,354 @@
+/*
+ * AssistantDock — komanda.html's `.askdock` verbatim (down to timing curves
+ * and the exact blob clip-path), ported to our tokens. Real CSS, not
+ * inline styles: cubic-bezier width/height/position transitions between
+ * states, @keyframes for the ambient glow blobs / gradient flow / spinning
+ * blob-icon layers — none of this is expressible in a React style object.
+ * This is deliberately the one bespoke, hand-preserved piece in the whole
+ * system (same category as SidebarNav) — an "organism" too specific to
+ * generalize into a governed primitive, per the standing rule that kept the
+ * original AssistantDock out of every earlier Radix-refounding pass.
+ */
+
+.assistant-dock {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* ---- input pill (idle state) ---- */
+.assistant-dock-input {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 52px;
+  max-width: 80vw;
+  pointer-events: auto;
+  transition: width 0.34s cubic-bezier(0.34, 1.3, 0.5, 1), height 0.34s cubic-bezier(0.34, 1.3, 0.5, 1),
+    bottom 0.3s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+.assistant-dock--open .assistant-dock-input {
+  width: min(832px, calc(100vw - 96px));
+  height: 52px;
+  bottom: 24px;
+}
+.assistant-dock--orb .assistant-dock-input {
+  width: 84px;
+  height: 84px;
+  bottom: -28px;
+}
+
+/* ---- panel (open state) ---- */
+.assistant-dock-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 116px;
+  /* the scrim + heavy blur — this is the whole point of the panel: it's
+     what's supposed to diffuse whatever's behind it into a soft wash
+     instead of legible overlapping text. Was accidentally left off this
+     rule entirely (Foundation's Surface `scrim` variant exists for exactly
+     this, but this element is a plain div + CSS class, not a Surface, so
+     nothing carried the values over) — computed style confirmed
+     background:transparent + backdrop-filter:none before this fix. */
+  background: var(--brand-scrim);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  backdrop-filter: blur(40px) saturate(1.4);
+  opacity: 0;
+  transform: scale(0.99);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.3s;
+}
+.assistant-dock--open .assistant-dock-panel {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.assistant-dock-inner {
+  position: relative;
+  z-index: 1;
+  width: min(832px, calc(100vw - 96px));
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 26px 0 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.assistant-dock-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.assistant-dock-title {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--foreground);
+}
+.assistant-dock-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.assistant-dock-close:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.assistant-dock-msgs {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.assistant-dock-sub {
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+}
+
+/* ---- ambient glow (behind panel head) ---- */
+.assistant-dock-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  z-index: 0;
+  pointer-events: none;
+}
+.assistant-dock-glow .blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(28px);
+}
+.assistant-dock-glow .blob1 {
+  width: 120px;
+  height: 120px;
+  left: 16%;
+  top: -74px;
+  background: #ffb75f;
+  opacity: 0.7;
+  animation: assistant-blob-a 13s ease-in-out infinite alternate;
+}
+.assistant-dock-glow .blob2 {
+  width: 96px;
+  height: 96px;
+  left: 50%;
+  top: -52px;
+  background: var(--brand-accent);
+  opacity: 0.55;
+  animation: assistant-blob-b 17s ease-in-out infinite alternate;
+}
+.assistant-dock-glow .blob3 {
+  width: 150px;
+  height: 150px;
+  left: 72%;
+  top: -88px;
+  background: #ffd4bf;
+  opacity: 0.8;
+  animation: assistant-blob-c 15s ease-in-out infinite alternate;
+}
+@keyframes assistant-blob-a {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(42px, 22px) scale(1.25); }
+  100% { transform: translate(12px, -12px) scale(0.9); }
+}
+@keyframes assistant-blob-b {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-34px, 16px) scale(1.3); }
+  100% { transform: translate(26px, 6px); }
+}
+@keyframes assistant-blob-c {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-44px, 20px) scale(0.85); }
+  100% { transform: translate(-16px, -14px) scale(1.2); }
+}
+
+/* ---- chips ---- */
+.assistant-dock-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---- input field (glass, gradient border, visible only when open) ---- */
+.assistant-dock-field {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: 1;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  padding: 0 64px 0 22px;
+  font-size: 16px;
+  color: var(--foreground);
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.2) 40%, rgba(255, 255, 255, 0.12) 60%, rgba(255, 255, 255, 0.85)) border-box;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  outline: none;
+  box-shadow: 0 10px 28px -10px rgba(15, 15, 15, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.assistant-dock-field::placeholder {
+  color: rgba(44, 44, 42, 0.5);
+}
+.assistant-dock--open .assistant-dock-field {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---- CTA button (gradient, morphs size per state) ---- */
+.assistant-dock-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 28px -10px rgba(15, 15, 15, 0.35);
+  background: var(--brand-accent-gradient);
+  background-size: 200% 200%;
+  background-position: 50% 50%;
+  color: var(--secondary);
+  transition: width 0.34s cubic-bezier(0.34, 1.3, 0.5, 1), height 0.34s cubic-bezier(0.34, 1.3, 0.5, 1), filter 0.15s;
+}
+.assistant-dock-btn:hover {
+  filter: brightness(1.06);
+  animation: assistant-grad-flow 7s ease infinite;
+}
+@keyframes assistant-grad-flow {
+  0% { background-position: 0% 50%; background-size: 200% 200%; }
+  50% { background-position: 100% 50%; background-size: 300% 300%; }
+  100% { background-position: 0% 50%; background-size: 200% 200%; }
+}
+.assistant-dock--open .assistant-dock-btn {
+  width: 52px;
+}
+.assistant-dock--orb .assistant-dock-btn {
+  width: 84px;
+  height: 84px;
+  box-shadow: none;
+  overflow: visible;
+  background: transparent;
+}
+
+.assistant-dock-btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  font-size: 16px;
+  transition: opacity 0.14s ease;
+}
+.assistant-dock--open .assistant-dock-btn-label,
+.assistant-dock--orb .assistant-dock-btn-label {
+  opacity: 0;
+}
+
+.assistant-dock-send {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+.assistant-dock--open .assistant-dock-send {
+  opacity: 1;
+  transition: opacity 0.1s ease 0.19s;
+}
+
+.assistant-dock-miniico {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  color: var(--secondary);
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.assistant-dock--orb .assistant-dock-miniico {
+  opacity: 1;
+  transition: opacity 0.2s ease 0.12s;
+}
+
+/* ---- animated blob icon (idle orb state) ---- */
+.assistant-dock-blob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  z-index: 1;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+  transition: opacity 0.12s ease, transform 0.16s cubic-bezier(0.4, 0, 0.7, 0.5);
+  pointer-events: none;
+}
+.assistant-dock-blob i {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  clip-path: path("M52 26C52 33.3734 44.9307 35.03 40 39.7617C35.3284 44.2448 32.986 52 26 52C19.014 52 14.6716 45.2448 10 40.7617C5.06932 36.03 0 33.3734 0 26C0 19.7356 7.21541 16.9887 10.9055 12.5C15.674 6.69949 17.905 0 26 0C34.095 0 37.326 6.69949 42.0945 12.5C45.7846 16.9887 52 19.7356 52 26Z");
+}
+.assistant-dock-blob i:nth-child(1) { background: var(--brand-accent); opacity: 0.12; scale: 1.769; }
+.assistant-dock-blob i:nth-child(2) { background: var(--brand-accent); opacity: 0.18; scale: 1.577; }
+.assistant-dock-blob i:nth-child(3) { background: var(--brand-accent); opacity: 0.28; scale: 1.462; }
+.assistant-dock-blob i:nth-child(4) { background: var(--brand-accent-gradient); scale: 1.385; }
+.assistant-dock--orb .assistant-dock-blob {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+.assistant-dock--orb .assistant-dock-blob i:nth-child(1) { animation: assistant-spin-r 30s linear infinite; }
+.assistant-dock--orb .assistant-dock-blob i:nth-child(2) { animation: assistant-spin-l 36s linear infinite; }
+.assistant-dock--orb .assistant-dock-blob i:nth-child(3) { animation: assistant-spin-r 26s linear infinite; }
+.assistant-dock--orb .assistant-dock-blob i:nth-child(4) { animation: assistant-spin-l 44s linear infinite; }
+@keyframes assistant-spin-r { to { rotate: 360deg; } }
+@keyframes assistant-spin-l { to { rotate: -360deg; } }
+
+@media (max-width: 760px) {
+  .assistant-dock-panel { padding-left: 0; }
+}
