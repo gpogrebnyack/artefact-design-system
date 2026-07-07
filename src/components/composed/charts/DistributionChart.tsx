@@ -5,15 +5,11 @@ import { color } from "@/foundation"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 
 /*
- * DistributionChart — Components tier, real Recharts (replaces the
+ * DistributionChart — Components tier, real Recharts (replaces a
  * hand-rolled div/Flex "SegmentedBar", which looked cheap next to actual
- * charts — see Pages/Дашборд's "Таблицы и голос клиента" for the real
- * usage; no dedicated Section wraps this, Sections stays lean/SidebarNav-
- * only by standing rule). One horizontal stacked bar per category: each
- * named segment proportional, the remainder (if segments don't sum to the
- * category's own 100%) rendered as a muted "rest" filler — matching the
- * source's own behavior (some rows fill the full track, some don't,
- * depending on real data).
+ * charts). One horizontal stacked bar per category: each named segment
+ * proportional, the remainder (if segments don't sum to the category's own
+ * 100%) rendered as a muted "rest" filler.
  */
 export type DistributionSegment = { label: string; count: string; widthPct: number }
 export type DistributionGroup = { name: string; total: string; segments: DistributionSegment[] }
