@@ -58,9 +58,13 @@ export * from "./components/composed/Toolbar"
 export * from "./components/composed/TypingIndicator"
 export * from "./components/composed/charts/AreaChart"
 export * from "./components/composed/charts/BarChart"
+export * from "./components/composed/charts/ComposedChart"
 export * from "./components/composed/charts/DistributionChart"
 export * from "./components/composed/charts/DonutChart"
 export * from "./components/composed/charts/LineChart"
+export * from "./components/composed/charts/RadialChart"
+export * from "./components/composed/charts/ScatterChart"
+export * from "./components/composed/charts/Sparkline"
 
 // Sections — the few bespoke ones
 export * from "./sections/AssistantDock"

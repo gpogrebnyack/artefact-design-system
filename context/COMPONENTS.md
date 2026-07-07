@@ -48,7 +48,7 @@
 - `[data-slot="button"]`/`[data-slot="input"]`/`[data-slot="select-trigger"]` — высота/радиус пересчитаны в `brand-overrides.css` (см. `DESIGN.md` → Components).
 - Если конкретному месту нужно другое поведение (например, `Select`, который умеет очищаться крестиком) — это уже не «просто shadcn Select», это новый Components-тир композит (см. `FilterSelect` ниже), а не проп на самом `Select`.
 
-**⚠️ `Sparkline`/`ScoreRing` — не компоненты.** Демонстрационный код в `src/stories/Chart.stories.tsx` показывает, что Recharts+`ChartContainer` покрывает то, что раньше было кастомным SVG (mini-график, круговой индикатор прогресса). Ничего не экспортируется — если понадобится настоящий спарклайн-компонент, его нужно сначала выделить в реальный файл.
+`recharts` — реальная, объявленная зависимость этого пакета (не только внутренняя деталь реализации чартов ниже). Если для какой-то задачи не хватает ни одного из готовых чарт-компонентов — можно писать напрямую на `recharts`, но объявляй его явной зависимостью в своём `package.json`, не рассчитывай, что он долетит транзитивно через хойстинг node_modules (он долетает сегодня, но это случайность конкретного дерева зависимостей, не гарантия).
 
 ## Components
 
@@ -68,7 +68,11 @@ Primitives + Foundation, собранные в конкретную повтор
 | `Search` | `placeholder?, value?, onChange?, className?` | `InputGroup` (shadcn) + `Icon` как leading addon. Всегда для полей поиска — не собирай Input + абсолютно-позиционированную иконку вручную. |
 | `BarChart` / `LineChart` / `AreaChart` | `data, xKey, series: {key,label,color}[], height?, showLegend?` (+`stacked?` у Area) | Настоящий Recharts через shadcn's `ChartContainer`. `showLegend` по умолчанию `series.length > 1`. Grid/оси — `color.input`, никогда `color.border` (тот прозрачный по правилу). |
 | `DonutChart` | `data: {key,label,value,color}[], height?, showLegend?` | Категориальная разбивка (Pie, `innerRadius:"60%"`). |
-| `DistributionChart` | `groups: {name,total,segments:{label,count,widthPct}[]}[], rowHeight?` | Горизонтальный stacked-bar на группу; если сегменты не сумма в 100% — остаток дорисовывается приглушённым `rest`. Заменил старый самописный `SegmentedBar` (визуально выглядел дешевле настоящих чартов). |
+| `DistributionChart` | `groups: {name,total,segments:{label,count,widthPct}[]}[], rowHeight?` | Горизонтальный stacked-bar на группу; если сегменты не сумма в 100% — остаток дорисовывается приглушённым `rest`. |
+| `ScatterChart` | `series: {key,label,color,data:{x,y}[]}[], xLabel?, yLabel?, height?, showLegend?` | Корреляция двух числовых величин, опционально по нескольким сериям. |
+| `RadialChart` | `value(0–100), color, trackColor?, size?, label?` | Круговой гейдж. Это и есть формализованный «ScoreRing» — раньше пересобирался с нуля на каждом новом экране (в исходной странице, в Storybook-демо, в тестовой consumer-сессии) вместо того, чтобы быть готовым компонентом. |
+| `ComposedChart` | `data, xKey, series: {key,label,color,type:"bar"\|"line"\|"area",axis?:"left"\|"right"}[], height?, showLegend?` | Смешивает типы серий на одном графике (например, объём как бары + тренд как линия). **`axis:"right"` — не опционально-декоративное**: если серии на сильно разных масштабах (штуки 0–60 и оценка 0–10), на общей оси меньшая серия визуально сплющивается в почти прямую линию — заметно прямо на демо-данных этого компонента. |
+| `Sparkline` | `data: number[], color, width?, height?, showEndDot?` | Мини-линия тренда внутри строки/карточки (не полноценный `LineChart` — без осей/сетки/тултипа, фиксированный размер). Формализует паттерн, который до этого просто копипастили руками на каждом новом экране (в т.ч. в оригинальной странице-источнике и в тестовой consumer-сессии) — теперь настоящий экспорт, не «собери сам». **Без `ResponsiveContainer` намеренно** — процентный размер внутри auto-height Grid/Flex-строки не на что мерить, это реальный, воспроизводимый баг Recharts, не связанный с `Foundation/Grid` (был неверно приписан ему в одной из тестовых сессий). |
 
 ### shadcn/vendored, но на уровне Components (не Primitives)
 
