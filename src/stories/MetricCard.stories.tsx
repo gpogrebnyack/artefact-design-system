@@ -1,23 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { LineChart, Line } from 'recharts'
-import { ChartContainer } from '@/components/ui/chart'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Text } from '@/primitives/Text'
 import { Icon } from '@/primitives/Icon'
 import { color } from '@/foundation'
+import { Sparkline } from '@/components/composed/charts/Sparkline'
 
 /*
- * Chart (advanced) — a COMPONENT, distinct from the raw chart marks at
- * `Primitives/Chart` (sparkline/radial gauge — see src/stories/Chart.stories
- * .tsx, unchanged). This composes a primitive chart mark + Card + Text into
- * a real "metric card" panel — the kind that goes straight into a Sections/
- * Аналитика dashboard.
+ * MetricCard — a demo composition, NOT a real exported component. Filed
+ * under Components (not Components/Chart) on purpose: what makes this a
+ * "metric card" is the Card shell + label/value/trend layout — the
+ * embedded Sparkline is one ingredient, not the thing being categorized.
+ * Filing it next to LineChart/BarChart implied it was a chart TYPE, which
+ * misled a real reader (see context/COMPONENTS.md's note on this).
+ *
+ * Copy this composition by hand if you need it — Card + Text + Icon +
+ * Sparkline are all real exports; only this specific assembly is demo-only.
  */
-const meta: Meta = { title: 'Components/Chart/MetricCard' }
+const meta: Meta = { title: 'Components/MetricCard' }
 export default meta
 type Story = StoryObj
 
-const trend = [{ v: 6.8 }, { v: 7.0 }, { v: 6.9 }, { v: 7.2 }, { v: 7.1 }, { v: 7.4 }]
+const trend = [6.8, 7.0, 6.9, 7.2, 7.1, 7.4]
 
 export const TeamAverageMetricCard: Story = {
   render: () => (
@@ -36,11 +39,7 @@ export const TeamAverageMetricCard: Story = {
             <Icon name="trend-up" size={14} /> +0,3 за неделю
           </Text>
         </div>
-        <ChartContainer config={{ v: { label: 'Оценка', color: color.green } }} className="h-12 w-full">
-          <LineChart data={trend} margin={{ top: 4, bottom: 4, left: 4, right: 4 }}>
-            <Line dataKey="v" type="monotone" stroke="var(--color-v)" strokeWidth={2} dot={false} isAnimationActive={false} />
-          </LineChart>
-        </ChartContainer>
+        <Sparkline data={trend} color={color.green} width={248} height={48} />
       </CardContent>
     </Card>
   ),
