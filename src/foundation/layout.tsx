@@ -147,6 +147,22 @@ export function Grid({
           : `repeat(auto-fit, minmax(min(${space(minColWidth)}, 100%), 1fr))`,
         gap: space(gap),
         alignItems: align,
+        // `align-content` is a SEPARATE property from `align-items` — it
+        // decides what happens to leftover space across the whole set of
+        // (auto-sized) row tracks, not within one row. Left unset, it
+        // defaults to "normal", which behaves like `stretch` for grid rows —
+        // a real, reproducible bug found live: an `auto`-height Grid's rows
+        // got measured ~2.3x too tall on first paint (a browser intrinsic-
+        // sizing quirk, still unexplained at the CSS level), and
+        // `align-content: normal` then stretched every row to match that
+        // inflated size instead of leaving the extra (phantom) space alone.
+        // This container is NEVER given an explicit height by us, so there
+        // is never legitimate leftover space to redistribute — pin this to
+        // "start" unconditionally rather than trust the browser default.
+        // (Was misattributed to Recharts' ResponsiveContainer in an earlier
+        // note; Sparkline never uses ResponsiveContainer at all, and this
+        // reproduces with zero charts involved — see COMPONENTS.md.)
+        alignContent: "start",
         ...style,
       }}
     >
