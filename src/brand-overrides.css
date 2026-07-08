@@ -87,14 +87,29 @@ body {
   backdrop-filter: blur(10px) saturate(1.1);
 }
 
-/* --- divider visibility: shadcn's Separator (and everything that uses one
-       internally — DropdownMenu, Select, Field, ButtonGroup, Item) paints
-       itself with `bg-border`, which we've deliberately set to transparent
-       (the "no borders by default" rule above). That makes every divider
-       invisible project-wide, which defeats its entire purpose. Fix it where
-       a divider is actually wanted: --input is komanda's own --line-2, the
-       "hairline that's meant to be seen" token (already used for input
-       borders) — reuse it here instead of inventing a new value. --- */
-[data-slot="separator"] {
+/* --- divider visibility: shadcn's Separator paints itself with `bg-border`,
+       which we've deliberately set to transparent (the "no borders by
+       default" rule above). That makes every divider invisible, which
+       defeats its entire purpose. Fix it where a divider is actually wanted:
+       --input is komanda's own --line-2, the "hairline that's meant to be
+       seen" token (already used for input borders) — reuse it here instead
+       of inventing a new value.
+
+       This selector must list every data-slot a consumer of <Separator>
+       overrides it to, not just "separator" — a real bug, found live:
+       ItemSeparator (item.tsx) renders `data-slot="item-separator"`, so the
+       old bare `[data-slot="separator"]` rule silently never matched it and
+       the divider stayed invisible. ButtonGroupSeparator overrides its slot
+       too (`button-group-separator`) but happened to stay visible anyway —
+       it also sets `bg-input` directly in its own className, which wins by
+       accident of Tailwind's utility ordering, not because of this rule.
+       Listed explicitly here now so it doesn't depend on that luck.
+
+       FieldSeparator (field.tsx) is NOT in this list on purpose — its inner
+       divider renders a plain <Separator> without overriding the slot, so
+       it already matches "separator" below. --- */
+[data-slot="separator"],
+[data-slot="item-separator"],
+[data-slot="button-group-separator"] {
   background-color: var(--input);
 }
