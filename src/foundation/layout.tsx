@@ -133,9 +133,17 @@ type GridProps = BoxProps & {
   align?: CSSProperties["alignItems"]
 }
 
-/** Grid — auto-fit reflow (intrinsically responsive, no breakpoints needed). */
+/** Grid — auto-fit reflow (intrinsically responsive, no breakpoints needed).
+ *  `align` defaults to "start", not "stretch" — found live: the exact same
+ *  entity card (an "unknown employee" placeholder) rendered at three
+ *  different heights across three address groups, purely because each
+ *  landed next to a different, taller neighbor in its row. `stretch` makes
+ *  a card's height depend on whoever else is in its row, not its own
+ *  content — wrong default for a roster of independent entities. Pass
+ *  `align="stretch"` explicitly for the rarer case of wanting matched-height
+ *  rows on purpose (e.g. a fixed set of side-by-side metric tiles). */
 export function Grid({
-  minColWidth = 280, columns, gap = "base", align = "stretch", style, children, ...box
+  minColWidth = 280, columns, gap = "base", align = "start", style, children, ...box
 }: GridProps) {
   return (
     <Box
