@@ -68,6 +68,15 @@ body {
   min-height: 40px;
   border-radius: 14px;           /* our --radius on fields */
 }
+/* Same bug class as the separator fix above: shadcn's outline Button variant
+   paints its border with `border-border`, which we've deliberately set to
+   transparent. An outline button is invisible against anything but a plain
+   page background — on a card (paper/glass surface) it disappears entirely,
+   found live comparing a real card against a target design. `input` is the
+   same "hairline that's meant to be seen" token separators already use. */
+[data-slot="button"][data-variant="outline"] {
+  border-color: var(--input);
+}
 
 /* --- shadows OFF (our "no shadows" rule). shadcn bakes shadow-* utilities
        into component markup, so we can't remove them via a token.
