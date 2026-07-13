@@ -47,13 +47,25 @@ export const Gallery: Story = {
   ),
 }
 
+/*
+ * Exactly TWO weights exist in this system — the `weight` prop's own type
+ * forbids the other four Phosphor styles (thin/light fall apart at working
+ * sizes, bold is emphasis-by-stroke, duotone bakes two tones into the
+ * glyph where we use the soft-chip + glyph pair). See DESIGN.md → Shapes.
+ */
 export const Weights: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-      {(["thin", "light", "regular", "bold", "fill", "duotone"] as const).map((w) => (
-        <div key={w} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+    <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+      {(
+        [
+          ["regular", "дефолт — вся контурная UI-иконография"],
+          ["fill", "глиф-знак: play/pause, маркер на чипе, ✦"],
+        ] as const
+      ).map(([w, note]) => (
+        <div key={w} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, maxWidth: 180 }}>
           <Icon name="team" size={30} weight={w} />
           <span style={{ fontSize: 12, color: color.mutedForeground }}>{w}</span>
+          <span style={{ fontSize: 12, color: color.mutedForeground, textAlign: "center" }}>{note}</span>
         </div>
       ))}
     </div>

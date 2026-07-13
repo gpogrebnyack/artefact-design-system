@@ -38,7 +38,6 @@ import {
   Flag,
   Crosshair,
   type Icon as PhosphorIcon,
-  type IconWeight,
 } from "@phosphor-icons/react"
 
 /*
@@ -101,11 +100,26 @@ export type IconName = keyof typeof REGISTRY
 
 export const ICON_NAMES = Object.keys(REGISTRY) as IconName[]
 
+/*
+ * The system uses EXACTLY TWO of Phosphor's six weights — enforced here at
+ * the type level, not just in prose (DESIGN.md → Shapes):
+ *  - "regular" (default) — all outline UI iconography;
+ *  - "fill"    — glyphs acting as a SIGN, not an outline icon: media
+ *    play/pause (outline vanishes at 10–26px), identity markers on tinted
+ *    chips (priority flag), the ✦ spark of SparkLink.
+ * thin/light break down at working sizes on the warm background; bold is
+ * emphasis-by-stroke (we emphasize by size/color instead); duotone bakes
+ * two tones into the glyph where the system does it with the soft-chip +
+ * glyph pair. Needing a third weight = widen this type deliberately AND
+ * update the DESIGN.md rule, not a local cast.
+ */
+export type IconAllowedWeight = "regular" | "fill"
+
 export type IconProps = {
   name: IconName
   /** px; matches the surrounding text/control size */
   size?: number
-  weight?: IconWeight
+  weight?: IconAllowedWeight
   color?: string
   className?: string
   /** decorative by default; pass a label to expose it to AT */
