@@ -59,15 +59,6 @@ export function CollapsibleGroup({
         style={{ all: "unset", cursor: "pointer", display: "block", width: "100%" }}
       >
         <Flex align="center" gap="sm" wrap={false}>
-          <span
-            style={{
-              display: "inline-flex",
-              transition: `transform ${motion.base} ${motion.ease}`,
-              transform: isOpen ? "none" : "rotate(-90deg)",
-            }}
-          >
-            <Icon name="caret-down" size={16} color={color.mutedForeground} />
-          </span>
           <Text as="span" size="subhead" weight={600}>
             {title}
           </Text>
@@ -77,6 +68,18 @@ export function CollapsibleGroup({
             </Text>
           )}
           {extra}
+          {/* chevron on the RIGHT edge, like the source's .addr-head — the
+              affordance marks the end of the header rail, not its start */}
+          <span
+            style={{
+              display: "inline-flex",
+              marginLeft: "auto",
+              transition: `transform ${motion.base} ${motion.ease}`,
+              transform: isOpen ? "none" : "rotate(-90deg)",
+            }}
+          >
+            <Icon name="caret-down" size={16} color={color.mutedForeground} />
+          </span>
         </Flex>
       </button>
       {/* display:none (not unmount): keeps children state (filters, charts)

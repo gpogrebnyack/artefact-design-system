@@ -35,15 +35,21 @@ export const WithSide: Story = {
   ),
 }
 
-export const NoSide: Story = {
+// The side rail stays RESERVED when `side` is empty (same main width on
+// every row of a page — komanda keeps empty .srow-side divs for exactly
+// this). `fullWidth` is the explicit opt-out (dashboard's .srow.no-side).
+export const EmptySideStillReserved: Story = {
   render: () => (
     <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
       <Stack gap="lg">
         <TitledRow title={<Text as="h2" size="title">Операции</Text>}>
-          <DemoPanel label="main content, no side rail" />
+          <DemoPanel label="main — той же ширины, что у строк с side" />
         </TitledRow>
         <TitledRow>
-          <DemoPanel label="no title either — komanda's dash-head pattern" />
+          <DemoPanel label="без заголовка — komanda's titleless row, ширина та же" />
+        </TitledRow>
+        <TitledRow fullWidth title={<Text as="h2" size="title">На всю ширину</Text>}>
+          <DemoPanel label="fullWidth — явное решение, main забирает место рейла" />
         </TitledRow>
       </Stack>
     </div>

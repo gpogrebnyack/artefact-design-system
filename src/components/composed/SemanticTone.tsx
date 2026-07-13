@@ -14,29 +14,41 @@ import { color, semanticRoles } from "@/foundation"
  * hand-kept union), so a new role added to `color` in tokens.ts is usable
  * here with zero edit.
  *
- * Two DIFFERENT color pairs on purpose, matching how both consumer sessions
- * already used them independently before this existed:
- * - `StatusBadge` — the pale `Soft`/`SoftForeground` pair (a tag/label reads
- *   at rest, not shouting).
- * - `SemanticAvatarFallback` — the vivid base/`Foreground` pair (a small
- *   solid identity mark, same as a score-band ring/gauge).
- * Don't merge these into one pair "for consistency" — the pale pair on an
- * avatar-sized circle reads as disabled/empty, not as a status.
+ * Both use the pale `Soft`/`SoftForeground` pair — CORRECTED against the
+ * real source page: komanda.html's own avatars (`.eava`, manager avatars)
+ * paint `background: var(--green-bg)` etc., i.e. the SOFT pair, not the
+ * vivid one. The earlier "vivid pair on avatars" doctrine here came from a
+ * consumer session's reinvention, not from the source — rebuilding
+ * komanda.html verbatim (Pages/Komanda) exposed the mismatch. The vivid
+ * base/`Foreground` pair belongs to the score gauge/ring (`RadialChart`
+ * via its `color` prop), which stays untouched by this.
  */
 export type SemanticTone = (typeof semanticRoles)[number]
+
+/** SemanticTone + "muted" — the neutral case ("Мало смен", a count pill, a
+ *  gray avatar of an unnamed person) is not a semantic role in tokens.ts
+ *  (muted has no Soft siblings), but it IS the same visual slot. Rebuilding
+ *  komanda.html needed this exact neutral pair inline FIVE times before it
+ *  became part of the API. */
+export type StatusTone = SemanticTone | "muted"
+
+function softPair(tone: StatusTone) {
+  return tone === "muted"
+    ? { backgroundColor: color.muted, color: color.mutedForeground }
+    : { backgroundColor: color[`${tone}Soft`], color: color[`${tone}SoftForeground`] }
+}
 
 export function StatusBadge({
   tone,
   children,
   style,
   ...props
-}: { tone: SemanticTone; children: ReactNode } & Omit<ComponentProps<typeof Badge>, "variant">) {
+}: { tone: StatusTone; children: ReactNode } & Omit<ComponentProps<typeof Badge>, "variant">) {
   return (
     <Badge
       variant="outline"
       style={{
-        backgroundColor: color[`${tone}Soft`],
-        color: color[`${tone}SoftForeground`],
+        ...softPair(tone),
         borderColor: "transparent",
         ...style,
       }}
@@ -52,12 +64,11 @@ export function SemanticAvatarFallback({
   children,
   style,
   ...props
-}: { tone: SemanticTone; children: ReactNode } & ComponentProps<typeof AvatarFallback>) {
+}: { tone: StatusTone; children: ReactNode } & ComponentProps<typeof AvatarFallback>) {
   return (
     <AvatarFallback
       style={{
-        backgroundColor: color[tone],
-        color: color[`${tone}Foreground`],
+        ...softPair(tone),
         fontWeight: 600,
         ...style,
       }}

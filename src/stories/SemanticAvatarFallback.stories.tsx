@@ -22,6 +22,9 @@ export const AllTones: Story = {
           <SemanticAvatarFallback tone={tone}>{tone.slice(0, 2).toUpperCase()}</SemanticAvatarFallback>
         </Avatar>
       ))}
+      <Avatar>
+        <SemanticAvatarFallback tone="muted">MU</SemanticAvatarFallback>
+      </Avatar>
     </Flex>
   ),
 }

@@ -37,7 +37,10 @@ export function MetricRow({ label, value, delta, tone, trend }: MetricRowProps) 
       )}
       {delta != null && (
         <Text as="span" size="footnote" weight={600} color={deltaColor} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          {trend && <Icon name={trend === "up" ? "trend-up" : "trend-down"} size={12} />}
+          {/* straight ↑/↓, matching the source's own `.einfo` deltas — the
+              diagonal trend-up/trend-down glyphs are the SCORE's language
+              (ScorePill), the source deliberately distinguishes the two */}
+          {trend && <Icon name={trend === "up" ? "arrow-up" : "arrow-down"} size={12} />}
           {delta}
         </Text>
       )}

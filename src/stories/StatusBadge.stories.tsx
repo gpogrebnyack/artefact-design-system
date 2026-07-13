@@ -32,6 +32,7 @@ export const AllTones: Story = {
           {LABELS[tone] ?? tone}
         </StatusBadge>
       ))}
+      <StatusBadge tone="muted">Мало смен</StatusBadge>
     </Flex>
   ),
 }

@@ -4,17 +4,16 @@ import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color } from '@/founda
 import { Icon } from '@/primitives/Icon'
 import { Text } from '@/primitives/Text'
 import { Avatar } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { ChartCard } from '@/components/composed/ChartCard'
 import { CollapsibleGroup } from '@/components/composed/CollapsibleGroup'
 import { FilterSelect } from '@/components/composed/FilterSelect'
 import { MetricRow } from '@/components/composed/MetricRow'
 import { ScorePill } from '@/components/composed/ScorePill'
 import { Search } from '@/components/composed/Search'
 import { SemanticAvatarFallback, StatusBadge, type SemanticTone } from '@/components/composed/SemanticTone'
-import { Sparkline } from '@/components/composed/charts/Sparkline'
+import { StatusDot } from '@/components/composed/StatusDot'
+import { SummaryNote, SummaryStat } from '@/components/composed/SummaryNote'
 import { Toolbar, ToolbarToggleGroup, ToolbarToggleItem } from '@/components/composed/Toolbar'
 import { AssistantDock } from '@/sections/AssistantDock'
 import { PageHeader } from '@/sections/PageHeader'
@@ -22,57 +21,61 @@ import { SidebarNav, EXAMPLE_NAV_ITEMS } from '@/sections/SidebarNav'
 
 /*
  * ACCEPTANCE TEST, not a component: komanda.html rebuilt end-to-end from
- * package exports only, with the source's own real data. The point is the
- * gap hunt — every place where something was missing or awkward is marked
- * with a `GAP:` comment and collected in the review that shipped this.
- * Same discipline as the dashboard-prototype acceptance test that once
- * produced AppShell/TitledRow/AdviceCard.
+ * package exports only, with the source's own data, layout and visual
+ * conventions — verified side-by-side against the original in a browser
+ * (not from memory; the first draft of this story invented data and card
+ * layouts and was corrected wholesale). Deviations found while building it
+ * were fixed in the KIT, not papered over here: SemanticAvatarFallback
+ * flipped to the soft pair (the source's own avatars), MetricRow's delta
+ * arrows straightened (↑/↓ vs the score's ↗/↘), CollapsibleGroup's chevron
+ * moved to the right edge, Grid/CollapsibleGroup gained width:100% (the
+ * phantom-height root cause).
  */
 const meta: Meta = { title: 'Pages/Komanda', parameters: { layout: 'fullscreen' } }
 export default meta
 type Story = StoryObj
 
-// --- source data (komanda.html's own numbers, verbatim) ---
+// --- source data (komanda.html verbatim) ---
 
 type ScoreTone = Extract<SemanticTone, 'green' | 'warn' | 'accent'>
+type Tag = { label: string; tone?: ScoreTone } // tone-less = neutral gray
+type Metric = { value: string; delta: string; tone?: ScoreTone; trend?: 'up' | 'down' }
 type Employee = {
-  initials: string; name: string; role: string
-  score: string; tone: ScoreTone; trend?: 'up' | 'down'
-  tag?: { tone: SemanticTone; label: string; trend?: 'up' | 'down' } | { neutral: string }
-  spark: number[]
-  check: { value: string; delta: string; tone?: ScoreTone; trend?: 'up' | 'down' }
-  upsell: { value?: string; delta: string; tone?: ScoreTone; trend?: 'up' | 'down' }
+  initials: string; name: string
+  score: string; tone: ScoreTone
+  tags?: Tag[]
+  check: Metric
+  upsell: Metric
   daily?: boolean
 }
 
 const BOLSHEVISTSKAYA: Employee[] = [
-  { initials: 'ТК', name: 'Татьяна Климова', role: 'Бариста', score: '7,1', tone: 'green', spark: [6.6, 6.8, 6.7, 7.0, 7.1], check: { value: '438 ₽', delta: '+4% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '+6% к плану', delta: 'план выполнен', tone: 'green', trend: 'up' }, daily: true },
-  { initials: 'К', name: 'Кирилл', role: 'Бариста', score: '6,3', tone: 'green', trend: 'up', tag: { tone: 'green', label: 'Растёт', trend: 'up' }, spark: [5.6, 5.9, 6.0, 6.1, 6.3], check: { value: '401 ₽', delta: '+1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '−21 989 ₽ к плану', delta: 'недобор на допродажах', tone: 'accent', trend: 'down' } },
-  { initials: 'Я', name: 'Яна', role: 'Бариста', score: '6,1', tone: 'green', tag: { neutral: 'Мало смен' }, spark: [6.2, 6.1, 6.2, 6.0, 6.1], check: { value: '406 ₽', delta: '±0% к среднему' }, upsell: { value: '2 заказа за неделю', delta: 'почти не выходила', tone: 'accent', trend: 'down' } },
-  { initials: 'АЛ', name: 'Алина', role: 'Бариста', score: '6,0', tone: 'green', spark: [6.1, 6.0, 5.9, 6.1, 6.0], check: { value: '390 ₽', delta: '−1% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '−28 297 ₽ к плану', delta: 'недобор на допродажах', tone: 'accent', trend: 'down' } },
-  { initials: 'ПО', name: 'Полина', role: 'Бариста', score: '5,9', tone: 'warn', tag: { tone: 'green', label: 'Растёт', trend: 'up' }, spark: [5.3, 5.5, 5.6, 5.8, 5.9], check: { value: '415 ₽', delta: '+2% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '+3% к плану', delta: 'план выполнен', tone: 'green', trend: 'up' } },
-  { initials: 'АН', name: 'Анастасия', role: 'Бариста', score: '5,6', tone: 'accent', trend: 'down', tag: { tone: 'accent', label: 'Оценка снижается', trend: 'down' }, spark: [6.1, 6.0, 5.9, 5.8, 5.6], check: { value: '398 ₽', delta: '−1% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '−13 627 ₽ к плану', delta: 'недобор на допродажах', tone: 'accent', trend: 'down' } },
-  { initials: 'НИ', name: 'Николай', role: 'Бариста', score: '5,5', tone: 'warn', tag: { tone: 'accent', label: 'Оценка снижается', trend: 'down' }, spark: [5.8, 5.7, 5.7, 5.6, 5.5], check: { value: '402 ₽', delta: '±0% к среднему' }, upsell: { value: '−4% к плану', delta: 'недобор на допродажах', tone: 'accent', trend: 'down' } },
+  { initials: 'ТК', name: 'Татьяна Климова', score: '7,1', tone: 'green', tags: [{ label: 'Высокая оценка', tone: 'green' }, { label: 'Растёт', tone: 'green' }], check: { value: '470 ₽', delta: '1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '5 200 ₽', delta: '86% к среднему', tone: 'green', trend: 'up' }, daily: true },
+  { initials: 'К', name: 'Кирилл', score: '6,3', tone: 'green', tags: [{ label: 'Растёт', tone: 'green' }], check: { value: '480 ₽', delta: '3% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '4 885 ₽', delta: '75% к среднему', tone: 'green', trend: 'up' } },
+  { initials: 'Я', name: 'Яна', score: '6,1', tone: 'green', tags: [{ label: 'Мало смен' }], check: { value: '528 ₽', delta: '14% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '0 ₽', delta: 'нет за неделю', tone: 'accent', trend: 'down' } },
+  { initials: 'А', name: 'Алина', score: '6,0', tone: 'green', check: { value: '460 ₽', delta: '1% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '4 970 ₽', delta: '78% к среднему', tone: 'green', trend: 'up' } },
+  { initials: 'П', name: 'Полина', score: '5,9', tone: 'warn', tags: [{ label: 'Растёт', tone: 'green' }], check: { value: '540 ₽', delta: '16% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '1 430 ₽', delta: '49% к среднему', tone: 'accent', trend: 'down' } },
+  { initials: 'А', name: 'Анастасия', score: '5,6', tone: 'warn', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '450 ₽', delta: '3% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '1 200 ₽', delta: '57% к среднему', tone: 'accent', trend: 'down' } },
+  { initials: 'Н', name: 'Николай', score: '5,5', tone: 'warn', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '464 ₽', delta: 'на уровне среднего' }, upsell: { value: '2 110 ₽', delta: '24% к среднему', tone: 'accent', trend: 'down' }, daily: true },
 ]
 
 const SOVETSKAYA: Employee[] = [
-  { initials: 'АШ', name: 'Александра Шипилова', role: 'Бариста', score: '5,0', tone: 'warn', tag: { tone: 'accent', label: 'Оценка снижается', trend: 'down' }, spark: [5.9, 5.7, 5.5, 5.2, 5.0], check: { value: '385 ₽', delta: '−3% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '−59 968 ₽ к плану', delta: 'недобор на допродажах', tone: 'accent', trend: 'down' } },
+  { initials: 'АШ', name: 'Александра Шипилова', score: '5,0', tone: 'warn', tags: [{ label: 'Низкая оценка', tone: 'warn' }], check: { value: '314 ₽', delta: '32% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '3 020 ₽', delta: '8% к среднему', tone: 'green', trend: 'up' } },
 ]
 
 const DIMITROVA: Employee[] = [
-  { initials: 'МО', name: 'Максим Орлов', role: 'Бариста', score: '6,0', tone: 'green', spark: [5.7, 5.8, 6.0, 5.9, 6.0], check: { value: '408 ₽', delta: '+1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '+2% к плану', delta: 'план выполнен', tone: 'green', trend: 'up' }, daily: true },
+  { initials: 'МО', name: 'Максим Орлов', score: '6,0', tone: 'green', check: { value: '470 ₽', delta: '1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '2 300 ₽', delta: '18% к среднему', tone: 'accent', trend: 'down' } },
 ]
 
 // --- page-local assemblies (deliberately NOT components — the test is
 //     whether the kit's parts are enough to build them cleanly) ---
 
 function AccessStatus() {
-  return (
-    <Flex align="center" gap="xs">
-      <Icon name="lock-open" size={14} color={color.green} />
-      <Text as="span" size="footnote" color={color.green}>Пользуется ежедневно</Text>
-    </Flex>
-  )
+  return <StatusDot tone="green">Пользуется ежедневно</StatusDot>
+}
+
+function TagBadge({ tag }: { tag: Tag }) {
+  return <StatusBadge tone={tag.tone ?? 'muted'}>{tag.label}</StatusBadge>
 }
 
 function EmployeeCard({ e }: { e: Employee }) {
@@ -86,28 +89,20 @@ function EmployeeCard({ e }: { e: Employee }) {
             </Avatar>
             <Stack gap="none">
               <Text as="span" size="body" weight={600}>{e.name}</Text>
-              <Text as="span" size="footnote" color={color.mutedForeground}>{e.role}</Text>
+              <Text as="span" size="footnote" color={color.mutedForeground}>Сотрудник</Text>
             </Stack>
           </Flex>
-          <Flex align="center" gap="sm" wrap={false}>
-            <ScorePill value={e.score} tone={e.tone} trend={e.trend} />
-            <Sparkline data={e.spark} color={color[e.tone]} showEndDot />
-          </Flex>
+          {/* score in the card is plain colored text — the pill (`.sval`)
+              is the insights-row language, the source keeps them distinct */}
+          <Text as="span" size="title" weight={600} color={color[e.tone]}>
+            {e.score}
+          </Text>
         </Flex>
 
-        {e.tag && (
-          'neutral' in e.tag ? (
-            <Badge variant="outline" style={{ backgroundColor: color.muted, color: color.mutedForeground, borderColor: 'transparent' }}>
-              {e.tag.neutral}
-            </Badge>
-          ) : (
-            <div>
-              <StatusBadge tone={e.tag.tone} style={{ gap: 4 }}>
-                {e.tag.trend && <Icon name={e.tag.trend === 'up' ? 'trend-up' : 'trend-down'} size={11} />}
-                {e.tag.label}
-              </StatusBadge>
-            </div>
-          )
+        {e.tags && e.tags.length > 0 && (
+          <Flex gap="xs">
+            {e.tags.map((t) => <TagBadge key={t.label} tag={t} />)}
+          </Flex>
         )}
 
         <Separator />
@@ -123,7 +118,7 @@ function EmployeeCard({ e }: { e: Employee }) {
           <AccessStatus />
         ) : (
           <Button variant="outline" size="sm" style={{ width: 'max-content' }}>
-            <Icon name="lock" size={13} /> Выдать доступ в приложение
+            Выдать доступ в приложение
           </Button>
         )}
       </Stack>
@@ -131,59 +126,66 @@ function EmployeeCard({ e }: { e: Employee }) {
   )
 }
 
-function UnknownVoiceCard({ addr, samples }: { addr: string; samples: string }) {
+function PointManagerCard({ initials, name, badge }: { initials: string; name: string; badge: string }) {
+  // Ирина Соколова's card: an entity card with a role badge, a dash instead
+  // of a score, no metrics — the source keeps the separators and the empty
+  // metrics zone so the card reads in the same family as its neighbors
   return (
-    <Surface variant="muted" p="base" radius="xl">
-      <Stack gap="md">
+    <Surface variant="glass" p="base" radius="xl">
+      <Stack gap="md" style={{ height: '100%' }}>
         <Flex justify="space-between" align="flex-start" gap="base" wrap={false}>
           <Flex align="center" gap="sm" wrap={false}>
             <Avatar>
-              {/* GAP?: no neutral AvatarFallback helper — hand-tinted like every session did */}
-              <SemanticAvatarFallback tone="warn" style={{ backgroundColor: color.secondary, color: color.mutedForeground }}>
-                <Icon name="voice" size={14} />
-              </SemanticAvatarFallback>
+              <SemanticAvatarFallback tone="plum">{initials}</SemanticAvatarFallback>
             </Avatar>
             <Stack gap="none">
-              <Text as="span" size="body" weight={600}>Неизвестный сотрудник</Text>
-              <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
+              <Text as="span" size="body" weight={600}>{name}</Text>
+              <Text as="span" size="footnote" color={color.mutedForeground}>Сотрудник</Text>
             </Stack>
           </Flex>
-          <Badge variant="outline" style={{ backgroundColor: color.secondary, color: color.mutedForeground, borderColor: 'transparent' }}>
-            {samples}
-          </Badge>
+          <Text as="span" size="title" weight={600} color={color.mutedForeground}>—</Text>
         </Flex>
-        <Text as="p" size="caption" color={color.mutedForeground}>
-          Распознали новый голос — прослушайте записи и присвойте имя. После этого начнём считать его оценку.
-        </Text>
-        <Button variant="secondary" size="sm" style={{ width: 'max-content' }}>
-          ✎ Указать имя
-        </Button>
+        <Flex gap="xs">
+          <StatusBadge tone="plum">{badge}</StatusBadge>
+        </Flex>
+        <Separator />
+        <div style={{ flex: 1 }} />
+        <Separator />
+        <AccessStatus />
       </Stack>
     </Surface>
   )
 }
 
-function ManagerCard({ initials, name, role = 'Управляющий сетью', scope = 'Все адреса' }: { initials: string; name: string; role?: string; scope?: string }) {
+function NetworkManagerCard({ initials, name }: { initials: string; name: string }) {
   return (
     <Surface variant="glass" p="base" radius="xl">
-      <Flex justify="space-between" align="center" gap="base" wrap={false}>
-        <Flex align="center" gap="sm" wrap={false}>
-          <Avatar>
-            <SemanticAvatarFallback tone="plum">{initials}</SemanticAvatarFallback>
-          </Avatar>
+      <Flex align="center" gap="sm" wrap={false}>
+        <Avatar>
+          <SemanticAvatarFallback tone="plum">{initials}</SemanticAvatarFallback>
+        </Avatar>
+        <Stack gap="xs">
           <Stack gap="none">
             <Text as="span" size="body" weight={600}>{name}</Text>
-            <StatusBadge tone="plum">{role}</StatusBadge>
+            <Text as="span" size="footnote" color={color.mutedForeground}>Управляющий сетью</Text>
           </Stack>
-        </Flex>
-        <Flex align="center" gap="sm" wrap={false}>
-          <Badge variant="outline" style={{ backgroundColor: color.muted, color: color.mutedForeground, borderColor: 'transparent' }}>
-            {scope}
-          </Badge>
-          <AccessStatus />
-        </Flex>
+          <div>
+            <StatusBadge tone="plum">Все адреса</StatusBadge>
+          </div>
+        </Stack>
       </Flex>
     </Surface>
+  )
+}
+
+function InsightHeader({ icon, label, tone }: { icon: 'star' | 'warning'; label: string; tone: 'green' | 'accent' }) {
+  return (
+    <Flex align="center" gap="xs">
+      <Icon name={icon} size={14} color={color[tone]} />
+      <Text as="span" size="footnote" weight={600} color={color[tone]} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        {label}
+      </Text>
+    </Flex>
   )
 }
 
@@ -192,9 +194,7 @@ function InsightPersonRow({ initials, name, addr, pill }: { initials: string; na
     <Flex justify="space-between" align="center" gap="base" wrap={false} style={{ cursor: 'pointer' }}>
       <Flex align="center" gap="sm" wrap={false}>
         <Avatar size="sm">
-          <SemanticAvatarFallback tone="warn" style={{ backgroundColor: color.muted, color: color.foreground }}>
-            {initials}
-          </SemanticAvatarFallback>
+          <SemanticAvatarFallback tone="muted">{initials}</SemanticAvatarFallback>
         </Avatar>
         <Stack gap="none">
           <Text as="span" size="caption" weight={600}>{name}</Text>
@@ -206,36 +206,64 @@ function InsightPersonRow({ initials, name, addr, pill }: { initials: string; na
   )
 }
 
-// GAP: summary note with clickable inline stats (.summary/.stat) — no
-// component; hand-built here exactly like two consumer sessions did.
-function SummaryNote() {
-  const stat = (label: string, tone: 'green' | 'accent' | undefined) => (
-    <Text
-      as="span"
-      size="body"
-      weight={600}
-      color={tone ? color[tone] : undefined}
-      style={{ textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer' }}
-    >
-      {label}
-    </Text>
-  )
+
+function UnknownVoiceCard({ addr, samples }: { addr: string; samples: string }) {
   return (
-    <Surface variant="glass" p="lg" radius="xl">
-      <Stack gap="sm">
-        <Flex align="center" gap="xs">
-          <Icon name="spark" size={13} color={color.accent} />
-          <Text as="span" size="footnote" weight={600} color={color.accent}>Сводка команды</Text>
+    <Surface variant="muted" p="base" radius="xl">
+      <Stack gap="md">
+        <Flex align="center" gap="sm" wrap={false}>
+          <Avatar>
+            <SemanticAvatarFallback tone="muted" style={{ backgroundColor: color.secondary }}>
+              <Icon name="voice" size={14} />
+            </SemanticAvatarFallback>
+          </Avatar>
+          <Stack gap="none">
+            <Text as="span" size="body" weight={600}>Неизвестный сотрудник</Text>
+            <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
+          </Stack>
         </Flex>
-        <Text as="p" size="body">
-          Сильнее всех команда {stat('Большевистская 35', 'green')}, у них есть чему поучиться.
-          Самый большой недобор на допродажах на {stat('Советская 5', 'accent')}.{' '}
-          {stat('Распознано 3 новых голоса', undefined)} — их нужно сопоставить с сотрудниками.
-          Доступ в приложение пока выдан 2 из 14 линейных.
+        <div>
+          <StatusBadge tone="muted" style={{ backgroundColor: color.secondary, gap: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: color.mutedForeground }} />
+            {samples}
+          </StatusBadge>
+        </div>
+        <Text as="p" size="caption" color={color.mutedForeground}>
+          Распознали новый голос — прослушайте записи и присвойте имя. После этого начнём считать его оценку.
+        </Text>
+        <Button size="sm" style={{ width: 'max-content' }}>
+          ✎ Указать имя
+        </Button>
+      </Stack>
+    </Surface>
+  )
+}
+
+function ProcessingCard({ addr }: { addr: string }) {
+  return (
+    <Surface variant="muted" p="base" radius="xl">
+      <Stack gap="md">
+        <Flex align="center" gap="sm" wrap={false}>
+          <Avatar>
+            <SemanticAvatarFallback tone="muted" style={{ backgroundColor: color.secondary }}>
+              <Icon name="voice" size={14} />
+            </SemanticAvatarFallback>
+          </Avatar>
+          <Stack gap="none">
+            <Text as="span" size="body" weight={600}>Идёт обработка</Text>
+            <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
+          </Stack>
+        </Flex>
+        <Text as="p" size="caption" color={color.mutedForeground}>
+          Собираем записи на точке. Сэмплы голосов появятся в ближайшие дни — тогда можно будет присвоить имена.
         </Text>
       </Stack>
     </Surface>
   )
+}
+
+function GroupCount({ n }: { n: number }) {
+  return <StatusBadge tone="muted">{n}</StatusBadge>
 }
 
 export const Full: Story = {
@@ -246,60 +274,64 @@ export const Full: Story = {
           <SidebarNav
             active="team"
             items={EXAMPLE_NAV_ITEMS}
-            avatarInitials="УС"
-            avatarTitle="Управляющий сетью"
+            avatarInitials="У"
+            avatarTitle="Управляющий"
             clientLabel="Бодрый день"
           />
         }
       >
-        <Stack gap="xl">
+        <Stack gap="lg">
           <PageHeader
             title="Команда"
             meta="Бодрый день · 5 адресов · 16 человек · неделя 17–23 июня"
-            action={<Button>+ Создать профиль</Button>}
+            action={
+              // the page's single accent CTA — the source's own orange button
+              <Button style={{ background: color.accent, color: color.accentForeground }}>
+                + Создать профиль
+              </Button>
+            }
           />
 
-          <SummaryNote />
+          {/* everything below the header lives in the SAME rail column as
+              the source (titleless TitledRow = the source's own titleless
+              .srow) — the first draft spanned full width and looked like a
+              different page */}
+          <TitledRow>
+            <Stack gap="base">
+              <SummaryNote label="Сводка команды">
+                Сильнее всех команда <SummaryStat tone="green" onClick={() => {}}>Большевистская 35</SummaryStat>, у них есть чему поучиться.
+                Самый большой недобор на допродажах на <SummaryStat tone="accent" onClick={() => {}}>Советская 5</SummaryStat>.{' '}
+                <SummaryStat tone="muted" onClick={() => {}}>Распознано 3 новых голоса</SummaryStat> — их нужно сопоставить с сотрудниками.
+                Доступ в приложение пока выдан 2 из 14 линейных.
+              </SummaryNote>
 
-          {/* insights row — two cards grouping person rows */}
-          <Grid columns={2} gap="base">
-            <ChartCard
-              title={
-                <Flex align="center" gap="xs">
-                  <Icon name="star" size={15} color={color.green} />
-                  <Text as="span" size="body" weight={600} color={color.green}>Лучшие на неделе</Text>
-                </Flex>
-              }
-            >
-              <Stack gap="md">
-                <InsightPersonRow initials="ТК" name="Татьяна Климова" addr="Большевистская 35" pill={<ScorePill value="7,1" tone="green" />} />
-                <InsightPersonRow initials="К" name="Кирилл" addr="Большевистская 35" pill={<ScorePill value="6,3" tone="green" trend="up" />} />
-              </Stack>
-            </ChartCard>
-            <ChartCard
-              title={
-                <Flex align="center" gap="xs">
-                  <Icon name="warning" size={15} color={color.accent} />
-                  <Text as="span" size="body" weight={600} color={color.accent}>Требуют внимания</Text>
-                </Flex>
-              }
-            >
-              <Stack gap="md">
-                <InsightPersonRow initials="АШ" name="Александра Шипилова" addr="Советская 5" pill={<ScorePill value="5,0" tone="warn" />} />
-                <InsightPersonRow initials="А" name="Анастасия" addr="Большевистская 35" pill={<ScorePill value="5,6" tone="accent" trend="down" />} />
-              </Stack>
-            </ChartCard>
-          </Grid>
+              <Grid columns={2} gap="base">
+                <Surface variant="glass" p="lg" radius="xl">
+                  <Stack gap="md">
+                    <InsightHeader icon="star" label="Лучшие на неделе" tone="green" />
+                    <InsightPersonRow initials="ТК" name="Татьяна Климова" addr="Большевистская 35" pill={<ScorePill value="7,1" tone="green" />} />
+                    <InsightPersonRow initials="К" name="Кирилл" addr="Большевистская 35" pill={<ScorePill value="6,3" tone="green" trend="up" />} />
+                  </Stack>
+                </Surface>
+                <Surface variant="glass" p="lg" radius="xl">
+                  <Stack gap="md">
+                    <InsightHeader icon="warning" label="Требуют внимания" tone="accent" />
+                    <InsightPersonRow initials="АШ" name="Александра Шипилова" addr="Советская 5" pill={<ScorePill value="5,0" tone="warn" />} />
+                    <InsightPersonRow initials="А" name="Анастасия" addr="Большевистская 35" pill={<ScorePill value="5,6" tone="accent" trend="down" />} />
+                  </Stack>
+                </Surface>
+              </Grid>
 
-          {/* voices banner */}
-          <Surface variant="muted" p="base" radius="xl" style={{ cursor: 'pointer' }}>
-            <Flex justify="space-between" align="center" gap="base" wrap={false}>
-              <Text as="p" size="caption">
-                <b>Распознано 3 новых голоса</b> на Серебренниковской и Советской — присвойте имена, чтобы начать считать их работу.
-              </Text>
-              <Button variant="secondary" size="sm" style={{ flexShrink: 0 }}>Разметить голоса</Button>
-            </Flex>
-          </Surface>
+              <Surface variant="muted" p="base" radius="xl" style={{ cursor: 'pointer' }}>
+                <Flex justify="space-between" align="center" gap="base" wrap={false}>
+                  <Text as="p" size="caption">
+                    <b>Распознано 3 новых голоса</b> на Серебренниковской и Советской — присвойте имена, чтобы начать считать их работу.
+                  </Text>
+                  <Button size="sm" style={{ flexShrink: 0 }}>Разметить голоса</Button>
+                </Flex>
+              </Surface>
+            </Stack>
+          </TitledRow>
 
           {/* Состав */}
           <TitledRow
@@ -337,47 +369,42 @@ export const Full: Story = {
                   Управляющие сетью · все адреса
                 </Text>
                 <Grid columns={2} gap="base">
-                  <ManagerCard initials="АГ" name="Алексей Громов" />
-                  <ManagerCard initials="МИ" name="Мария Иванова" />
+                  <NetworkManagerCard initials="АГ" name="Алексей Громов" />
+                  <NetworkManagerCard initials="МИ" name="Мария Иванова" />
                 </Grid>
               </Stack>
 
-              <CollapsibleGroup title="Большевистская 35" count="7 человек">
+              <CollapsibleGroup title="Новосибирск, Большевистская 35" count={<GroupCount n={7} />}>
                 <Grid minColWidth={320} gap="base">
                   {BOLSHEVISTSKAYA.map((e) => <EmployeeCard key={e.name} e={e} />)}
                 </Grid>
               </CollapsibleGroup>
 
-              <CollapsibleGroup title="Серебренниковская 20" count="1 человек" extra={<StatusBadge tone="accent">1 неизвестный</StatusBadge>}>
+              <CollapsibleGroup title="Новосибирск, Серебренниковская 20" count={<GroupCount n={1} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
                 <Grid minColWidth={320} gap="base">
-                  <UnknownVoiceCard addr="Серебренниковская 20" samples="8 сэмплов голоса" />
+                  <UnknownVoiceCard addr="Новосибирск, Серебренниковская 20" samples="8 сэмплов голоса" />
                 </Grid>
               </CollapsibleGroup>
 
-              <CollapsibleGroup title="Советская 5" count="2 человека" extra={<StatusBadge tone="accent">1 неизвестный</StatusBadge>}>
+              <CollapsibleGroup title="Новосибирск, Советская 5" count={<GroupCount n={2} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
                 <Grid minColWidth={320} gap="base">
                   {SOVETSKAYA.map((e) => <EmployeeCard key={e.name} e={e} />)}
-                  <UnknownVoiceCard addr="Советская 5" samples="5 сэмплов голоса" />
+                  <UnknownVoiceCard addr="Новосибирск, Советская 5" samples="5 сэмплов голоса" />
                 </Grid>
               </CollapsibleGroup>
 
-              <CollapsibleGroup title="Димитрова 2" count="3 человека" extra={<StatusBadge tone="accent">1 неизвестный</StatusBadge>}>
+              <CollapsibleGroup title="Новосибирск, Димитрова 2" count={<GroupCount n={3} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
                 <Grid minColWidth={320} gap="base">
-                  <ManagerCard initials="ИС" name="Ирина Соколова" role="Управляющий точкой" scope="Димитрова 2" />
+                  <PointManagerCard initials="ИС" name="Ирина Соколова" badge="Управляющий точкой" />
                   {DIMITROVA.map((e) => <EmployeeCard key={e.name} e={e} />)}
-                  <UnknownVoiceCard addr="Димитрова 2" samples="3 сэмпла голоса" />
+                  <UnknownVoiceCard addr="Новосибирск, Димитрова 2" samples="3 сэмпла голоса" />
                 </Grid>
               </CollapsibleGroup>
 
-              <CollapsibleGroup title="Кирова 113/2" count="0 человек" defaultOpen={false}>
-                <Surface variant="muted" p="base" radius="xl">
-                  <Flex align="center" gap="sm">
-                    <Icon name="voice" size={16} color={color.mutedForeground} />
-                    <Text as="p" size="caption" color={color.mutedForeground}>
-                      Собираем записи на точке. Сэмплы голосов появятся в ближайшие дни — тогда можно будет присвоить имена.
-                    </Text>
-                  </Flex>
-                </Surface>
+              <CollapsibleGroup title="Новосибирск, Кирова 113/2" count={<GroupCount n={1} />}>
+                <Grid minColWidth={320} gap="base">
+                  <ProcessingCard addr="Новосибирск, Кирова 113/2" />
+                </Grid>
               </CollapsibleGroup>
             </Stack>
           </TitledRow>
