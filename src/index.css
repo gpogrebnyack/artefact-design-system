@@ -26,6 +26,9 @@
     --color-sidebar-primary: var(--sidebar-primary);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar: var(--sidebar);
+    --color-chart-8: var(--chart-8);
+    --color-chart-7: var(--chart-7);
+    --color-chart-6: var(--chart-6);
     --color-chart-5: var(--chart-5);
     --color-chart-4: var(--chart-4);
     --color-chart-3: var(--chart-3);
@@ -85,6 +88,16 @@
     --chart-3: #c9805e;
     --chart-4: #b3a48f;
     --chart-5: #6c6a63;
+    /* 6–8: dashboard-prototype.html's own multi-series palette (--c-blue/
+       --c-sky/--c-purple verbatim). Hues that exist nowhere else in the
+       system — without them a chart matching the source pages' look was
+       literally inexpressible (the extraction originally kept only 5 of the
+       source's 9 categorical colors; the remaining 4 duplicate roles we
+       already have: c-ink=foreground, c-red≈danger, c-yellow≈warn,
+       c-wheat≈chart-4). */
+    --chart-6: #0089ff;
+    --chart-7: #99d6ff;
+    --chart-8: #c952de;
     --radius: 0.875rem;                        /* 14px = our --radius */
     --sidebar: rgba(255, 255, 255, 0.6);
     --sidebar-foreground: #2c2c2a;

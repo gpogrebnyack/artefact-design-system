@@ -87,6 +87,9 @@ export const color = {
   chart3: "var(--chart-3)",
   chart4: "var(--chart-4)",
   chart5: "var(--chart-5)",
+  chart6: "var(--chart-6)", // #0089ff — dashboard's own --c-blue; a hue that exists nowhere else in the system
+  chart7: "var(--chart-7)", // #99d6ff — --c-sky
+  chart8: "var(--chart-8)", // #c952de — --c-purple
   chartSurface: "var(--brand-chart-surface)", // #fbfaf7 — quiet backdrop for data-viz surfaces (dashboard-prototype.html only)
   scrim: "var(--brand-scrim)", // rgba(0,0,0,.1) — dark low-opacity backdrop behind a heavily blurred overlay (assistant dock)
 } as const
@@ -182,4 +185,34 @@ export type TypeKey = keyof typeof type
 /** Font family — self-hosted Struve, see brand-overrides.css for @font-face. */
 export const font = {
   sans: "var(--font-sans)",
+} as const
+
+/** Motion — extracted from komanda.html, where these exact values recur
+ *  across independent animations rather than being one-offs. `spring` is
+ *  the brand signature (the assistant dock's morph, the modal pop): a
+ *  slight overshoot, not a generic ease. Was previously baked inline
+ *  wherever needed — the recurring curve is what makes it a token. */
+export const motion = {
+  /** hover/press feedback (transform, background) */
+  fast: "150ms",
+  /** small reveals (opacity, chevron rotation) */
+  base: "200ms",
+  /** panel/dock morphs — pair with `spring` */
+  slow: "340ms",
+  /** signature overshoot curve — komanda's cubic-bezier(.34,1.3,.5,1) */
+  spring: "cubic-bezier(0.34, 1.3, 0.5, 1)",
+  /** plain fallback where overshoot would look wrong (color fades) */
+  ease: "ease",
+} as const
+
+/** Breakpoints (px) — the two real layout switches in the system. NOT a
+ *  full responsive scale on purpose: only breakpoints actually exercised
+ *  by shipped CSS belong here. CSS files can't import TS — row.css and
+ *  SidebarNav.css hard-code these same numbers; if you change one here,
+ *  grep the src CSS files for the old value and update in lockstep. */
+export const breakpoint = {
+  /** TitledRow collapses title-rail to stacked column below this (row.css) */
+  rail: 1120,
+  /** SidebarNav collapses to mobile below this (SidebarNav.css) */
+  sidebar: 760,
 } as const
