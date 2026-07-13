@@ -169,7 +169,7 @@ export const AssistantDock = forwardRef<AssistantDockHandle, AssistantDockProps>
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKey}
         />
-        <div className="assistant-dock-blob" aria-hidden="true"><i /><i /><i /><i /></div>
+        <div className="assistant-dock-blob" aria-hidden="true"><span /><span /><span /><span /></div>
         <button
           type="button"
           className="assistant-dock-btn"

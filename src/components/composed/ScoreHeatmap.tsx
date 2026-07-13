@@ -67,7 +67,7 @@ function Fraction({ earned, max }: { earned: number; max: number }) {
   return (
     <span className="artefact-heatmap-fraction">
       {earned}
-      <i>/{max}</i>
+      <span className="artefact-heatmap-fraction-max">/{max}</span>
     </span>
   )
 }

@@ -46,8 +46,7 @@
   font-size: 16px;
   font-weight: 500;
 }
-.artefact-heatmap-fraction i {
-  font-style: normal;
+.artefact-heatmap-fraction-max {
   font-weight: 500;
   opacity: 0.5;
   margin-left: 1px;

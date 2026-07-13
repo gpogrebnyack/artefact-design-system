@@ -148,7 +148,7 @@ export const WaveformPlayer = forwardRef<WaveformPlayerHandle, WaveformPlayerPro
         >
           <div className="artefact-wave-bars" aria-hidden="true">
             {bars.map((h, i) => (
-              <i
+              <span
                 key={i}
                 className={i / bars.length <= frac ? "artefact-wave-bar--played" : undefined}
                 style={{ height: `${h}%` }}
