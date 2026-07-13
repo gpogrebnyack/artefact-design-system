@@ -46,7 +46,15 @@
 
 ### shadcn/vendored (стандартный API — см. shadcn-документацию)
 
-`Avatar`, `Badge`, `Button`, `ButtonGroup`/`ButtonGroupText`/`ButtonGroupSeparator`, `Checkbox`, `Input`, `Textarea`, `Label`, `RadioGroup`, `Select`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `NavigationMenu`, `Progress`, `Separator`, `Spinner`, `Dialog`.
+`Avatar`, `Badge`, `Button`, `ButtonGroup`/`ButtonGroupText`/`ButtonGroupSeparator`, `Checkbox`, `Collapsible`, `Input`, `Textarea`, `Label`, `Popover`, `RadioGroup`, `ScrollArea`, `Select`, `Skeleton`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `NavigationMenu`, `Progress`, `Separator`, `Spinner`, `Dialog`.
+
+Заметки по недавно довендоренным:
+- `Skeleton` — загрузочный плейсхолдер. Повторяй ФОРМУ замещаемого контента (круг аватара + две строки), не одну серую простыню.
+- `Collapsible` — база для сворачиваемых групп (поведение `.addr-group` из исходной страницы; две consumer-сессии успели написать этот стейт руками). Собранный паттерн — `CollapsibleGroup` ниже.
+- `Popover` — кликом открываемый интерактивный флоат. Для hover-подсказки — `Tooltip`, не он.
+- `ScrollArea` — управляемый скролл-контейнер вместо самодельного `maxHeight + overflow:auto` (реальный hand-roll из consumer-сессии).
+
+**Осознанно НЕ вендорим** (проверяли — причина есть у каждого): `sidebar` (наш `SidebarNav` — bespoke под бренд, shadcn'овский — другая большая layout-система), `form` (есть `FormField`), `message`/`bubble` (есть свои Chat-компоненты по дизайну источника), `calendar`/`carousel`/`resizable`/`input-otp`/`slider` (ни одного реального кейса в продукте — «не строим наперёд»).
 
 Используются как есть, без правки исходников. Наши оверрайды — на уровне темы/атрибутов, не пропсов:
 - `[data-slot="button"]`/`[data-slot="input"]`/`[data-slot="select-trigger"]` — высота/радиус пересчитаны в `brand-overrides.css` (см. `DESIGN.md` → Components).
@@ -134,7 +142,9 @@ Primitives + Foundation, собранные в конкретную повтор
 
 ### Списки и композиционные оболочки (shadcn/vendored)
 
-`Card` (см. семейство Card), `Empty`, `Tabs`, `Alert`, `DropdownMenu`, `Pagination`, `Table`, `Toaster` (sonner), `Item`. Композиционные оболочки со слотами — поэтому Components, не Primitives. API — см. shadcn-документацию.
+`Card` (см. семейство Card), `Empty`, `Tabs`, `Alert`, `AlertDialog`, `DropdownMenu`, `Pagination`, `Table`, `Toaster` (sonner), `Item`. Композиционные оболочки со слотами — поэтому Components, не Primitives. API — см. shadcn-документацию.
+
+- **`AlertDialog`** — блокирующее подтверждение разрушительного действия. Ровно то место, куда указывает правило про `danger` в `DESIGN.md`: кнопка подтверждения — единственное легитимное место для danger-filled кнопки. Для нейтральных модалок — `Dialog`, не он.
 
 | Компонент | Что делает | Когда брать / не брать |
 |---|---|---|
