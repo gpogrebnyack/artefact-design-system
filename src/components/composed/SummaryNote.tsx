@@ -71,7 +71,7 @@ export function SummaryStat({ tone, onClick, children }: SummaryStatProps) {
   } as const
   if (onClick) {
     return (
-      <button type="button" className="artefact-summary-stat" onClick={onClick} style={{ ...shared, border: "none", cursor: "pointer" }}>
+      <button type="button" className="artefact-summary-stat artefact-focus-ring artefact-pressable" onClick={onClick} style={{ ...shared, border: "none", cursor: "pointer" }}>
         {children}
       </button>
     )

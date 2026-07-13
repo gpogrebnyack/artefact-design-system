@@ -57,7 +57,7 @@ export function CollapsibleGroup({
         aria-expanded={isOpen}
         aria-controls={bodyId}
         onClick={toggle}
-        className="artefact-collapsible-group-head"
+        className="artefact-collapsible-group-head artefact-focus-ring"
       >
         <Flex align="center" gap="sm" wrap={false}>
           <Text as="span" size="subhead" weight={600}>

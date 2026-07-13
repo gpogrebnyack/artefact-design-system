@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from "react"
 import { Surface, color } from "@/foundation"
+import "./Chip.css"
 
 /*
  * Chip — Components tier (Surface + Box's now-forwarded onClick). Found
@@ -16,6 +17,7 @@ export function Chip({ children, style, ...props }: ButtonHTMLAttributes<HTMLBut
       type="button"
       variant="glass"
       radius="pill"
+      className="artefact-chip artefact-focus-ring artefact-pressable"
       style={{
         border: "none",
         cursor: "pointer",

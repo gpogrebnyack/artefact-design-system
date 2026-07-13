@@ -17,3 +17,16 @@
   background: var(--foreground);
   color: var(--background);
 }
+
+/* hover + keyboard focus for the toggles — audited against the shadcn
+   Button canon (vendored components breathe, ours didn't). Hover only on
+   the not-selected state: the dark "on" pill shouldn't flicker. Ring
+   formula = interactive.css's. */
+.toolbar-toggle-item:hover:not([data-state="on"]) {
+  background: var(--muted);
+  color: var(--foreground);
+}
+.toolbar-toggle-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}

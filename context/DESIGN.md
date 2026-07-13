@@ -225,6 +225,7 @@ components:
 - Длительности: `fast` (150ms) — hover/press-фидбэк; `base` (200ms) — мелкие появления (opacity, поворот шеврона); `slow` (340ms) — морфы панелей, всегда в паре со `spring`.
 - Где overshoot неуместен (смена цвета, fade текста) — `motion.ease`, не `spring`: подпрыгивающий цвет выглядит ошибкой.
 - Не анимируй `width/height/top/left` там, где можно `transform` — и уважай `prefers-reduced-motion` для всего крупнее hover-фидбэка.
+- **Интерактив дышит — 4 состояния, канон от shadcn Button**: hover (смена фона/лёгкий brightness/подъём карточки), focus-visible (ring 3px, `--ring` на 50% — «фокус всегда виден»), active-press (`translateY(1px)` — для кнопкоподобного), disabled (opacity 50%). Vendored-компоненты несут всё это из коробки; **любой СВОЙ кликабельный элемент обязан иметь минимум hover + focus-visible** — готовые утилиты `artefact-focus-ring`/`artefact-pressable` в `foundation/interactive.css`, для кликабельных поверхностей — `Surface interactive`. Реальная ошибка, которую ловили: `all: unset` на самодельной кнопке молча убил видимость клавиатурного фокуса.
 
 ## Elevation & Depth
 

@@ -2,6 +2,7 @@ import type { ComponentProps, CSSProperties } from "react"
 import { Box } from "./layout"
 import { color } from "./tokens"
 import "./surface.css"
+import "./interactive.css"
 
 /*
  * Surface — still Foundation, one step above the bare Box. Box is pure
@@ -67,7 +68,7 @@ export function Surface({ variant = "glass", radius = "xl", interactive = false,
       radius={radius}
       className={
         interactive
-          ? `foundation-surface--interactive${className ? ` ${className}` : ""}`
+          ? `foundation-surface--interactive artefact-focus-ring${className ? ` ${className}` : ""}`
           : className
       }
       style={{

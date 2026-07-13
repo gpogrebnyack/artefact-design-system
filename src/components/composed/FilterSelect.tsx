@@ -51,6 +51,7 @@ export function FilterSelect({ label, placeholder, value, onValueChange, onClear
           <Separator orientation="vertical" />
           <button
             type="button"
+            className="artefact-focus-ring"
             onClick={onClear}
             aria-label={`Сбросить ${label.toLowerCase()}`}
             style={{

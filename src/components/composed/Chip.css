@@ -1,0 +1,9 @@
+/*
+ * Chip hover — the source's global `button:hover{background:var(--cream-2)}`
+ * effect, expressed as brightness so it works over Chip's inline glass bg
+ * (an inline background always beats a class background; filter doesn't
+ * compete with it). Focus ring / press come from interactive.css.
+ */
+.artefact-chip:hover {
+  filter: brightness(0.97);
+}

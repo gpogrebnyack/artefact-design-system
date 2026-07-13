@@ -1,0 +1,25 @@
+/*
+ * Shared interactive states for OUR OWN clickables — the shadcn-vendored
+ * components already breathe (hover + focus-visible ring + active press +
+ * disabled are baked into their classes); these utilities close the same
+ * gap for custom elements built from Foundation, where inline styles can't
+ * express :hover/:focus-visible/:active. Found by auditing against the
+ * shadcn Button canon: Chip, Toolbar toggles, FilterSelect's clear button
+ * and CollapsibleGroup's header had ZERO states — and `all: unset` on
+ * custom buttons had silently killed keyboard-focus visibility, violating
+ * DESIGN.md's own "фокус всегда виден".
+ *
+ * Ring formula = shadcn's focus-visible:ring-3 ring-ring/50 (3px, --ring
+ * at 50%). 150ms = motion.fast; keep in lockstep with tokens.ts.
+ */
+.artefact-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+/* press feedback — shadcn Button's own active:translate-y-px */
+.artefact-pressable {
+  transition: transform 150ms, filter 150ms;
+}
+.artefact-pressable:active {
+  transform: translateY(1px);
+}
