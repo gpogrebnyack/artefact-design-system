@@ -1,10 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color } from '@/foundation'
 import { Icon } from '@/primitives/Icon'
 import { Text } from '@/primitives/Text'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { CollapsibleGroup } from '@/components/composed/CollapsibleGroup'
 import { FilterSelect } from '@/components/composed/FilterSelect'
@@ -80,7 +89,7 @@ function TagBadge({ tag }: { tag: Tag }) {
 
 function EmployeeCard({ e }: { e: Employee }) {
   return (
-    <Surface variant="glass" p="base" radius="xl" style={{ cursor: 'pointer' }}>
+    <Surface variant="glass" p="base" radius="xl" interactive>
       <Stack gap="md">
         <Flex justify="space-between" align="flex-start" gap="base" wrap={false}>
           <Flex align="center" gap="sm" wrap={false}>
@@ -207,7 +216,7 @@ function InsightPersonRow({ initials, name, addr, pill }: { initials: string; na
 }
 
 
-function UnknownVoiceCard({ addr, samples }: { addr: string; samples: string }) {
+function UnknownVoiceCard({ addr, samples, onAssign }: { addr: string; samples: string; onAssign: () => void }) {
   return (
     <Surface variant="muted" p="base" radius="xl">
       <Stack gap="md">
@@ -231,7 +240,7 @@ function UnknownVoiceCard({ addr, samples }: { addr: string; samples: string }) 
         <Text as="p" size="caption" color={color.mutedForeground}>
           Распознали новый голос — прослушайте записи и присвойте имя. После этого начнём считать его оценку.
         </Text>
-        <Button size="sm" style={{ width: 'max-content' }}>
+        <Button size="sm" style={{ width: 'max-content' }} onClick={onAssign}>
           ✎ Указать имя
         </Button>
       </Stack>
@@ -266,8 +275,56 @@ function GroupCount({ n }: { n: number }) {
   return <StatusBadge tone="muted">{n}</StatusBadge>
 }
 
-export const Full: Story = {
-  render: () => (
+// --- groups as data, so the toolbar can actually filter them (the source
+//     page's own behavior: setFilter/applyView/toggleAll are real) ---
+
+type GroupDef = {
+  id: string
+  title: string
+  employees: Employee[]
+  pointManager?: { initials: string; name: string; badge: string }
+  unknown?: { samples: string }
+  processing?: boolean
+}
+
+const GROUPS: GroupDef[] = [
+  { id: 'bolshevistskaya', title: 'Новосибирск, Большевистская 35', employees: BOLSHEVISTSKAYA },
+  { id: 'serebrennikovskaya', title: 'Новосибирск, Серебренниковская 20', employees: [], unknown: { samples: '8 сэмплов голоса' } },
+  { id: 'sovetskaya', title: 'Новосибирск, Советская 5', employees: SOVETSKAYA, unknown: { samples: '5 сэмплов голоса' } },
+  { id: 'dimitrova', title: 'Новосибирск, Димитрова 2', employees: DIMITROVA, pointManager: { initials: 'ИС', name: 'Ирина Соколова', badge: 'Управляющий точкой' }, unknown: { samples: '3 сэмпла голоса' } },
+  { id: 'kirova', title: 'Новосибирск, Кирова 113/2', employees: [], processing: true },
+]
+
+type TabFilter = 'all' | 'mgr' | 'staff' | 'unknown'
+
+function KomandaPageDemo() {
+  const [tab, setTab] = useState<TabFilter>('all')
+  const [addr, setAddr] = useState<string | undefined>(undefined)
+  const [query, setQuery] = useState('')
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
+  const [assignFor, setAssignFor] = useState<string | null>(null)
+
+  const allCollapsed = GROUPS.every((g) => collapsed[g.id])
+  const q = query.trim().toLowerCase()
+
+  const visibleGroups = useMemo(() => {
+    return GROUPS.map((g) => {
+      const employees =
+        tab === 'mgr' || tab === 'unknown'
+          ? []
+          : g.employees.filter((e) => !q || e.name.toLowerCase().includes(q))
+      const showManager = (tab === 'all' || tab === 'mgr') && g.pointManager && (!q || g.pointManager.name.toLowerCase().includes(q))
+      const showUnknown = (tab === 'all' || tab === 'unknown') && !!g.unknown && !q
+      const showProcessing = tab === 'all' && !!g.processing && !q
+      const empty = employees.length === 0 && !showManager && !showUnknown && !showProcessing
+      return { ...g, employeesVisible: employees, showManager, showUnknown, showProcessing, hidden: empty || (addr != null && g.id !== addr) }
+    }).filter((g) => !g.hidden)
+  }, [tab, addr, q])
+
+  const showNetworkManagers = (tab === 'all' || tab === 'mgr') && addr == null &&
+    (!q || 'алексей громов мария иванова'.includes(q))
+
+  return (
     <>
       <AppShell
         sidebar={
@@ -298,10 +355,12 @@ export const Full: Story = {
               different page */}
           <TitledRow>
             <Stack gap="base">
+              {/* SummaryStat clicks do what the source's .stat onclicks do:
+                  filter the roster / jump to the unknowns */}
               <SummaryNote label="Сводка команды">
-                Сильнее всех команда <SummaryStat tone="green" onClick={() => {}}>Большевистская 35</SummaryStat>, у них есть чему поучиться.
-                Самый большой недобор на допродажах на <SummaryStat tone="accent" onClick={() => {}}>Советская 5</SummaryStat>.{' '}
-                <SummaryStat tone="muted" onClick={() => {}}>Распознано 3 новых голоса</SummaryStat> — их нужно сопоставить с сотрудниками.
+                Сильнее всех команда <SummaryStat tone="green" onClick={() => setAddr('bolshevistskaya')}>Большевистская 35</SummaryStat>, у них есть чему поучиться.
+                Самый большой недобор на допродажах на <SummaryStat tone="accent" onClick={() => setAddr('sovetskaya')}>Советская 5</SummaryStat>.{' '}
+                <SummaryStat tone="muted" onClick={() => { setTab('unknown'); setAddr(undefined) }}>Распознано 3 новых голоса</SummaryStat> — их нужно сопоставить с сотрудниками.
                 Доступ в приложение пока выдан 2 из 14 линейных.
               </SummaryNote>
 
@@ -322,12 +381,20 @@ export const Full: Story = {
                 </Surface>
               </Grid>
 
-              <Surface variant="muted" p="base" radius="xl" style={{ cursor: 'pointer' }}>
+              <Surface
+                variant="muted"
+                p="base"
+                radius="xl"
+                interactive
+                onClick={() => { setTab('unknown'); setAddr(undefined) }}
+              >
                 <Flex justify="space-between" align="center" gap="base" wrap={false}>
                   <Text as="p" size="caption">
                     <b>Распознано 3 новых голоса</b> на Серебренниковской и Советской — присвойте имена, чтобы начать считать их работу.
                   </Text>
-                  <Button size="sm" style={{ flexShrink: 0 }}>Разметить голоса</Button>
+                  <Button size="sm" style={{ flexShrink: 0 }} onClick={(ev) => { ev.stopPropagation(); setAssignFor('Новосибирск, Серебренниковская 20') }}>
+                    Разметить голоса
+                  </Button>
                 </Flex>
               </Surface>
             </Stack>
@@ -336,12 +403,20 @@ export const Full: Story = {
           {/* Состав */}
           <TitledRow
             title={<Text as="h2" size="title" weight={600}>Состав</Text>}
-            side={<Button variant="link" size="sm">Свернуть всё</Button>}
+            side={
+              <Button
+                variant="link"
+                size="sm"
+                onClick={() => setCollapsed(Object.fromEntries(GROUPS.map((g) => [g.id, !allCollapsed])))}
+              >
+                {allCollapsed ? 'Развернуть всё' : 'Свернуть всё'}
+              </Button>
+            }
           >
             <Stack gap="lg">
               <Toolbar bare>
                 <Flex align="center" gap="sm" grow>
-                  <ToolbarToggleGroup value="all" onValueChange={() => {}}>
+                  <ToolbarToggleGroup value={tab} onValueChange={(v) => v && setTab(v as TabFilter)}>
                     <ToolbarToggleItem value="all">Все</ToolbarToggleItem>
                     <ToolbarToggleItem value="mgr">Управляющие</ToolbarToggleItem>
                     <ToolbarToggleItem value="staff">Линейные</ToolbarToggleItem>
@@ -350,6 +425,9 @@ export const Full: Story = {
                   <FilterSelect
                     label="Адрес"
                     placeholder="Все адреса"
+                    value={addr}
+                    onValueChange={setAddr}
+                    onClear={() => setAddr(undefined)}
                     options={[
                       { value: 'bolshevistskaya', label: 'Большевистская 35' },
                       { value: 'serebrennikovskaya', label: 'Серебренниковская 20' },
@@ -359,57 +437,72 @@ export const Full: Story = {
                     ]}
                   />
                   <div style={{ flex: 1, minWidth: 200 }}>
-                    <Search placeholder="Поиск по имени" />
+                    <Search placeholder="Поиск по имени" value={query} onChange={setQuery} />
                   </div>
                 </Flex>
               </Toolbar>
 
-              <Stack gap="sm">
-                <Text as="div" size="footnote" color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  Управляющие сетью · все адреса
+              {showNetworkManagers && (
+                <Stack gap="sm">
+                  <Text as="div" size="footnote" color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    Управляющие сетью · все адреса
+                  </Text>
+                  <Grid columns={2} gap="base">
+                    <NetworkManagerCard initials="АГ" name="Алексей Громов" />
+                    <NetworkManagerCard initials="МИ" name="Мария Иванова" />
+                  </Grid>
+                </Stack>
+              )}
+
+              {visibleGroups.map((g) => (
+                <CollapsibleGroup
+                  key={g.id}
+                  title={g.title}
+                  count={<GroupCount n={g.employees.length + (g.pointManager ? 1 : 0)} />}
+                  extra={g.unknown ? <StatusBadge tone="warn">1 неизвестный</StatusBadge> : undefined}
+                  open={!collapsed[g.id]}
+                  onOpenChange={(open) => setCollapsed((prev) => ({ ...prev, [g.id]: !open }))}
+                >
+                  <Grid minColWidth={320} gap="base">
+                    {g.showManager && g.pointManager && (
+                      <PointManagerCard initials={g.pointManager.initials} name={g.pointManager.name} badge={g.pointManager.badge} />
+                    )}
+                    {g.employeesVisible.map((e) => <EmployeeCard key={e.name} e={e} />)}
+                    {g.showUnknown && g.unknown && (
+                      <UnknownVoiceCard addr={g.title} samples={g.unknown.samples} onAssign={() => setAssignFor(g.title)} />
+                    )}
+                    {g.showProcessing && <ProcessingCard addr={g.title} />}
+                  </Grid>
+                </CollapsibleGroup>
+              ))}
+
+              {visibleGroups.length === 0 && (
+                <Text as="p" size="caption" color={color.mutedForeground}>
+                  Никого не нашли — измените фильтр или запрос.
                 </Text>
-                <Grid columns={2} gap="base">
-                  <NetworkManagerCard initials="АГ" name="Алексей Громов" />
-                  <NetworkManagerCard initials="МИ" name="Мария Иванова" />
-                </Grid>
-              </Stack>
-
-              <CollapsibleGroup title="Новосибирск, Большевистская 35" count={<GroupCount n={7} />}>
-                <Grid minColWidth={320} gap="base">
-                  {BOLSHEVISTSKAYA.map((e) => <EmployeeCard key={e.name} e={e} />)}
-                </Grid>
-              </CollapsibleGroup>
-
-              <CollapsibleGroup title="Новосибирск, Серебренниковская 20" count={<GroupCount n={1} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
-                <Grid minColWidth={320} gap="base">
-                  <UnknownVoiceCard addr="Новосибирск, Серебренниковская 20" samples="8 сэмплов голоса" />
-                </Grid>
-              </CollapsibleGroup>
-
-              <CollapsibleGroup title="Новосибирск, Советская 5" count={<GroupCount n={2} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
-                <Grid minColWidth={320} gap="base">
-                  {SOVETSKAYA.map((e) => <EmployeeCard key={e.name} e={e} />)}
-                  <UnknownVoiceCard addr="Новосибирск, Советская 5" samples="5 сэмплов голоса" />
-                </Grid>
-              </CollapsibleGroup>
-
-              <CollapsibleGroup title="Новосибирск, Димитрова 2" count={<GroupCount n={3} />} extra={<StatusBadge tone="warn">1 неизвестный</StatusBadge>}>
-                <Grid minColWidth={320} gap="base">
-                  <PointManagerCard initials="ИС" name="Ирина Соколова" badge="Управляющий точкой" />
-                  {DIMITROVA.map((e) => <EmployeeCard key={e.name} e={e} />)}
-                  <UnknownVoiceCard addr="Новосибирск, Димитрова 2" samples="3 сэмпла голоса" />
-                </Grid>
-              </CollapsibleGroup>
-
-              <CollapsibleGroup title="Новосибирск, Кирова 113/2" count={<GroupCount n={1} />}>
-                <Grid minColWidth={320} gap="base">
-                  <ProcessingCard addr="Новосибирск, Кирова 113/2" />
-                </Grid>
-              </CollapsibleGroup>
+              )}
             </Stack>
           </TitledRow>
         </Stack>
       </AppShell>
+
+      {/* the source's assign-name modal (.modal on .scrim), on the vendored Dialog */}
+      <Dialog open={assignFor != null} onOpenChange={(open) => !open && setAssignFor(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Неизвестный сотрудник</DialogTitle>
+            <DialogDescription>
+              Мы распознали новый голос ({assignFor}) и насчитали сэмплы. Прослушайте их и присвойте
+              имя — после этого начнём считать оценку.
+            </DialogDescription>
+          </DialogHeader>
+          <Input placeholder="ФИО сотрудника" />
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setAssignFor(null)}>Отмена</Button>
+            <Button onClick={() => setAssignFor(null)}>Присвоить имя</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <AssistantDock
         title="Ассистент"
@@ -422,5 +515,9 @@ export const Full: Story = {
         fallbackAnswer="Пока не знаю ответа — уточните вопрос про команду, оценки или допродажи."
       />
     </>
-  ),
+  )
+}
+
+export const Full: Story = {
+  render: () => <KomandaPageDemo />,
 }

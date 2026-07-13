@@ -1,0 +1,18 @@
+/*
+ * Surface — the `interactive` hover state. Real CSS because :hover can't be
+ * expressed in Foundation's usual inline styles (same reason row.css /
+ * SidebarNav.css exist). Values are komanda.html's own `.ecard`/`.ecard:hover`
+ * verbatim: a transparent 1.5px border at rest (so hover doesn't shift
+ * layout), then lift + accent border + a brighter glass on hover. 150ms =
+ * motion.fast in tokens.ts — CSS can't import TS, keep in lockstep.
+ */
+.foundation-surface--interactive {
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform 150ms, border-color 150ms, background 150ms;
+}
+.foundation-surface--interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-accent);
+  background: rgba(255, 255, 255, 0.72);
+}

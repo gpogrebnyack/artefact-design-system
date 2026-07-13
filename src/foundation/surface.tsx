@@ -1,6 +1,7 @@
 import type { ComponentProps, CSSProperties } from "react"
 import { Box } from "./layout"
 import { color } from "./tokens"
+import "./surface.css"
 
 /*
  * Surface — still Foundation, one step above the bare Box. Box is pure
@@ -52,13 +53,23 @@ export const SURFACE_VARIANTS = VARIANTS
 
 export type SurfaceProps = ComponentProps<typeof Box> & {
   variant?: SurfaceVariant
+  /** the surface is CLICKABLE — hover lift + accent border + cursor, the
+   *  source's own `.ecard:hover` (surface.css). Rule from DESIGN.md:
+   *  «выглядит кликабельным → обязано реагировать» — a Surface with onClick
+   *  and no `interactive` gives no hover feedback, which reads as broken. */
+  interactive?: boolean
 }
 
-export function Surface({ variant = "glass", radius = "xl", style, ...box }: SurfaceProps) {
+export function Surface({ variant = "glass", radius = "xl", interactive = false, className, style, ...box }: SurfaceProps) {
   const { backdropFilter, ...rest } = VARIANTS[variant].style
   return (
     <Box
       radius={radius}
+      className={
+        interactive
+          ? `foundation-surface--interactive${className ? ` ${className}` : ""}`
+          : className
+      }
       style={{
         ...rest,
         WebkitBackdropFilter: backdropFilter,

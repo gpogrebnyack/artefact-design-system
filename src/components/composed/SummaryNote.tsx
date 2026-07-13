@@ -3,6 +3,7 @@ import { Flex, Stack, Surface, color } from "@/foundation"
 import { Icon, type IconName } from "@/primitives/Icon"
 import { Text } from "@/primitives/Text"
 import type { StatusTone } from "./SemanticTone"
+import "./SummaryNote.css"
 
 /*
  * SummaryNote + SummaryStat — komanda.html's `.summary`/`.stat`: an
@@ -70,7 +71,7 @@ export function SummaryStat({ tone, onClick, children }: SummaryStatProps) {
   } as const
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} style={{ ...shared, border: "none", cursor: "pointer" }}>
+      <button type="button" className="artefact-summary-stat" onClick={onClick} style={{ ...shared, border: "none", cursor: "pointer" }}>
         {children}
       </button>
     )

@@ -1,0 +1,21 @@
+/*
+ * CollapsibleGroup header hover — komanda's `.addr-head:hover` verbatim
+ * (soft white wash over the warm page bg). Real CSS: :hover isn't
+ * expressible inline. 150ms = motion.fast, keep in lockstep with tokens.ts.
+ */
+.artefact-collapsible-group-head {
+  /* full button reset lives HERE, not as inline `all: unset` — an inline
+     reset would out-cascade this class and kill the hover background */
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  transition: background 150ms;
+}
+.artefact-collapsible-group-head:hover {
+  background: rgba(255, 255, 255, 0.4);
+}

@@ -1,5 +1,6 @@
 import { useId, useState, type ReactNode } from "react"
 import { Flex, motion } from "@/foundation"
+import "./CollapsibleGroup.css"
 import { color } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
 import { Text } from "@/primitives/Text"
@@ -56,7 +57,7 @@ export function CollapsibleGroup({
         aria-expanded={isOpen}
         aria-controls={bodyId}
         onClick={toggle}
-        style={{ all: "unset", cursor: "pointer", display: "block", width: "100%" }}
+        className="artefact-collapsible-group-head"
       >
         <Flex align="center" gap="sm" wrap={false}>
           <Text as="span" size="subhead" weight={600}>
