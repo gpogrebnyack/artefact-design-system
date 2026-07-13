@@ -1,0 +1,46 @@
+/*
+ * MomentCard / MomentStrip — real CSS for hover lift, the highlighted
+ * outline, and the strip's hidden scrollbar (not expressible inline).
+ */
+.artefact-moment-card {
+  flex: none;
+  width: 256px;
+  background: var(--secondary); /* paper — opaque, sits on a glass panel */
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  border: 1.5px solid transparent;
+  transition: border-color 150ms, transform 150ms;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.artefact-moment-card:hover {
+  transform: translateY(-2px);
+}
+/* SELECTION (the playing moment), not hover — accent outline allowed */
+.artefact-moment-card--hl {
+  border-color: var(--brand-accent);
+}
+.artefact-moment-card--end {
+  cursor: default;
+  background: transparent;
+  border: 1px dashed var(--input);
+}
+.artefact-moment-card--end:hover {
+  transform: none;
+}
+
+.artefact-moment-strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 24px;
+  scroll-padding-left: 24px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.artefact-moment-strip::-webkit-scrollbar {
+  display: none;
+}

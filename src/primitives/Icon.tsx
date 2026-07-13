@@ -30,6 +30,13 @@ import {
   ChartLineUp,
   SquaresFour,
   PaperPlaneRight,
+  Play,
+  Pause,
+  DownloadSimple,
+  SpeakerHigh,
+  TextAlignLeft,
+  Flag,
+  Crosshair,
   type Icon as PhosphorIcon,
   type IconWeight,
 } from "@phosphor-icons/react"
@@ -79,6 +86,15 @@ const REGISTRY = {
   "chart-line-up": ChartLineUp,
   dashboard: SquaresFour,
   send: PaperPlaneRight,
+  // media / playback (dialog-review pages: player, TimeTag, transcript)
+  play: Play,
+  pause: Pause,
+  download: DownloadSimple,
+  volume: SpeakerHigh,
+  transcript: TextAlignLeft,
+  // priority / assignment
+  flag: Flag,
+  target: Crosshair,
 } as const
 
 export type IconName = keyof typeof REGISTRY

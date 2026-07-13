@@ -55,6 +55,7 @@ export const color = {
   accentHover: "var(--brand-accent-hover)",
   accentSoft: "var(--brand-accent-soft)", // #fdeee5
   accentSoftForeground: "var(--brand-accent-soft-foreground)",
+  accentSoftStrong: "var(--brand-accent-soft-strong)", // #a83c08 — DATA-grade fg on accentSoft (heatmap fractions); the plain SoftForeground fails contrast at data sizes
   accentGradient: "var(--brand-accent-gradient)", // komanda's ONE gradient — .primary.askbtn on the assistant dock
 
   green: "var(--brand-green)", // #1f7a54 — score-band "good" (komanda's own band(): score ≥7)
@@ -62,12 +63,14 @@ export const color = {
   greenHover: "var(--brand-green-hover)",
   greenSoft: "var(--brand-green-soft)",
   greenSoftForeground: "var(--brand-green-soft-foreground)",
+  greenSoftStrong: "var(--brand-green-soft-strong)", // #0f5e3f — see accentSoftStrong
 
   warn: "var(--brand-warn)", // #b8862f — score-band "caution" (band(): 5 ≤ score < 7)
   warnForeground: "var(--brand-warn-foreground)",
   warnHover: "var(--brand-warn-hover)",
   warnSoft: "var(--brand-warn-soft)",
   warnSoftForeground: "var(--brand-warn-soft-foreground)",
+  warnSoftStrong: "var(--brand-warn-soft-strong)", // #856700 — see accentSoftStrong
 
   plum: "var(--brand-plum)", // #7a4d7d — role tint: network manager (not a score band)
   plumForeground: "var(--brand-plum-foreground)",
@@ -92,6 +95,7 @@ export const color = {
   chart8: "var(--chart-8)", // #c952de — --c-purple
   chartSurface: "var(--brand-chart-surface)", // #fbfaf7 — quiet backdrop for data-viz surfaces (dashboard-prototype.html only)
   scrim: "var(--brand-scrim)", // rgba(0,0,0,.1) — dark low-opacity backdrop behind a heavily blurred overlay (assistant dock)
+  sand: "var(--brand-sand)", // #cbb79c — audio waveform idle bars (dialog-v2.html); playback progress recolors them to accent
 } as const
 
 type ColorKey = keyof typeof color

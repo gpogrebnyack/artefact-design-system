@@ -1,0 +1,50 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { LayeredCard } from '@/components/composed/LayeredCard'
+import { Grid, Stack, color } from '@/foundation'
+import { Text } from '@/primitives/Text'
+import { TimeTag } from '@/components/composed/TimeTag'
+
+/*
+ * LayeredCard — dialog-v2's `.rec`/`.up4-card` shared anatomy: the FACT on
+ * an opaque paper layer, the ADVICE below it on the tinted wrapper that
+ * peeks around the paper. The page's grammar for "observation → what to do
+ * about it" (recommendations AND upsell cards).
+ */
+const meta: Meta<typeof LayeredCard> = {
+  title: 'Components/Card/Layered',
+  component: LayeredCard,
+}
+export default meta
+type Story = StoryObj<typeof LayeredCard>
+
+export const Recommendation: Story = {
+  render: () => (
+    <Grid minColWidth={340} gap="md" style={{ maxWidth: 840 }}>
+      <LayeredCard
+        footer={
+          <Stack gap="xs">
+            <Text as="span" size="footnote" weight={600} color={color.ink3} style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              Как лучше
+            </Text>
+            <Text as="div" size="body" style={{ lineHeight: 1.5 }}>
+              Если гость заказывает только еду, предложите напиток: «Вместо обычного чая возьмите наш
+              сезонный чай со льдом „Таёжь“. Попробуете?».
+            </Text>
+          </Stack>
+        }
+      >
+        <Stack gap="sm">
+          <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25 }}>
+            Гость заказал только сэндвич, но сотрудник не предложил дополнить заказ напитком
+          </Text>
+          <Text as="div" size="body" color={color.mutedForeground}>
+            «Сэндвич подогреть?» <TimeTag time="00:05" onClick={() => {}} />
+          </Text>
+        </Stack>
+      </LayeredCard>
+      <LayeredCard>
+        <Text as="div" size="body">Без футера — просто факт на бумаге в тонированной рамке.</Text>
+      </LayeredCard>
+    </Grid>
+  ),
+}

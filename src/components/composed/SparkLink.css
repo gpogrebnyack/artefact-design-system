@@ -1,0 +1,25 @@
+/*
+ * SparkLink — real CSS for the hover state (inline styles can't hover);
+ * the button reset lives in the class so it doesn't out-cascade :hover.
+ */
+.artefact-spark-link {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: color 150ms;
+}
+.artefact-spark-link:hover {
+  color: var(--brand-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.artefact-spark-link-spark {
+  color: var(--brand-accent);
+  flex: none;
+}

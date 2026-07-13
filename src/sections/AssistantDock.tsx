@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from "react"
 import { Icon } from "@/primitives/Icon"
 import { Chip } from "@/components/composed/Chip"
 import { MessageBubble } from "@/components/composed/MessageBubble"
@@ -20,9 +20,21 @@ import "./AssistantDock.css"
  *
  * `intro`/`fallbackAnswer`/`chips` have no client-specific defaults —
  * pass real copy per product, don't rely on the placeholders below.
+ *
+ * The rest of the page can SUMMON the dock with a prepared question via
+ * the ref handle (`ask`) — dialog-v2.html does this from at least three
+ * places (the "Назначить профиль" pill, every SparkLink insight, the
+ * upsell cards' "Потренировать с ассистентом"), all funneling into the
+ * source's global `ask()`. Found missing while rebuilding that page.
  */
 
 export type ChipQuestion = { question: string; answer: ReactNode }
+
+export type AssistantDockHandle = {
+  /** open the dock, post `question` as the user, answer after the typing
+   *  delay (falls back to `fallbackAnswer` when no answer given) */
+  ask: (question: string, answer?: ReactNode) => void
+}
 
 export type AssistantDockProps = {
   title?: string
@@ -37,13 +49,13 @@ type Msg = { id: number; from: "user" | "bot"; content: ReactNode }
 
 let msgId = 0
 
-export function AssistantDock({
+export const AssistantDock = forwardRef<AssistantDockHandle, AssistantDockProps>(function AssistantDock({
   title = "Ассистент",
   intro = "Спросите что угодно или начните с подсказки:",
   chips = [],
   fallbackAnswer = "Уточните вопрос — разберём подробнее.",
   placeholder = "Задайте вопрос…",
-}: AssistantDockProps) {
+}: AssistantDockProps, ref) {
   const [mode, setMode] = useState<Mode>("idle")
   const [messages, setMessages] = useState<Msg[]>([])
   const [typing, setTyping] = useState(false)
@@ -76,6 +88,8 @@ export function AssistantDock({
   useEffect(() => {
     msgsRef.current?.scrollTo({ top: msgsRef.current.scrollHeight })
   }, [messages, typing])
+
+  useImperativeHandle(ref, () => ({ ask: (q, a) => ask(q, a ?? null) }))
 
   const ask = (question: string, answer: ReactNode) => {
     setMode("open")
@@ -170,4 +184,4 @@ export function AssistantDock({
       </div>
     </div>
   )
-}
+})

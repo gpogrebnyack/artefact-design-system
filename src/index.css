@@ -127,6 +127,13 @@
     --brand-accent-hover: color-mix(in srgb, var(--brand-accent) 85%, black);
     --brand-accent-soft: #fdeee5;
     --brand-accent-soft-foreground: var(--brand-accent);
+    /* -soft-strong: DATA-grade foreground on the -soft tint. The soft pair's
+       own foreground is fine for 12px/600 labels (badges, pills) but fails
+       contrast for primary data (dialog-v2's criteria heatmap shows 16px
+       score fractions on the tint — its midFg() darkens every band for
+       exactly this reason). Hexes are the source page's own, not invented:
+       #a83c08 / #0f5e3f / #856700. */
+    --brand-accent-soft-strong: #a83c08;
     /* komanda.html's own --accent-grad — found missing while rebuilding the
        AI assistant dock (.primary.askbtn). The ONE gradient in either source
        page; kept scoped to accent (not given the full role structure above)
@@ -138,12 +145,14 @@
     --brand-green-hover: color-mix(in srgb, var(--brand-green) 85%, black);
     --brand-green-soft: #eaf2ea;
     --brand-green-soft-foreground: var(--brand-green);
+    --brand-green-soft-strong: #0f5e3f; /* see -soft-strong note at accent */
 
     --brand-warn: #b8862f;
     --brand-warn-foreground: #2c2c2a; /* ink: 4.32:1 vs 3.24:1 for white — measurably better, no prior convention to preserve */
     --brand-warn-hover: color-mix(in srgb, var(--brand-warn) 85%, black);
     --brand-warn-soft: #f6edda;
     --brand-warn-soft-foreground: var(--brand-warn);
+    --brand-warn-soft-strong: #856700; /* see -soft-strong note at accent */
 
     --brand-plum: #7a4d7d;
     --brand-plum-foreground: #ffffff; /* 6.59:1 — passes AA normal text */
@@ -178,6 +187,13 @@
        off-white backdrop specifically for data-viz surfaces (stopmenu bars,
        chart panels), distinct from --card/--popover. Real, not invented. */
     --brand-chart-surface: #fbfaf7;
+
+    /* Found while assembling dialog-v2.html — the warm sand of the audio
+       waveform's idle bars (#cbb79c hardcoded in the source page). Warmer
+       and darker than any cream/hairline we have (input #e4e2da reads
+       invisible at 2px bars; ink-3 #a3a094 is cold gray). Playback progress
+       recolors bars to --brand-accent, so idle must sit between the two. */
+    --brand-sand: #cbb79c;
 }
 
 .dark {
