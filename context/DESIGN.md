@@ -171,13 +171,16 @@ components:
     backgroundColor: "linear-gradient(135deg, #ffb88c 0%, #f75506 50%, #ff5e62 100%)"
     textColor: "{colors.accent-foreground}"
     rounded: "{rounded.pill}"
-    height: 40px
+    # 52px — единственный контрол НЕ на 40px-шкале: плавающая CTA дока крупнее
+    # ряда обычных контролов намеренно (источник: .askbtn/.askinput = 52px).
+    # В mini/blob-состояниях морфится в 32px/84px — это уже поведение, не токен.
+    height: 52px
   toolbar-toggle-active:
     backgroundColor: "{colors.foreground}"
     textColor: "{colors.background}"
+  # полноэкранный оверлей (inset:0) — радиуса у панели НЕТ намеренно
   assistant-dock-panel:
     backgroundColor: "{colors.scrim}"
-    rounded: "{rounded.2xl}"
 ---
 
 # Артефакт — правила дизайна

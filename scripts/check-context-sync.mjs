@@ -96,6 +96,10 @@ function findExportedComponents(dir) {
     const filePath = join(entry.parentPath ?? entry.path ?? dir, entry.name)
     const text = readFileSync(filePath, "utf8")
     for (const m of text.matchAll(/export function ([A-Z]\w+)/g)) names.push(m[1])
+    // forwardRef components are `export const X = forwardRef(...)` — the
+    // function-only regex silently skipped them (AssistantDock, MomentCard,
+    // WaveformPlayer were invisible to this check)
+    for (const m of text.matchAll(/export const ([A-Z]\w+) = forwardRef/g)) names.push(m[1])
   }
   return names
 }

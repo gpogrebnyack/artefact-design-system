@@ -25,7 +25,11 @@ import "./interactive.css"
 
 const VARIANTS = {
   glass: {
-    style: { background: color.card, backdropFilter: "blur(10px)" } as CSSProperties,
+    // blur(10px) saturate(1.1) — the SAME glass as brand-overrides.css gives
+    // the vendored Card ([data-slot="card"]); the saturate half was missing
+    // here, so Foundation glass and shadcn-Card glass diffused differently
+    // (caught by a DESIGN.md consistency audit, not by eye)
+    style: { background: color.card, backdropFilter: "blur(10px) saturate(1.1)" } as CSSProperties,
     description: "60% + blur — карточки-острова",
   },
   paper: {
