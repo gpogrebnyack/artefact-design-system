@@ -6,7 +6,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 // A Component — DropdownMenu assembled from trigger + content + items, not atomic.
-const meta: Meta<typeof DropdownMenu> = { title: 'Components/Menu', component: DropdownMenu }
+const meta: Meta<typeof DropdownMenu> = { title: 'Components/DropdownMenu', component: DropdownMenu }
 export default meta
 type Story = StoryObj<typeof DropdownMenu>
 

@@ -3,14 +3,14 @@ import { TitledRow, Surface, Stack } from '@/foundation'
 import { Text } from '@/primitives/Text'
 
 /*
- * Foundation/Row — the primary page-composition primitive both real source
+ * Foundation/TitledRow — the primary page-composition primitive both real source
  * pages (komanda.html, dashboard-prototype.html) use for nearly every
  * section: sticky title-rail | main content | optional sticky side-rail.
  * Found missing while assembling dashboard-prototype.html from the existing
  * component set — resize the canvas below 1120px to see it collapse to a
  * plain stacked column (title/side lose stickiness there).
  */
-const meta: Meta = { title: 'Foundation/Row', parameters: { layout: 'fullscreen' } }
+const meta: Meta = { title: 'Foundation/TitledRow', parameters: { layout: 'fullscreen' } }
 export default meta
 type Story = StoryObj
 

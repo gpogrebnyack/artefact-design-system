@@ -6,7 +6,7 @@ import {
   DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 
-const meta: Meta = { title: 'Primitives/Modal' }
+const meta: Meta = { title: 'Primitives/Dialog' }
 export default meta
 type Story = StoryObj
 

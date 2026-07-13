@@ -12,7 +12,7 @@ import { Icon } from '@/primitives/Icon'
 
 // A Components-tier composite: Empty + our Icon primitive + Button primitive.
 const meta: Meta<typeof Empty> = {
-  title: 'Components/EmptyState',
+  title: 'Components/Empty',
   component: Empty,
 }
 export default meta

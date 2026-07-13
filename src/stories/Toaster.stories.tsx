@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 // A Components-tier composite: shadcn's toast system (sonner), themed via our
 // tokens (see components/ui/sonner.tsx — --normal-bg/--normal-text/--border-radius
 // already resolve against index.css's --popover/--popover-foreground/--radius).
-const meta: Meta = { title: 'Components/Notification' }
+const meta: Meta = { title: 'Components/Toaster' }
 export default meta
 type Story = StoryObj
 

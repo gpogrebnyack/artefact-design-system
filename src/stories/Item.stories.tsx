@@ -25,7 +25,7 @@ import { Icon } from '@/primitives/Icon'
  * token). Use `variant="muted"` for a row that needs visible separation.
  */
 const meta: Meta<typeof Item> = {
-  title: 'Primitives/Item',
+  title: 'Components/Item',
   component: Item,
 }
 export default meta

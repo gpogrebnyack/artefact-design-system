@@ -7,8 +7,8 @@ import { Sparkline } from '@/components/composed/charts/Sparkline'
 
 /*
  * MetricCard — a demo composition, NOT a real exported component. Filed
- * under Components (not Components/Chart) on purpose: what makes this a
- * "metric card" is the Card shell + label/value/trend layout — the
+ * under Components/Card/* (the Card family folder) on purpose: what makes
+ * this a "metric card" is the Card shell + label/value/trend layout — the
  * embedded Sparkline is one ingredient, not the thing being categorized.
  * Filing it next to LineChart/BarChart implied it was a chart TYPE, which
  * misled a real reader (see context/COMPONENTS.md's note on this).
@@ -16,7 +16,7 @@ import { Sparkline } from '@/components/composed/charts/Sparkline'
  * Copy this composition by hand if you need it — Card + Text + Icon +
  * Sparkline are all real exports; only this specific assembly is demo-only.
  */
-const meta: Meta = { title: 'Components/MetricCard' }
+const meta: Meta = { title: 'Components/Card/Metric' }
 export default meta
 type Story = StoryObj
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MessageBubble } from '@/components/composed/MessageBubble'
 import { Stack } from '@/foundation'
 
-const meta: Meta<typeof MessageBubble> = { title: 'Components/MessageBubble', component: MessageBubble }
+const meta: Meta<typeof MessageBubble> = { title: 'Components/Chat/MessageBubble', component: MessageBubble }
 export default meta
 type Story = StoryObj<typeof MessageBubble>
 
