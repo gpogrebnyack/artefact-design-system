@@ -79,4 +79,5 @@ export * from "./components/composed/charts/Sparkline"
 
 // Sections — the few bespoke ones
 export * from "./sections/AssistantDock"
+export * from "./sections/PageHeader"
 export * from "./sections/SidebarNav"
