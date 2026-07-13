@@ -87,7 +87,9 @@ export const MomentCard = forwardRef<HTMLDivElement, MomentCardProps>(function M
         <Text
           as="div"
           size="footnote"
-          style={{ fontStyle: "italic", lineHeight: 1.45, marginTop: "auto", paddingTop: 4 }}
+          // quote reads as a quote through «» alone — no italic in the
+          // system (Struve has no italic face, faked slant rejected)
+          style={{ lineHeight: 1.45, marginTop: "auto", paddingTop: 4 }}
         >
           «{quote}»
         </Text>

@@ -462,7 +462,7 @@ function DialogPageDemo() {
                     <Text as="div" size="footnote" weight={600} color={color[`${it.tone}SoftForeground`]}>
                       {it.fmeta}
                     </Text>
-                    <Text as="div" size="body" color={color.mutedForeground} style={{ fontStyle: 'italic', lineHeight: 1.5, marginTop: 12 }}>
+                    <Text as="div" size="body" color={color.mutedForeground} style={{ lineHeight: 1.5, marginTop: 12 }}>
                       «{it.quote}» {jump(it.turn)}
                     </Text>
                     <Stack gap="xs" style={{ marginTop: 14 }}>

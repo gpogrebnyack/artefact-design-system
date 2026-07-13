@@ -181,7 +181,10 @@ export function ScoreHeatmap({
                 borderRadius: radius.sm,
               }}
             >
-              <Text as="span" size="caption" style={{ fontStyle: "italic" }}>
+              {/* quote = «» + its own paper block, NOT italic — the system
+                  has no italic face (Struve ships 400/600 upright only;
+                  browser-faked slant looked cheap and was removed on review) */}
+              <Text as="span" size="caption">
                 «{sel.quote}»
               </Text>
             </div>
