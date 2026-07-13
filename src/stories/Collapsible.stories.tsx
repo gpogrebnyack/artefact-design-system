@@ -1,14 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useState } from 'react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Icon } from '@/primitives/Icon'
 import { Text } from '@/primitives/Text'
-import { Flex, Stack, Surface, color } from '@/foundation'
+import { Flex, Stack, Surface, color, motion } from '@/foundation'
 
 /*
  * Collapsible — vendored as the base for collapsible group headers
- * (komanda's own .addr-group behavior: two independent consumer sessions
- * re-implemented the same collapsed-state React logic by hand before this
- * existed). See CollapsibleGroup (Components) for the assembled pattern.
+ * (komanda's own .addr-group behavior). This demo shows the RAW primitive
+ * wired by hand; the packaged pattern with all the kit rules built in is
+ * `CollapsibleGroup` (Components) — reach for that one on real pages.
+ *
+ * The demo itself follows the kit rules it once violated (caught in
+ * review): chevron on the RIGHT edge and rotating, real focus ring, no
+ * inline `all: unset` (which out-cascades the focus-ring class — the
+ * documented a11y bug).
  */
 const meta: Meta<typeof Collapsible> = {
   title: 'Primitives/Collapsible',
@@ -17,18 +23,41 @@ const meta: Meta<typeof Collapsible> = {
 export default meta
 type Story = StoryObj<typeof Collapsible>
 
-export const AddressGroup: Story = {
-  render: () => (
-    <Collapsible defaultOpen style={{ width: 420 }}>
+function AddressGroupDemo() {
+  const [open, setOpen] = useState(true)
+  return (
+    <Collapsible open={open} onOpenChange={setOpen} style={{ width: 420 }}>
       <CollapsibleTrigger asChild>
         <button
           type="button"
-          style={{ all: 'unset', cursor: 'pointer', display: 'block', width: '100%' }}
+          className="artefact-focus-ring"
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            font: 'inherit',
+            color: 'inherit',
+            textAlign: 'left',
+            cursor: 'pointer',
+            display: 'block',
+            width: '100%',
+            borderRadius: 8,
+          }}
         >
-          <Flex align="center" gap="sm">
-            <Icon name="caret-down" size={16} color={color.mutedForeground} />
+          <Flex align="center" gap="sm" wrap={false}>
             <Text as="span" size="subhead" weight={600}>Большевистская 35</Text>
             <Text as="span" size="footnote" color={color.mutedForeground}>7 человек</Text>
+            <span
+              style={{
+                display: 'inline-flex',
+                marginLeft: 'auto',
+                transition: `transform ${motion.base} ${motion.ease}`,
+                transform: open ? 'none' : 'rotate(-90deg)',
+              }}
+            >
+              <Icon name="caret-down" size={16} color={color.mutedForeground} />
+            </span>
           </Flex>
         </button>
       </CollapsibleTrigger>
@@ -39,5 +68,9 @@ export const AddressGroup: Story = {
         </Stack>
       </CollapsibleContent>
     </Collapsible>
-  ),
+  )
+}
+
+export const AddressGroup: Story = {
+  render: () => <AddressGroupDemo />,
 }
