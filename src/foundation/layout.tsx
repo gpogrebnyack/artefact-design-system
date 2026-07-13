@@ -150,6 +150,20 @@ export function Grid({
       {...box}
       style={{
         display: "grid",
+        // Explicit 100% width, NOT auto — the root cause of the long-lived
+        // "phantom height" bug family, finally pinned: when a Grid (or a
+        // block wrapper holding one) is an item of a COLUMN flex container
+        // (Stack/Flex), Chromium resolves the item's hypothetical main size
+        // (height) BEFORE stretching its cross size — at that moment the
+        // auto-fit grid is measured near max-content width, collapses to
+        // one column, and reports a huge height. The stretch happens after,
+        // but the stale height is never re-resolved: the container ends up
+        // ~750-1000px taller than its deepest descendant, with no CSS rule,
+        // margin or transform explaining it (verified live: no reflow nudge
+        // fixes it, width:100% instantly does). If you WRAP a Grid in your
+        // own plain block div inside a Stack, that wrapper needs width:100%
+        // too — see CollapsibleGroup for the shipped example.
+        width: "100%",
         gridTemplateColumns: columns
           ? `repeat(${columns}, minmax(0, 1fr))`
           : `repeat(auto-fit, minmax(min(${space(minColWidth)}, 100%), 1fr))`,
@@ -158,18 +172,18 @@ export function Grid({
         // `align-content` is a SEPARATE property from `align-items` — it
         // decides what happens to leftover space across the whole set of
         // (auto-sized) row tracks, not within one row. Left unset, it
-        // defaults to "normal", which behaves like `stretch` for grid rows —
-        // a real, reproducible bug found live: an `auto`-height Grid's rows
-        // got measured ~2.3x too tall on first paint (a browser intrinsic-
-        // sizing quirk, still unexplained at the CSS level), and
-        // `align-content: normal` then stretched every row to match that
-        // inflated size instead of leaving the extra (phantom) space alone.
-        // This container is NEVER given an explicit height by us, so there
-        // is never legitimate leftover space to redistribute — pin this to
-        // "start" unconditionally rather than trust the browser default.
-        // (Was misattributed to Recharts' ResponsiveContainer in an earlier
-        // note; Sparkline never uses ResponsiveContainer at all, and this
-        // reproduces with zero charts involved — see COMPONENTS.md.)
+        // defaults to "normal", which behaves like `stretch` for grid rows.
+        // The "leftover space" that stretch was distributing was the
+        // phantom height from the stale flex measurement described above
+        // (width:100% removes the phantom at the source) — but keep "start"
+        // pinned anyway: this container is never given an explicit height
+        // by us, so there is never LEGITIMATE leftover space to
+        // redistribute, and "start" makes any future phantom show up as an
+        // honest empty gap below the rows instead of silently inflating
+        // every row (~2.3x, the shape the bug was first reported in).
+        // (Historical: was once misattributed to Recharts'
+        // ResponsiveContainer; Sparkline never uses it, and this reproduces
+        // with zero charts involved.)
         alignContent: "start",
         ...style,
       }}
