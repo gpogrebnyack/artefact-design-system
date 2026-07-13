@@ -157,7 +157,10 @@ function PointManagerCard({ initials, name, badge }: { initials: string; name: s
         <Flex gap="xs">
           <StatusBadge tone="plum">{badge}</StatusBadge>
         </Flex>
-        <Separator />
+        {/* no metrics block -> no dividers around the empty zone: a
+            Separator only exists BETWEEN two non-empty blocks (see the
+            entity-card guideline); равная высота карточек — забота Grid,
+            не пустых зон */}
         <div style={{ flex: 1 }} />
         <Separator />
         <AccessStatus />
@@ -381,13 +384,10 @@ function KomandaPageDemo() {
                 </Surface>
               </Grid>
 
-              <Surface
-                variant="muted"
-                p="base"
-                radius="xl"
-                interactive
-                onClick={() => { setTab('unknown'); setAddr(undefined) }}
-              >
+              {/* NOT interactive: the card-hover language (lift + accent
+                  border) belongs to entity cards; the source's banner has
+                  no hover — the button carries the action */}
+              <Surface variant="muted" p="base" radius="xl">
                 <Flex justify="space-between" align="center" gap="base" wrap={false}>
                   <Text as="p" size="caption">
                     <b>Распознано 3 новых голоса</b> на Серебренниковской и Советской — присвойте имена, чтобы начать считать их работу.
