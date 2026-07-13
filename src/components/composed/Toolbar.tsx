@@ -82,7 +82,15 @@ export function ToolbarToggleGroup({
       onValueChange={(v) => v && onValueChange?.(v)}
       asChild
     >
-      <Flex gap="xs" style={{ background: color.background, borderRadius: radius.pill, padding: spacing.xs }}>
+      {/* minHeight 40 = --layout-control-height: the pill sits in toolbars
+          NEXT to inputs/selects pinned to 40px — the source's own
+          .period-seg{height:var(--control-h)}. Was 37px (content-derived)
+          and read as misaligned in the control row. */}
+      <Flex
+        gap="xs"
+        align="center"
+        style={{ background: color.background, borderRadius: radius.pill, padding: spacing.xs, minHeight: 40 }}
+      >
         {children}
       </Flex>
     </RadixToolbar.ToggleGroup>
