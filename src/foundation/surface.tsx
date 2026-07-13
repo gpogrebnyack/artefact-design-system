@@ -25,12 +25,14 @@ import "./interactive.css"
 
 const VARIANTS = {
   glass: {
-    // blur(10px) saturate(1.1) — the SAME glass as brand-overrides.css gives
-    // the vendored Card ([data-slot="card"]); the saturate half was missing
-    // here, so Foundation glass and shadcn-Card glass diffused differently
-    // (caught by a DESIGN.md consistency audit, not by eye)
-    style: { background: color.card, backdropFilter: "blur(10px) saturate(1.1)" } as CSSProperties,
-    description: "60% + blur — карточки-острова",
+    // NO backdrop blur — audited against all three source pages: they never
+    // blur cards, only OVERLAYS (assistant panel/field, mobile header).
+    // "Glass" on a card is purely the 60% white fill letting the warm page
+    // gradient through; blur here was our invention with zero visible
+    // effect (cards sit on a near-flat gradient, nothing scrolls behind
+    // them) at a real compositing cost per card. Blur lives in `scrim`.
+    style: { background: color.card } as CSSProperties,
+    description: "60% белого — карточки-острова (без блюра)",
   },
   paper: {
     style: { background: color.secondary } as CSSProperties,

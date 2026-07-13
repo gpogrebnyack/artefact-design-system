@@ -16,8 +16,8 @@
   width: 74px;
   flex: none;
   background: var(--card);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  /* no backdrop blur: the source .sidebar has none — content never sits
+     behind it, and blur over the flat page gradient is invisible */
   border-radius: var(--radius-2xl);
   padding: 18px 0 16px;
   display: flex;

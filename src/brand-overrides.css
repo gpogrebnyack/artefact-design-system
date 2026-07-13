@@ -95,12 +95,12 @@ body {
   --tw-shadow: 0 0 #0000 !important;
 }
 
-/* --- glass islands: cards get the 60% translucent surface (already set via
-       --card) PLUS the blur, which isn't expressible in shadcn's markup. --- */
-[data-slot="card"] {
-  -webkit-backdrop-filter: blur(10px) saturate(1.1);
-  backdrop-filter: blur(10px) saturate(1.1);
-}
+/* --- glass islands: cards are the 60% translucent --card fill and NOTHING
+       else. An earlier version also blurred them (backdrop-filter on
+       [data-slot="card"]) — removed after auditing the sources: neither
+       page blurs a card; blur is the OVERLAY language (assistant panel &
+       field, mobile header), and over the near-flat page gradient it had
+       zero visible effect at a per-card compositing cost. --- */
 
 /* --- divider visibility: shadcn's Separator paints itself with `bg-border`,
        which we've deliberately set to transparent (the "no borders by
