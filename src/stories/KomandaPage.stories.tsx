@@ -209,7 +209,10 @@ function InsightPersonRow({ initials, name, addr, pill }: { initials: string; na
           <SemanticAvatarFallback tone="muted">{initials}</SemanticAvatarFallback>
         </Avatar>
         <Stack gap="none">
-          <Text as="span" size="caption" weight={600}>{name}</Text>
+          {/* same size as the card name — the source uses --text-body for
+              BOTH .ename and .iline .nm; a person's name doesn't shrink in
+              compact rows */}
+          <Text as="span" size="body" weight={600}>{name}</Text>
           <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
         </Stack>
       </Flex>
