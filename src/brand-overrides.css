@@ -102,6 +102,18 @@ body {
        field, mobile header), and over the near-flat page gradient it had
        zero visible effect at a per-card compositing cost. --- */
 
+/* This shadcn generation draws its hairline as `ring-1 ring-foreground/10`,
+   NOT `border border-border` — so it sails past both our transparent
+   --border and the shadow kill above (which deliberately spares
+   --tw-ring-shadow for the focus ring). On the CARD that ring is a
+   decorative frame and violates the "no borders, surfaces separate by
+   fill" rule — kill it here. Do NOT extend this to the floating slots
+   (dropdown/select/dialog/popover content): with drop shadows globally
+   off, their ring is the only edge they have over the content they cover. */
+[data-slot="card"] {
+  --tw-ring-shadow: 0 0 #0000;
+}
+
 /* --- divider visibility: shadcn's Separator paints itself with `bg-border`,
        which we've deliberately set to transparent (the "no borders by
        default" rule above). That makes every divider invisible, which

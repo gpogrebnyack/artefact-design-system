@@ -8,7 +8,7 @@ const meta: Meta<typeof Card> = {
 export default meta
 type Story = StoryObj<typeof Card>
 
-// glass island: 60% surface + blur, no drop shadow (see brand-overrides.css)
+// glass island: the 60% fill, no blur, no shadow, no ring (brand-overrides.css)
 export const GlassIsland: Story = {
   render: () => (
     <Card className="w-[320px]">
