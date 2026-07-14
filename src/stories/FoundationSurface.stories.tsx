@@ -48,16 +48,8 @@ export const Variants: Story = {
   ),
 }
 
-// Radius passes straight through to the underlying Box.
-export const RadiusOverride: Story = {
-  render: () => (
-    <Flex gap="md">
-      <Surface variant="glass" p="base" radius="sm" width={120} style={{ height: 80 }} />
-      <Surface variant="glass" p="base" radius="2xl" width={120} style={{ height: 80 }} />
-      <Surface variant="glass" p="base" radius="pill" width={120} style={{ height: 80 }} />
-    </Flex>
-  ),
-}
+/* No RadiusOverride story: `radius` passes straight through to Box — the
+ * scale is documented once, in Foundation/Radius. */
 
 // This IS how a Card (Components tier) is meant to be built: Surface + Text.
 export const AsACardBase: Story = {

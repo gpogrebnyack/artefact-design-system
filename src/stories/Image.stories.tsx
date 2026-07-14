@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Image } from '@/primitives/Image'
-import { Flex, color, radius } from '@/foundation'
+import { color, radius } from '@/foundation'
 
 // Inline SVG data URIs — real, loadable "photos" with no external request.
 const PORTRAIT =
@@ -44,13 +44,6 @@ export const Contain: Story = {
   ),
 }
 
-// Radius scale applied to the same image — matches the Foundation radius steps.
-export const RadiusSteps: Story = {
-  render: () => (
-    <Flex gap="md">
-      {(['sm', 'md', 'lg', 'xl', '2xl', 'pill'] as const).map((r) => (
-        <Image key={r} src={PORTRAIT} alt={`Радиус ${r}`} width={72} height={72} fit="cover" radius={r} />
-      ))}
-    </Flex>
-  ),
-}
+/* No RadiusSteps story: `radius` is a pass-through to the Foundation scale
+ * (already visible on Portrait) — the scale itself is documented ONCE, in
+ * Foundation/Radius. Scale-prop pass-throughs don't get their own stories. */
