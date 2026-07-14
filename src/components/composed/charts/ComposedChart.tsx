@@ -1,5 +1,5 @@
 import { ComposedChart as RComposedChart, Bar, Line, Area, XAxis, YAxis, CartesianGrid } from "recharts"
-import { color } from "@/foundation"
+import { color, type as typeScale } from "@/foundation"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, type ChartConfig } from "@/components/ui/chart"
 
 /*
@@ -36,9 +36,9 @@ export function ComposedChart({ data, xKey, series, height = 260, showLegend = s
     <ChartContainer config={config} style={{ height }} className="w-full">
       <RComposedChart data={data}>
         <CartesianGrid vertical={false} stroke={color.input} />
-        <XAxis dataKey={xKey} tickLine={false} axisLine={false} fontSize={12} />
-        <YAxis yAxisId="left" tickLine={false} axisLine={false} fontSize={12} width={32} />
-        {hasRightAxis && <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} fontSize={12} width={32} />}
+        <XAxis dataKey={xKey} tickLine={false} axisLine={false} fontSize={typeScale.footnote.size} />
+        <YAxis yAxisId="left" tickLine={false} axisLine={false} fontSize={typeScale.footnote.size} width={32} />
+        {hasRightAxis && <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} fontSize={typeScale.footnote.size} width={32} />}
         <ChartTooltip content={<ChartTooltipContent />} />
         {showLegend && <ChartLegend content={<ChartLegendContent />} />}
         {series.map((s) => {

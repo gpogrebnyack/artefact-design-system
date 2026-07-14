@@ -1,5 +1,5 @@
 import { BarChart as RBarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
-import { color } from "@/foundation"
+import { color, type as typeScale } from "@/foundation"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, type ChartConfig } from "@/components/ui/chart"
 
 /*
@@ -23,8 +23,8 @@ export function BarChart({ data, xKey, series, height = 260, showLegend = series
     <ChartContainer config={config} style={{ height }} className="w-full">
       <RBarChart data={data}>
         <CartesianGrid vertical={false} stroke={color.input} />
-        <XAxis dataKey={xKey} tickLine={false} axisLine={false} fontSize={12} />
-        <YAxis tickLine={false} axisLine={false} fontSize={12} width={32} />
+        <XAxis dataKey={xKey} tickLine={false} axisLine={false} fontSize={typeScale.footnote.size} />
+        <YAxis tickLine={false} axisLine={false} fontSize={typeScale.footnote.size} width={32} />
         <ChartTooltip content={<ChartTooltipContent />} />
         {showLegend && <ChartLegend content={<ChartLegendContent />} />}
         {series.map((s) => (

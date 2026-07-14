@@ -9,7 +9,7 @@
   border-radius: var(--radius-xl);
   padding: 16px 18px;
   border: 1.5px solid transparent;
-  transition: border-color 150ms, transform 150ms;
+  transition: border-color 150ms, transform 150ms; /* 150ms = motion.fast — lockstep */
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;

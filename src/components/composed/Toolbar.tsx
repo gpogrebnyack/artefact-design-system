@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Toolbar as RadixToolbar } from "radix-ui"
 import { Flex } from "@/foundation"
-import { color, radius, spacing } from "@/foundation"
+import { color, radius, spacing, type as typeScale } from "@/foundation"
 import "./Toolbar.css"
 
 /*
@@ -118,7 +118,7 @@ export function ToolbarToggleItem({
         border: "none",
         borderRadius: radius.pill,
         padding: `${spacing.xs}px ${spacing.md}px`,
-        fontSize: 14,
+        fontSize: typeScale.caption.size,
         cursor: "pointer",
       }}
     >

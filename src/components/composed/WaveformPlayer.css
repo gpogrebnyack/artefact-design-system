@@ -46,7 +46,7 @@
   bottom: -4px;
   border-radius: 6px;
   opacity: 0.08;
-  transition: opacity 150ms;
+  transition: opacity 150ms; /* 150ms = motion.fast — lockstep */
 }
 .artefact-wave-mark--accent {
   background: var(--brand-accent);
@@ -95,7 +95,7 @@
   transform: translateX(-50%);
   background: var(--foreground);
   color: var(--background);
-  font-size: 11px;
+  font-size: 12px; /* = type.footnote (source had an off-scale 11px — normalized) */
   font-weight: 600;
   padding: 3px 10px;
   border-radius: 999px;
@@ -108,7 +108,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 14px;
+  font-size: 14px; /* = type.caption — CSS can't import TS, keep in lockstep */
 }
 .artefact-wave-play {
   all: unset;

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { color } from "@/foundation"
+import { color, type as typeScale } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
 import type { SemanticTone } from "./SemanticTone"
 
@@ -32,7 +32,7 @@ export function ScorePill({ value, tone, trend }: ScorePillProps) {
         minWidth: 32,
         borderRadius: 999,
         padding: "0 10px",
-        fontSize: 16,
+        fontSize: typeScale.body.size,
         fontWeight: 600,
         backgroundColor: color[`${tone}Soft`],
         color: color[`${tone}SoftForeground`],

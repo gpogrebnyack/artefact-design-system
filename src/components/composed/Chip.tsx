@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from "react"
-import { Surface, color } from "@/foundation"
+import { Surface, color, type as typeScale } from "@/foundation"
 import "./Chip.css"
 
 /*
@@ -21,7 +21,7 @@ export function Chip({ children, style, ...props }: ButtonHTMLAttributes<HTMLBut
       style={{
         border: "none",
         cursor: "pointer",
-        fontSize: 16,
+        fontSize: typeScale.body.size,
         fontWeight: 500,
         color: color.foreground,
         padding: "8px 14px",

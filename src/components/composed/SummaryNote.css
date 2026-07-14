@@ -4,7 +4,7 @@
  * static highlights must not pretend to be buttons.
  */
 button.artefact-summary-stat {
-  transition: filter 150ms, box-shadow 150ms;
+  transition: filter 150ms, box-shadow 150ms; /* 150ms = motion.fast — lockstep */
 }
 button.artefact-summary-stat:hover {
   filter: brightness(0.96);

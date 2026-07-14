@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Box, color } from "@/foundation"
+import { Box, color, type as typeScale } from "@/foundation"
 
 /*
  * MessageBubble — Components tier (Foundation Box + tokens). Found missing
@@ -18,7 +18,7 @@ export function MessageBubble({ from, children }: { from: "user" | "bot"; childr
         alignSelf: isUser ? "flex-end" : "flex-start",
         background: isUser ? color.foreground : color.secondary,
         color: isUser ? color.background : color.foreground,
-        fontSize: 16,
+        fontSize: typeScale.body.size,
         lineHeight: 1.55,
         borderBottomRightRadius: isUser ? 5 : undefined,
         borderBottomLeftRadius: isUser ? undefined : 5,

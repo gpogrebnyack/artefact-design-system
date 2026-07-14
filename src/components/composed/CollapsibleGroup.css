@@ -14,7 +14,7 @@
   border-radius: 10px;
   padding: 4px 8px;
   margin: -4px -8px;
-  transition: background 150ms;
+  transition: background 150ms; /* 150ms = motion.fast — lockstep */
 }
 .artefact-collapsible-group-head:hover {
   background: rgba(255, 255, 255, 0.4);

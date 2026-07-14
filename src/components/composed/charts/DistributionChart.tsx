@@ -1,7 +1,7 @@
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
 } from "recharts"
-import { color } from "@/foundation"
+import { color, type as typeScale } from "@/foundation"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 
 /*
@@ -41,7 +41,7 @@ export function DistributionChart({ groups, rowHeight = 40 }: { groups: Distribu
       <BarChart data={data} layout="vertical" margin={{ left: 0, right: 12, top: 4, bottom: 4 }}>
         <CartesianGrid horizontal={false} stroke={color.input} />
         <XAxis type="number" domain={[0, 100]} hide />
-        <YAxis type="category" dataKey="name" tickLine={false} axisLine={false} width={130} fontSize={12} />
+        <YAxis type="category" dataKey="name" tickLine={false} axisLine={false} width={130} fontSize={typeScale.footnote.size} />
         <ChartTooltip
           content={
             <ChartTooltipContent

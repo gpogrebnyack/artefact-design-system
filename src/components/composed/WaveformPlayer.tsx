@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { color } from "@/foundation"
+import { color, type as typeScale } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
 import "./WaveformPlayer.css"
 
@@ -189,7 +189,7 @@ export const WaveformPlayer = forwardRef<WaveformPlayerHandle, WaveformPlayerPro
             <Icon name={playing ? "pause" : "play"} size={26} weight="fill" />
           </button>
           <span
-            style={{ fontVariantNumeric: "tabular-nums", fontSize: 14, color: color.mutedForeground }}
+            style={{ fontVariantNumeric: "tabular-nums", fontSize: typeScale.caption.size, color: color.mutedForeground }}
           >
             {fmt(current)} / {fmt(duration)}
           </span>

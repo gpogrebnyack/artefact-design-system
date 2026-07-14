@@ -8,11 +8,11 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 14px; /* = type.caption — CSS can't import TS, keep in lockstep */
   font-weight: 500;
   color: var(--foreground);
   cursor: pointer;
-  transition: color 150ms;
+  transition: color 150ms; /* 150ms = motion.fast — lockstep */
 }
 .artefact-spark-link:hover {
   color: var(--brand-accent);
