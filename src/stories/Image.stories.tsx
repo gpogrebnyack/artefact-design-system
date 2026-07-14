@@ -1,18 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Image } from '@/primitives/Image'
-import { color, radius } from '@/foundation'
+import { Flex, color, radius } from '@/foundation'
+import { Text } from '@/primitives/Text'
 
-// Inline SVG data URIs — real, loadable "photos" with no external request.
-const PORTRAIT =
-  'data:image/svg+xml;utf8,' +
-  encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">' +
-      '<rect width="200" height="200" fill="#c9a26b"/>' +
-      '<circle cx="100" cy="80" r="40" fill="#f6ead6"/>' +
-      '<circle cx="100" cy="195" r="65" fill="#f6ead6"/>' +
-    '</svg>'
-  )
-
+// Inline SVG data URI — a real, loadable «illustration» with no external request.
 const LANDSCAPE =
   'data:image/svg+xml;utf8,' +
   encodeURIComponent(
@@ -23,27 +14,33 @@ const LANDSCAPE =
     '</svg>'
   )
 
+/*
+ * The page has ONE story because the primitive has ONE axis of its own:
+ * `fit`. Everything else passes through — radius to the Foundation scale
+ * (documented in Foundation/Radius), loading to the native attribute
+ * (lazy by default), alt is enforced by the required prop type. A missing-
+ * image fallback is deliberately NOT here: the person-photo case belongs
+ * to Avatar's fallback machinery, and no source page needs one for
+ * illustrations — «не строим наперёд».
+ */
 const meta: Meta<typeof Image> = { title: 'Primitives/Image', component: Image }
 export default meta
 type Story = StoryObj<typeof Image>
 
-// A square profile photo, cropped to fill regardless of source aspect ratio.
-export const Portrait: Story = {
+// Same image, same box — fit is the only thing changing.
+export const Fit: Story = {
   render: () => (
-    <Image src={PORTRAIT} alt="Фото сотрудника Татьяны Климовой" width={96} height={96} fit="cover" radius="lg" />
+    <Flex gap="lg" align="flex-start">
+      {(['cover', 'contain'] as const).map((fit) => (
+        <Flex key={fit} direction="column" gap="xs" align="center">
+          <div style={{ width: 180, height: 180, background: color.muted, borderRadius: radius.lg, overflow: 'hidden' }}>
+            <Image src={LANDSCAPE} alt="" width="100%" height="100%" fit={fit} />
+          </div>
+          <Text as="span" size="footnote" color={color.mutedForeground}>
+            {fit === 'cover' ? 'cover — кроп до заполнения' : 'contain — вписывается целиком'}
+          </Text>
+        </Flex>
+      ))}
+    </Flex>
   ),
 }
-
-// A wide illustration, contained (not cropped) inside its box — e.g. an
-// EmptyState or Hero image slot further up the hierarchy.
-export const Contain: Story = {
-  render: () => (
-    <div style={{ width: 320, height: 180, background: color.muted, borderRadius: radius.lg }}>
-      <Image src={LANDSCAPE} alt="Иллюстрация: адрес Большевистская 35" width="100%" height="100%" fit="contain" />
-    </div>
-  ),
-}
-
-/* No RadiusSteps story: `radius` is a pass-through to the Foundation scale
- * (already visible on Portrait) — the scale itself is documented ONCE, in
- * Foundation/Radius. Scale-prop pass-throughs don't get their own stories. */
