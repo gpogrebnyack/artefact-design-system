@@ -6,7 +6,7 @@ const meta: Meta<typeof MessageBubble> = { title: 'Components/Chat/MessageBubble
 export default meta
 type Story = StoryObj<typeof MessageBubble>
 
-export const Conversation: Story = {
+export const UserAndBot: Story = {
   render: () => (
     <Stack gap="sm" style={{ width: 360 }}>
       <MessageBubble from="user">Кто требует внимания?</MessageBubble>

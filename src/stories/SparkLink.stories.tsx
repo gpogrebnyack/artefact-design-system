@@ -13,7 +13,7 @@ const meta: Meta<typeof SparkLink> = {
 export default meta
 type Story = StoryObj<typeof SparkLink>
 
-export const Examples: Story = {
+export const Default: Story = {
   render: () => (
     <Stack gap="md">
       <SparkLink onClick={() => {}}>Сколько недозаработали?</SparkLink>

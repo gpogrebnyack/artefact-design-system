@@ -22,7 +22,7 @@ export const Default: Story = {
   args: { values: [4, 8, 14, 10, 6, 12, 16, 9, 5, 11, 7, 13] },
 }
 
-export const DialogRow: Story = {
+export const InRow: Story = {
   render: () => (
     <Flex align="center" gap="base" style={{ width: 420 }}>
       <Button variant="ghost" size="icon-sm" aria-label="Слушать">

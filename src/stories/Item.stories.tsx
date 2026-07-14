@@ -37,7 +37,7 @@ const DIALOGS = [
   { text: '«Карта или наличные?» — «Карта»', time: '41 мин' },
 ]
 
-export const DialogList: Story = {
+export const Group: Story = {
   render: () => (
     <ItemGroup className="w-96">
       {DIALOGS.map((d, i) => (

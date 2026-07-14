@@ -18,7 +18,7 @@ const meta: Meta<typeof Empty> = {
 export default meta
 type Story = StoryObj<typeof Empty>
 
-export const NoDataForPeriod: Story = {
+export const Default: Story = {
   render: () => (
     <Empty className="w-96">
       <EmptyHeader>
@@ -34,7 +34,7 @@ export const NoDataForPeriod: Story = {
   ),
 }
 
-export const NobodyAssignedYet: Story = {
+export const WithAction: Story = {
   render: () => (
     <Empty className="w-96">
       <EmptyHeader>

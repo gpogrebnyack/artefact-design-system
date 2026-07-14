@@ -6,7 +6,7 @@ const meta: Meta<typeof DonutChart> = { title: 'Components/Chart/Donut', compone
 export default meta
 type Story = StoryObj<typeof DonutChart>
 
-export const AccessBreakdown: Story = {
+export const Default: Story = {
   args: {
     data: [
       { key: 'granted', label: 'Доступ выдан', value: 62, color: color.green },

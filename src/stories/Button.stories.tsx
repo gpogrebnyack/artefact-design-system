@@ -15,7 +15,7 @@ export const Default: Story = { args: { children: 'Присвоить имя' } 
 // the rare orange primary (one per screen) — color.accent/accentForeground/
 // accentHover. Hover is color-mix() defined once in index.css (see
 // --brand-accent-hover) — read here, never recomputed, so it can't drift.
-export const OrangePrimary: Story = {
+export const AccentCTA: Story = {
   render: () => (
     <Button
       style={{ background: color.accent, color: color.accentForeground }}

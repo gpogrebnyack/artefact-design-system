@@ -43,6 +43,6 @@ function Demo() {
   )
 }
 
-export const Chronology: Story = {
+export const Strip: Story = {
   render: () => <Demo />,
 }

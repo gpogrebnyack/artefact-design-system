@@ -17,7 +17,7 @@ const LOC_OPTIONS = [
 ]
 
 // dashboard-prototype.html's table-toolbar filter row — two clearable pills.
-export const Toolbar: Story = {
+export const InToolbar: Story = {
   render: () => {
     function Demo() {
       const [barista, setBarista] = useState<string | undefined>()

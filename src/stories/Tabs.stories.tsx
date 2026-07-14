@@ -8,7 +8,7 @@ const meta: Meta<typeof Tabs> = {
 export default meta
 type Story = StoryObj<typeof Tabs>
 
-export const Periods: Story = {
+export const Default: Story = {
   render: () => (
     <Tabs defaultValue="week" className="w-80">
       <TabsList>

@@ -10,7 +10,7 @@ const meta: Meta = { title: 'Components/Toaster' }
 export default meta
 type Story = StoryObj
 
-export const VoiceTagged: Story = {
+export const Success: Story = {
   render: () => (
     <>
       <Toaster position="top-center" />
@@ -21,7 +21,7 @@ export const VoiceTagged: Story = {
   ),
 }
 
-export const ProfileCreated: Story = {
+export const Default: Story = {
   render: () => (
     <>
       <Toaster position="top-center" />
@@ -32,7 +32,7 @@ export const ProfileCreated: Story = {
   ),
 }
 
-export const AccessRevoked: Story = {
+export const Error: Story = {
   render: () => (
     <>
       <Toaster position="top-center" />

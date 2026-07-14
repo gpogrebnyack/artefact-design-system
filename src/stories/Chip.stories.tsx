@@ -7,7 +7,7 @@ export default meta
 type Story = StoryObj<typeof Chip>
 
 // komanda.html's assistant-dock suggestion chips, verbatim
-export const SuggestionRow: Story = {
+export const Row: Story = {
   render: () => (
     <Flex gap="sm">
       <Chip>Кто требует внимания?</Chip>

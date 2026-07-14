@@ -9,7 +9,7 @@ const meta: Meta<typeof Pagination> = { title: 'Components/Pagination', componen
 export default meta
 type Story = StoryObj<typeof Pagination>
 
-export const AddressPages: Story = {
+export const Default: Story = {
   render: () => (
     <Pagination>
       <PaginationContent>

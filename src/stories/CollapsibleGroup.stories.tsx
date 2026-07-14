@@ -25,7 +25,7 @@ function DemoCard({ label }: { label: string }) {
   )
 }
 
-export const AddressGroup: Story = {
+export const Default: Story = {
   render: () => (
     <CollapsibleGroup
       title="Советская 5"

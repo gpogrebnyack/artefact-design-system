@@ -10,7 +10,7 @@ const meta: Meta<typeof DropdownMenu> = { title: 'Components/DropdownMenu', comp
 export default meta
 type Story = StoryObj<typeof DropdownMenu>
 
-export const RowActions: Story = {
+export const Default: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

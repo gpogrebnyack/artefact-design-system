@@ -7,7 +7,7 @@ type Story = StoryObj<typeof DistributionChart>
 
 // dashboard-prototype.html's stopmenu data — same content the old
 // hand-rolled SegmentedBar used, now a real Recharts stacked bar.
-export const StopmenuGroups: Story = {
+export const Default: Story = {
   args: {
     groups: [
       {

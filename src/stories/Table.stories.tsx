@@ -16,7 +16,7 @@ const ROSTER = [
   { name: 'Максим Орлов', address: 'Димитрова 2', score: '6,0', delta: '+0,1' },
 ]
 
-export const Roster: Story = {
+export const Default: Story = {
   render: () => (
     <Table className="max-w-2xl">
       <TableCaption>Состав команды за неделю 17–23 июня</TableCaption>

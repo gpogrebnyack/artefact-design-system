@@ -31,7 +31,7 @@ const DIALOGS = [
   '«Повторить прошлый заказ?» — «Да»',
 ]
 
-export const DialogList: Story = {
+export const Default: Story = {
   render: () => (
     <ScrollArea style={{ height: 220, width: 420 }}>
       <ItemGroup>

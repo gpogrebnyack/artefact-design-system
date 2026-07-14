@@ -15,7 +15,7 @@ const meta: Meta<typeof ScoreHeatmap> = {
 export default meta
 type Story = StoryObj<typeof ScoreHeatmap>
 
-export const CriteriaRow: Story = {
+export const Default: Story = {
   render: () => (
     <Surface variant="glass" radius="xl" style={{ padding: '16px 20px', maxWidth: 840 }}>
       <ScoreHeatmap

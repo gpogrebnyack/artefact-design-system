@@ -15,7 +15,7 @@ const meta: Meta = { title: 'Components/Toolbar' }
 export default meta
 type Story = StoryObj
 
-export const PeriodAndActions: Story = {
+export const GroupsWithActions: Story = {
   render: () => {
     const [period, setPeriod] = useState('week')
     return (

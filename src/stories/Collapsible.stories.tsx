@@ -71,6 +71,6 @@ function AddressGroupDemo() {
   )
 }
 
-export const AddressGroup: Story = {
+export const Default: Story = {
   render: () => <AddressGroupDemo />,
 }

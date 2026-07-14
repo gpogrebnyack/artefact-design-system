@@ -15,7 +15,7 @@ const meta: Meta<typeof SummaryNote> = {
 export default meta
 type Story = StoryObj<typeof SummaryNote>
 
-export const TeamSummary: Story = {
+export const ClickableStats: Story = {
   render: () => (
     <SummaryNote label="Сводка команды">
       Сильнее всех команда <SummaryStat tone="green" onClick={() => {}}>Большевистская 35</SummaryStat>,
