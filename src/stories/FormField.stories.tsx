@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 // A Components-tier composite: label + control + description/error, built on
 // the Field primitives (shadcn) wrapped around the Input/Select primitives.
-const meta: Meta = { title: 'Components/Field' }
+const meta: Meta = { title: 'Components/FormField' }
 export default meta
 type Story = StoryObj
 
