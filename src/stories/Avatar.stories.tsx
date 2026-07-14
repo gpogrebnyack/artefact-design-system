@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Flex } from '@/foundation'
+import { Flex, color } from '@/foundation'
+import { Text } from '@/primitives/Text'
 import { SemanticAvatarFallback } from '@/components/composed/SemanticTone'
 
 const meta: Meta<typeof Avatar> = {
@@ -35,20 +36,27 @@ export const WithImage: Story = {
   ),
 }
 
-// Broken src → Image errors, Fallback initials stay (the whole point of Avatar).
-export const BrokenImageFallsBack: Story = {
+/* Both fallback paths on ONE page — they render identically (МК), and two
+ * indistinguishable sidebar entries read as a duplicate (caught in review).
+ * They still exercise DIFFERENT machinery: a broken src goes through
+ * Radix's load-error handling (the whole point of Avatar — this is the
+ * case that catches a broken vendored update), no-image skips loading
+ * entirely (the "no photo in data" composition). */
+export const Fallbacks: Story = {
   render: () => (
-    <Avatar size="lg">
-      <AvatarImage src="https://invalid.example/nope.jpg" alt="" />
-      <AvatarFallback>МК</AvatarFallback>
-    </Avatar>
-  ),
-}
-
-// No image → pure fallback initials.
-export const FallbackOnly: Story = {
-  render: () => (
-    <Avatar size="lg"><AvatarFallback>МК</AvatarFallback></Avatar>
+    <Flex gap="lg" align="center">
+      <Flex direction="column" gap="xs" align="center">
+        <Avatar size="lg">
+          <AvatarImage src="https://invalid.example/nope.jpg" alt="" />
+          <AvatarFallback>МК</AvatarFallback>
+        </Avatar>
+        <Text as="span" size="footnote" color={color.mutedForeground}>битый src → фолбэк</Text>
+      </Flex>
+      <Flex direction="column" gap="xs" align="center">
+        <Avatar size="lg"><AvatarFallback>МК</AvatarFallback></Avatar>
+        <Text as="span" size="footnote" color={color.mutedForeground}>без фото → сразу фолбэк</Text>
+      </Flex>
+    </Flex>
   ),
 }
 
