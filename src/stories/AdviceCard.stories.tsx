@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AdviceCard } from '@/components/composed/AdviceCard'
 
+/*
+ * Two variants by design: with a number and without. Without = the value
+ * block is absent entirely (an earlier story faked it with value="—"
+ * because the prop used to be required). `tone` is an independent axis —
+ * accent stays the rare genuine-highlight case.
+ */
 const meta: Meta<typeof AdviceCard> = { title: 'Components/Card/Advice', component: AdviceCard }
 export default meta
 type Story = StoryObj<typeof AdviceCard>
 
-// dashboard-prototype.html's upsell-insight — the common case, ink icon
-export const UpsellPotential: Story = {
+export const WithValue: Story = {
   args: {
     icon: 'lightbulb',
     value: '60–90',
@@ -15,12 +20,10 @@ export const UpsellPotential: Story = {
   },
 }
 
-// dashboard-prototype.html's conv-insight — the rare accent-tone variant
-export const ConversionRecord: Story = {
+export const WithoutValue: Story = {
   args: {
     icon: 'chart-line-up',
     tone: 'accent',
-    value: '—',
     text: 'Рекорд upsell за период',
     note: 'Сначала закрывайте визит, потом наращивайте допродажи',
   },

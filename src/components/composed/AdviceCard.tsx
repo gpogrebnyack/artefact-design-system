@@ -16,7 +16,10 @@ export type AdviceCardProps = {
   icon: IconName
   /** ink (default, most advice) or accent (rare — the source reserves this for a genuine highlight, e.g. a new record) */
   tone?: "ink" | "accent"
-  value: ReactNode
+  /** optional — an advice without a number renders NO value block at all
+   *  (never a "—" placeholder; the dash was a story hack around this prop
+   *  being required, caught in review) */
+  value?: ReactNode
   text: ReactNode
   note?: ReactNode
 }
@@ -28,7 +31,7 @@ export function AdviceCard({ icon, tone = "ink", value, text, note }: AdviceCard
       <Icon name={icon} size={40} color={iconColor} />
       {/* big number: regular weight + tight line-height, per DESIGN.md's
           own rule for large numbers — reuses the `display` type step. */}
-      <Text as="span" size="display" weight={400}>{value}</Text>
+      {value != null && <Text as="span" size="display" weight={400}>{value}</Text>}
       <Text as="span" size="caption" style={{ opacity: 0.72 }}>{text}</Text>
       {note && (
         <Text as="span" size="footnote" style={{ opacity: 0.68, marginTop: 2 }}>{note}</Text>
