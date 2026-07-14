@@ -18,14 +18,6 @@
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
     --color-chart-8: var(--chart-8);
     --color-chart-7: var(--chart-7);
     --color-chart-6: var(--chart-6);
@@ -99,14 +91,6 @@
     --chart-7: #99d6ff;
     --chart-8: #c952de;
     --radius: 0.875rem;                        /* 14px = our --radius */
-    --sidebar: rgba(255, 255, 255, 0.6);
-    --sidebar-foreground: #2c2c2a;
-    --sidebar-primary: #2c2c2a;
-    --sidebar-primary-foreground: #f9f6f0;
-    --sidebar-accent: #f1ece1;
-    --sidebar-accent-foreground: #2c2c2a;
-    --sidebar-border: transparent;
-    --sidebar-ring: #f75506;
 
     /* Komanda's own semantic tokens with NO shadcn-contract equivalent —
        orange/green/warn/plum. (Paper-white, cream-2, and ink-2 already exist
@@ -226,14 +210,6 @@
     --chart-3: oklch(0.439 0 0);
     --chart-4: oklch(0.371 0 0);
     --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {

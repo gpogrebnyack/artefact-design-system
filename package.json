@@ -30,7 +30,7 @@
     "build:js": "tsup",
     "build:css": "tailwindcss -i src/index.css -o dist/style.css --minify && mkdir -p dist/fonts && cp src/fonts/*.woff2 dist/fonts/",
     "build": "npm run lint:design && npm run check:context && npm run typecheck && npm run build:js && npm run build:css",
-    "lint:design": "design.md lint context/DESIGN.md",
+    "lint:design": "node scripts/lint-design-summary.mjs",
     "check:context": "node scripts/check-context-sync.mjs",
     "typecheck": "tsc --noEmit",
     "dev:css": "tailwindcss -i src/index.css -o dist/style.css --watch",
