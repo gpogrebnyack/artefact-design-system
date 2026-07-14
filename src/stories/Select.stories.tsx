@@ -10,7 +10,10 @@ const meta: Meta<typeof Select> = {
 export default meta
 type Story = StoryObj<typeof Select>
 
-export const AddressSelect: Story = {
+/* The two stories are STATES, not datasets (the old AddressSelect/
+ * RoleSelect names hid it): empty trigger showing the placeholder vs a
+ * preselected value — same naming as Input's Default/WithValue. */
+export const Default: Story = {
   render: () => (
     <Select>
       <SelectTrigger className="w-[200px]"><SelectValue placeholder="Адрес" /></SelectTrigger>
@@ -23,7 +26,7 @@ export const AddressSelect: Story = {
   ),
 }
 
-export const RoleSelect: Story = {
+export const WithValue: Story = {
   render: () => (
     <Select defaultValue="staff">
       <SelectTrigger className="w-[220px]"><SelectValue placeholder="Роль" /></SelectTrigger>

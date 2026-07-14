@@ -26,22 +26,15 @@ function Option({ value, children, disabled }: { value: string; children: string
   )
 }
 
-export const RoleSelect: Story = {
+/* One example dataset is enough — stories differ by STATE, not by content
+ * (an earlier RoleSelect/PeriodSelect pair differed only in data; caught
+ * in review). Selected + unselected are both visible here by nature. */
+export const Default: Story = {
   render: () => (
     <RadioGroup defaultValue="staff" style={{ width: 256 }}>
       <Option value="staff">Сотрудник</Option>
       <Option value="point">Управляющий точкой</Option>
       <Option value="network">Управляющий сетью</Option>
-    </RadioGroup>
-  ),
-}
-
-export const PeriodSelect: Story = {
-  render: () => (
-    <RadioGroup defaultValue="week" style={{ width: 192 }}>
-      <Option value="month">Месяц</Option>
-      <Option value="week">Неделя</Option>
-      <Option value="day">День</Option>
     </RadioGroup>
   ),
 }
