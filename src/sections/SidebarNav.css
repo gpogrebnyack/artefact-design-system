@@ -28,7 +28,7 @@
      own `.sidebar{margin:8px}` verbatim — the sidebar owns this itself rather
      than relying on whatever shell wraps it (a page hand-rolling its own
      wrapper padding instead of using AppShell is exactly what drifted from
-     the source's real 8px into 32px — see Foundation/AppShell). */
+     the source's real 8px into 32px — see Foundation/Layout/AppShell). */
   margin: 8px;
   height: calc(100vh - 16px);
   position: sticky;

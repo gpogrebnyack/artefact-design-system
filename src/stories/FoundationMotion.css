@@ -1,0 +1,14 @@
+/* Motion gallery demo — :hover can't be expressed inline. The dot slides
+   on row hover using the row's own duration/easing tokens. */
+.artefact-motion-row {
+  padding: 6px 0;
+}
+.artefact-motion-dot {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  transition-property: transform;
+}
+.artefact-motion-row:hover .artefact-motion-dot {
+  transform: translateX(120px);
+}

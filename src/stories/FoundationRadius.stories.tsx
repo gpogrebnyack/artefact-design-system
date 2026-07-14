@@ -15,7 +15,10 @@ export const RadiusScale: Story = {
       <Flex gap="md">
         {(Object.keys(radius) as (keyof typeof radius)[]).map((name) => (
           <Flex key={name} direction="column" align="center" gap="xs">
-            <Box width={64} radius={name} style={{ height: 64, background: color.card, outline: `1px solid ${color.border}` }} />
+            {/* color.input — the visible hairline; color.border is transparent
+                by rule and left this outline invisible (same demo bug the
+                Box story shipped with) */}
+            <Box width={64} radius={name} style={{ height: 64, background: color.card, outline: `1px solid ${color.input}` }} />
             <span className="text-xs text-muted-foreground">{name}</span>
           </Flex>
         ))}

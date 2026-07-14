@@ -33,6 +33,9 @@ export const PageAndSurface: Story = {
         {/* ink3 lives here, not with the semantic roles below — it's a
             neutral text tone (no-data states), not a status color. */}
         <Swatch name="ink3" value={color.ink3} fg={color.secondary} />
+        {/* input — the ONE visible hairline (border is transparent by rule);
+            separators, chart grids and demo outlines all reach for this */}
+        <Swatch name="input" value={color.input} fg={color.foreground} />
       </Flex>
     </Container>
   ),
@@ -45,8 +48,8 @@ export const PageAndSurface: Story = {
 // pale badge fill, paired with the base color as its own text (the pattern
 // Avatar's ToneGreen/ToneWarn already use).
 function RoleRow({
-  name, base, foreground, hover, soft, softForeground,
-}: { name: string; base: string; foreground: string; hover: string; soft: string; softForeground: string }) {
+  name, base, foreground, hover, soft, softForeground, softStrong,
+}: { name: string; base: string; foreground: string; hover: string; soft: string; softForeground: string; softStrong?: string }) {
   return (
     <Flex direction="column" gap="xs">
       <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{name}</span>
@@ -69,6 +72,17 @@ function RoleRow({
           </Box>
           <span className="text-xs text-muted-foreground">soft</span>
         </Flex>
+        {/* soft-strong exists only where data sits on the tint (accent/
+            green/warn — ScoreHeatmap's cells); 16px digits to show WHY:
+            the plain soft-foreground fails contrast at data sizes */}
+        {softStrong && (
+          <Flex direction="column" gap="xs" align="center">
+            <Box width={84} style={{ height: 44, background: soft, color: softStrong, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+              <span style={{ fontSize: 16, fontWeight: 500, fontVariantNumeric: 'tabular-nums' }}>0/4</span>
+            </Box>
+            <span className="text-xs text-muted-foreground">soft-strong</span>
+          </Flex>
+        )}
       </Flex>
     </Flex>
   )
@@ -98,6 +112,7 @@ export const BrandAndSemantic: Story = {
             hover={color[`${role}Hover`]}
             soft={color[`${role}Soft`]}
             softForeground={color[`${role}SoftForeground`]}
+            softStrong={(color as Record<string, string>)[`${role}SoftStrong`]}
           />
         ))}
 
@@ -145,9 +160,18 @@ export const BrandAndSemantic: Story = {
 export const Charts: Story = {
   render: () => (
     <Container size={900} p="xl">
-      <Flex gap="md">
-        {chartKeys.map((key) => <Swatch key={key} name={key} value={color[key]} />)}
-      </Flex>
+      <Stack gap="lg">
+        <Flex gap="md">
+          {chartKeys.map((key) => <Swatch key={key} name={key} value={color[key]} />)}
+        </Flex>
+        {/* data-viz companions outside the chartN pattern: the quiet chart
+            backdrop and the waveform's idle-bar sand (played bars recolor
+            to accent — see WaveformPlayer) */}
+        <Flex gap="md">
+          <Swatch name="chartSurface" value={color.chartSurface} fg={color.foreground} />
+          <Swatch name="sand" value={color.sand} fg={color.foreground} />
+        </Flex>
+      </Stack>
     </Container>
   ),
 }
