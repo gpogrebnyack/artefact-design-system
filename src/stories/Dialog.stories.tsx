@@ -6,11 +6,41 @@ import {
   DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 
+/*
+ * Dialog — the NEUTRAL modal (closes on Esc / outside click). A blocking
+ * confirm for a destructive action is NOT this component: that's
+ * AlertDialog (Components/AlertDialog — no outside-click dismiss, and the
+ * one legitimate home of a danger-filled button, per COMPONENTS.md). An
+ * earlier story here taught exactly that anti-pattern ("Забрать доступ" as
+ * a Dialog) — removed.
+ */
 const meta: Meta = { title: 'Primitives/Dialog' }
 export default meta
 type Story = StoryObj
 
-export const NameEmployeeDialog: Story = {
+// Plain title / description / actions — no form.
+export const Default: Story = {
+  render: () => (
+    <Dialog>
+      <DialogTrigger asChild><Button variant="secondary">Как считается оценка?</Button></DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Как считается оценка</DialogTitle>
+          <DialogDescription>
+            Средняя по критериям за выбранный период: приветствие, выявление потребностей,
+            допродажи, карта лояльности, завершение и коммуникация.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button>Понятно</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+// Dialog carrying a form control (the assign-name modal from komanda.html).
+export const WithForm: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild><Button>Указать имя</Button></DialogTrigger>
@@ -23,26 +53,6 @@ export const NameEmployeeDialog: Story = {
         <DialogFooter>
           <Button variant="secondary">Отмена</Button>
           <Button>Присвоить имя</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
-}
-
-export const RemoveAccessConfirm: Story = {
-  render: () => (
-    <Dialog>
-      <DialogTrigger asChild><Button variant="destructive">Забрать доступ</Button></DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Забрать доступ у Кирилла?</DialogTitle>
-          <DialogDescription>
-            Сотрудник потеряет доступ в приложение на Большевистской 35. Действие можно отменить позже.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="secondary">Отмена</Button>
-          <Button variant="destructive">Забрать доступ</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
