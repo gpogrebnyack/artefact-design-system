@@ -152,7 +152,7 @@
   height: 120px;
   left: 16%;
   top: -74px;
-  background: #ffb75f;
+  background: #ffb75f; /* the glow's own warm tint — exists nowhere else, deliberately NOT a token (bespoke organism) */
   opacity: 0.7;
   animation: assistant-blob-a 13s ease-in-out infinite alternate;
 }
@@ -170,7 +170,7 @@
   height: 150px;
   left: 72%;
   top: -88px;
-  background: #ffd4bf;
+  background: #ffd4bf; /* same: glow-only pale tint, not a token */
   opacity: 0.8;
   animation: assistant-blob-c 15s ease-in-out infinite alternate;
 }

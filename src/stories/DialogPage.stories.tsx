@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useRef, useState, type ReactNode } from 'react'
-import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color } from '@/foundation'
+import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color, type as typeScale } from '@/foundation'
 import { Icon, type IconName } from '@/primitives/Icon'
 import { Text } from '@/primitives/Text'
 import { Separator } from '@/components/ui/separator'
@@ -196,7 +196,7 @@ function DialogPageDemo() {
                   <button
                     type="button"
                     className="artefact-focus-ring artefact-pressable"
-                    style={{ cursor: 'pointer', fontSize: 14, padding: '3px 11px' }}
+                    style={{ cursor: 'pointer', fontSize: typeScale.caption.size, padding: '3px 11px' }}
                     onClick={() => ask('Кому принадлежит этот голос?', ANS.voice)}
                   >
                     <Icon name="target" size={14} /> Назначить профиль

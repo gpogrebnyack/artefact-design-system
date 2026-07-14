@@ -33,7 +33,8 @@ const meta: Meta<typeof SidebarNav> = {
 export default meta
 type Story = StoryObj<typeof SidebarNav>
 
-export const TeamActive: Story = { args: { active: "team" } }
-export const HomeActive: Story = { args: { active: "home" } }
-export const OrdersActive: Story = { args: { active: "orders" } }
+/* One Default is enough — an earlier TeamActive/HomeActive/OrdersActive
+ * trio walked the `active` prop's values (the dataset sin): the highlight
+ * state reads with ANY active item. */
+export const Default: Story = { args: { active: "team" } }
 export const WithoutClientChip: Story = { args: { active: "team", clientLabel: undefined } }
