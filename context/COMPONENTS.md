@@ -48,7 +48,7 @@
 
 ### shadcn/vendored (стандартный API — см. shadcn-документацию)
 
-`Avatar`, `Badge`, `Button`, `ButtonGroup`/`ButtonGroupText`/`ButtonGroupSeparator`, `Checkbox`, `Collapsible`, `Input`, `Textarea`, `Label`, `Popover`, `RadioGroup`, `ScrollArea`, `Select`, `Skeleton`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `NavigationMenu`, `Progress`, `Separator`, `Spinner`, `Dialog`.
+`Avatar`, `Badge`, `Button`, `ButtonGroup`/`ButtonGroupText`/`ButtonGroupSeparator`, `Checkbox`, `Collapsible`, `Input`, `Textarea`, `Label`, `Popover`, `RadioGroup`, `ScrollArea`, `Select`, `Skeleton`, `Switch`, `Toggle`/`ToggleGroup`, `Tooltip`, `Progress`, `Separator`, `Spinner`, `Dialog`.
 
 Заметки по недавно довендоренным:
 - `Skeleton` — загрузочный плейсхолдер. Повторяй ФОРМУ замещаемого контента (круг аватара + две строки), не одну серую простыню.
@@ -166,7 +166,7 @@ Primitives + Foundation, собранные в конкретную повтор
 
 - **Переключение состояния/периода** (Часы/Дни/Недели, вкладкоподобное) → `ToolbarToggleGroup` + `ToolbarToggleItem` (roving focus, aria-состояние «выбрано»); голый примитив под ним — `ToggleGroup`.
 - **Ряд независимых действий-кнопок** (два спаренных icon-баттона, сортировка) → `ButtonGroup` (Primitives) — каждая кнопка делает действие, ничего не «выбрано».
-- **Переход между разделами/страницами** → `NavigationMenu` (Primitives) — настоящие `<a href>` в `<nav>`-ландмарке: URL/history, открытие в новой вкладке, «navigation» для скринридера. Правило одной строкой: **меняешь данные на экране — ToggleGroup, меняешь экран — NavigationMenu**; «абстрактный» ToggleGroup вместо навигации теряет весь контракт ссылки.
+- **Переход между разделами/страницами** → `NavigationMenu` (Components) — настоящие `<a href>` в `<nav>`-ландмарке: URL/history, открытие в новой вкладке, «navigation» для скринридера. Правило одной строкой: **меняешь данные на экране — ToggleGroup, меняешь экран — NavigationMenu**; «абстрактный» ToggleGroup вместо навигации теряет весь контракт ссылки.
 
 | Компонент | Props | Заметки |
 |---|---|---|
@@ -174,7 +174,7 @@ Primitives + Foundation, собранные в конкретную повтор
 
 ### Списки и композиционные оболочки (shadcn/vendored)
 
-`Card` (см. семейство Card), `Empty`, `Tabs`, `Alert`, `AlertDialog`, `DropdownMenu`, `Pagination`, `Table`, `Toaster` (sonner), `Item`. Композиционные оболочки со слотами — поэтому Components, не Primitives. API — см. shadcn-документацию.
+`Card` (см. семейство Card), `Empty`, `Tabs`, `Alert`, `AlertDialog`, `DropdownMenu`, `Pagination`, `Table`, `Toaster` (sonner), `Item`, `NavigationMenu`. Композиционные оболочки со слотами — поэтому Components, не Primitives. Граница с Primitives-vendored: `Dialog`/`Select`/`Popover` остаются примитивами — многочастная разметка, но ОДНО взаимодействие (открыть модалку, выбрать одно, показать флоат); оболочки же структурируют контент. `NavigationMenu` (8 слотов, выпадающие панели, свой viewport) переехал сюда именно по этому критерию — в Primitives он лежал по инерции «vendored = примитив». API — см. shadcn-документацию.
 
 - **`AlertDialog`** — блокирующее подтверждение разрушительного действия. Ровно то место, куда указывает правило про `danger` в `DESIGN.md`: кнопка подтверждения — единственное легитимное место для danger-filled кнопки. Для нейтральных модалок — `Dialog`, не он.
 

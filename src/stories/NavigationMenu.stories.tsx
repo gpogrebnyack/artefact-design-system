@@ -12,7 +12,7 @@ import {
  * thumb: changes the SCREEN → this; changes the data on screen →
  * ToggleGroup (or ToolbarToggleGroup in a toolbar row).
  */
-const meta: Meta<typeof NavigationMenu> = { title: 'Primitives/NavigationMenu', component: NavigationMenu }
+const meta: Meta<typeof NavigationMenu> = { title: 'Components/NavigationMenu', component: NavigationMenu }
 export default meta
 type Story = StoryObj<typeof NavigationMenu>
 
