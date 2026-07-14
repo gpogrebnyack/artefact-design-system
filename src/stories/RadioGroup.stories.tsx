@@ -16,11 +16,11 @@ const meta: Meta<typeof RadioGroup> = {
 export default meta
 type Story = StoryObj<typeof RadioGroup>
 
-function Option({ value, children }: { value: string; children: string }) {
+function Option({ value, children, disabled }: { value: string; children: string; disabled?: boolean }) {
   const id = `rg-${value}`
   return (
-    <Flex align="center" gap="sm" wrap={false}>
-      <RadioGroupItem value={value} id={id} />
+    <Flex align="center" gap="sm" wrap={false} className="group" data-disabled={disabled || undefined}>
+      <RadioGroupItem value={value} id={id} disabled={disabled} />
       <Label htmlFor={id}>{children}</Label>
     </Flex>
   )
@@ -43,5 +43,28 @@ export const PeriodSelect: Story = {
       <Option value="week">Неделя</Option>
       <Option value="day">День</Option>
     </RadioGroup>
+  ),
+}
+
+/* Unchecked/checked need no separate stories — a radio is only meaningful
+ * inside a group (that's why the export is RadioGroup, not Radio), and any
+ * group shows both states at once. Disabled IS a real state to cover:
+ * per-item (an unavailable option among active ones) and the whole group. */
+export const Disabled: Story = {
+  render: () => (
+    <Flex gap="2xl" align="flex-start">
+      <RadioGroup defaultValue="staff" style={{ width: 256 }}>
+        <Option value="staff">Сотрудник</Option>
+        <Option value="point">Управляющий точкой</Option>
+        <Option value="network" disabled>
+          Управляющий сетью — недоступно
+        </Option>
+      </RadioGroup>
+      <RadioGroup defaultValue="week" disabled style={{ width: 192 }}>
+        <Option value="month">Месяц</Option>
+        <Option value="week">Неделя</Option>
+        <Option value="day">День</Option>
+      </RadioGroup>
+    </Flex>
   ),
 }
