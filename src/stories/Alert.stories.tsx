@@ -1,30 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
 
-// shadcn's Alert = the Callout/Banner equivalent (icon + title + text notice).
+/*
+ * Alert — a STATIC notice (title + text), one axis: variant.
+ * What it is NOT (both were taught here before, caught in review):
+ * - the product banner with an action button («Распознано N голосов» +
+ *   «Разметить») — that's the Surface variant="muted" + Button recipe
+ *   (see Pages/Komanda and the Surface row in COMPONENTS.md); an Alert
+ *   with a button inside is a second, competing recipe for the same thing;
+ * - an attention-grade metric notice — «требует внимания» is the ACCENT
+ *   language (DESIGN.md: просевшая метрика — accent, не danger).
+ *   variant="destructive" is for hard errors and destructive outcomes only.
+ */
 const meta: Meta<typeof Alert> = { title: 'Components/Alert', component: Alert }
 export default meta
 type Story = StoryObj<typeof Alert>
 
-// Banner recipe: "Распознано N новых голосов" + action
-export const RecognizedVoices: Story = {
+export const Default: Story = {
   render: () => (
     <Alert className="max-w-md">
-      <AlertTitle>Распознано 3 новых голоса</AlertTitle>
+      <AlertTitle>Запись обрабатывается</AlertTitle>
       <AlertDescription>
-        На Серебренниковской и Советской — присвойте имена, чтобы начать считать работу.
-        <div className="mt-2"><Button size="sm">Разметить голоса</Button></div>
+        Оценка диалога появится в течение часа после смены.
       </AlertDescription>
     </Alert>
   ),
 }
 
-export const Attention: Story = {
+export const Destructive: Story = {
   render: () => (
     <Alert variant="destructive" className="max-w-md">
-      <AlertTitle>Требуют внимания</AlertTitle>
-      <AlertDescription>2 сотрудника с оценкой ниже 5,0 за неделю.</AlertDescription>
+      <AlertTitle>Не удалось получить записи</AlertTitle>
+      <AlertDescription>
+        Точка «Советская 5» не выходит на связь с 9:00 — проверьте питание регистратора.
+      </AlertDescription>
     </Alert>
   ),
 }
