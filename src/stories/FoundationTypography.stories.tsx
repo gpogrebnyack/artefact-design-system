@@ -24,15 +24,17 @@ export const TypeScale: Story = {
 }
 
 /* The system's whole weight/style vocabulary — deliberately tiny: Struve
- * self-hosts ONLY upright 400 and 600. No italic exists (faked slant was
- * swept out — DESIGN.md → Typography), no third weight; emphasis = 600 or
- * size/color, quotes = «» + surface, never a slant. Mirrors the two-weight
- * icon rule (Primitives/Icon → Weights). */
+ * self-hosts upright 400/500/600 (500 landed later from the designer's
+ * .otf — before that every fontWeight:500 silently fell back to 400). No
+ * italic exists (faked slant was swept out — DESIGN.md → Typography);
+ * Light/Bold from the delivery are deliberately NOT wired. Mirrors the
+ * two-weight icon rule (Primitives/Icon → Weights). */
 export const Weights: Story = {
   render: () => (
     <Container size={700} p="xl">
       <Stack gap="sm">
         <div style={{ fontSize: 16, fontWeight: 400 }}>400 — весь обычный текст</div>
+        <div style={{ fontSize: 16, fontWeight: 500 }}>500 — UI-хром: кнопки, чипы, подписи контролов</div>
         <div style={{ fontSize: 16, fontWeight: 600 }}>600 — акцент: имена, заголовки блоков, значения</div>
         <div style={{ fontSize: 16 }}>Курсива нет: цитата — «ёлочки» и подложка, не наклон.</div>
       </Stack>
