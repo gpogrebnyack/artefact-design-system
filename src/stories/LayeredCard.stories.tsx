@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { LayeredCard } from '@/components/composed/LayeredCard'
-import { Grid, Stack, color } from '@/foundation'
+import { Stack, color } from '@/foundation'
 import { Text } from '@/primitives/Text'
 import { TimeTag } from '@/components/composed/TimeTag'
 
@@ -17,9 +17,10 @@ const meta: Meta<typeof LayeredCard> = {
 export default meta
 type Story = StoryObj<typeof LayeredCard>
 
-export const Recommendation: Story = {
+// the component's point: fact on paper + advice on the wash footer
+export const WithFooter: Story = {
   render: () => (
-    <Grid minColWidth={340} gap="md" style={{ maxWidth: 840 }}>
+    <div style={{ maxWidth: 420 }}>
       <LayeredCard
         footer={
           <Stack gap="xs">
@@ -42,9 +43,17 @@ export const Recommendation: Story = {
           </Text>
         </Stack>
       </LayeredCard>
+    </div>
+  ),
+}
+
+// no footer: just the fact on paper inside the tinted frame
+export const WithoutFooter: Story = {
+  render: () => (
+    <div style={{ maxWidth: 420 }}>
       <LayeredCard>
-        <Text as="div" size="body">Без футера — просто факт на бумаге в тонированной рамке.</Text>
+        <Text as="div" size="body">Факт на бумаге в тонированной рамке — совет не требуется.</Text>
       </LayeredCard>
-    </Grid>
+    </div>
   ),
 }

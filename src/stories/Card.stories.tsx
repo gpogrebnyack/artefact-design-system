@@ -8,8 +8,10 @@ const meta: Meta<typeof Card> = {
 export default meta
 type Story = StoryObj<typeof Card>
 
-// glass island: the 60% fill, no blur, no shadow, no ring (brand-overrides.css)
-export const GlassIsland: Story = {
+// The island look = the 60% fill letting the warm page through — no blur,
+// no shadow, no ring (brand-overrides.css). "Glass" survives only as the
+// Surface variant name for this fill.
+export const Default: Story = {
   render: () => (
     <Card className="w-[320px]">
       <CardHeader>
@@ -17,7 +19,7 @@ export const GlassIsland: Story = {
         <CardDescription>Бариста · Большевистская 35</CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">
-        Остров на полупрозрачном стекле, без тени и без рамки по умолчанию.
+        60%-заливка — тёплый фон просвечивает; без тени, рамки и блюра.
       </CardContent>
     </Card>
   ),

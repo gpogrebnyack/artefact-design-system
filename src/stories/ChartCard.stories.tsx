@@ -6,8 +6,11 @@ import { color } from '@/foundation'
 
 /*
  * ChartCard — the most repeated composition of dashboard-prototype.html
- * (11 instances of .media-chart-card). Card family member: the shell is
- * the point, any Components/Chart/* goes inside as children.
+ * (11 instances of .media-chart-card). Card family member: the SHELL is
+ * the point — any Components/Chart/* goes inside as children, so stories
+ * cover the shell's own slots (title/sub/aside), NOT chart types (an
+ * earlier WithLineChart/WithBarChart pair implied you pick the card by
+ * chart — the chart menu lives in the Chart family).
  */
 const meta: Meta<typeof ChartCard> = {
   title: 'Components/Card/Chart',
@@ -27,7 +30,8 @@ const WEEKS = [
   { week: 'Вс', value: 97, plan: 92 },
 ]
 
-export const WithLineChart: Story = {
+// full header: title + sub + aside (the common shape in the source)
+export const Default: Story = {
   render: () => (
     <div style={{ width: 640 }}>
       <ChartCard title="Упущенная прибыль и конверсии" sub="Последние 7 дней" aside="неделя 17–23 июня">
@@ -45,7 +49,8 @@ export const WithLineChart: Story = {
   ),
 }
 
-export const WithBarChart: Story = {
+// minimal shell: just the title (chart inside is incidental — any chart fits)
+export const TitleOnly: Story = {
   render: () => (
     <div style={{ width: 640 }}>
       <ChartCard title="Заказы по дням">

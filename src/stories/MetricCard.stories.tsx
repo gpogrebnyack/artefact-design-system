@@ -22,7 +22,8 @@ type Story = StoryObj
 
 const trend = [6.8, 7.0, 6.9, 7.2, 7.1, 7.4]
 
-export const TeamAverageMetricCard: Story = {
+// The recipe itself (named by function, not by the demo's dataset).
+export const Recipe: Story = {
   render: () => (
     <Card style={{ width: 280 }}>
       <CardHeader>
