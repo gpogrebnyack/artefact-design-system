@@ -188,6 +188,12 @@
        chart panels), distinct from --card/--popover. Real, not invented. */
     --brand-chart-surface: #fbfaf7;
 
+    /* dialog-v2.html's own tinted card-wrapper wash (.rec/.up4-card
+       background) — the neutral layer LayeredCard's advice zone sits on.
+       A near-invisible darkening, not a gray: must stay translucent so the
+       page gradient tints it. */
+    --brand-wash: rgba(0, 0, 0, 0.03);
+
     /* Found while assembling dialog-v2.html — the warm sand of the audio
        waveform's idle bars (#cbb79c hardcoded in the source page). Warmer
        and darker than any cream/hairline we have (input #e4e2da reads

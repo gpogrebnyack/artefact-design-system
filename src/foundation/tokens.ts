@@ -96,6 +96,7 @@ export const color = {
   chartSurface: "var(--brand-chart-surface)", // #fbfaf7 — quiet backdrop for data-viz surfaces (dashboard-prototype.html only)
   scrim: "var(--brand-scrim)", // rgba(0,0,0,.1) — dark low-opacity backdrop behind a heavily blurred overlay (assistant dock)
   sand: "var(--brand-sand)", // #cbb79c — audio waveform idle bars (dialog-v2.html); playback progress recolors them to accent
+  wash: "var(--brand-wash)", // rgba(0,0,0,.03) — LayeredCard's tinted wrapper (dialog-v2's .rec/.up4-card background)
 } as const
 
 type ColorKey = keyof typeof color

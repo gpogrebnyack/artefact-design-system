@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Separator } from '@/components/ui/separator'
+import { Box, Flex, color } from '@/foundation'
+import { Text } from '@/primitives/Text'
 
 const meta: Meta<typeof Separator> = { title: 'Primitives/Separator', component: Separator }
 export default meta
@@ -7,23 +9,23 @@ type Story = StoryObj<typeof Separator>
 
 export const Horizontal: Story = {
   render: () => (
-    <div className="w-72">
-      <div className="text-sm font-semibold">Татьяна Климова</div>
-      <div className="text-sm text-muted-foreground">Сотрудник · Большевистская 35</div>
-      <Separator className="my-3" />
-      <div className="text-sm text-muted-foreground">Средняя оценка за неделю: 7,1</div>
-    </div>
+    <Box width={288}>
+      <Text as="div" size="caption" weight={600}>Татьяна Климова</Text>
+      <Text as="div" size="caption" color={color.mutedForeground}>Сотрудник · Большевистская 35</Text>
+      <Separator style={{ marginBlock: 12 }} />
+      <Text as="div" size="caption" color={color.mutedForeground}>Средняя оценка за неделю: 7,1</Text>
+    </Box>
   ),
 }
 
 export const Vertical: Story = {
   render: () => (
-    <div className="flex h-8 items-center gap-3 text-sm text-muted-foreground">
-      <span>5 адресов</span>
+    <Flex align="center" gap="md" wrap={false} style={{ height: 32 }}>
+      <Text as="span" size="caption" color={color.mutedForeground}>5 адресов</Text>
       <Separator orientation="vertical" />
-      <span>16 человек</span>
+      <Text as="span" size="caption" color={color.mutedForeground}>16 человек</Text>
       <Separator orientation="vertical" />
-      <span>неделя 17–23 июня</span>
-    </div>
+      <Text as="span" size="caption" color={color.mutedForeground}>неделя 17–23 июня</Text>
+    </Flex>
   ),
 }

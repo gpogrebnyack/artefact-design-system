@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Flex, Container, Stack, color, spacing } from '@/foundation'
+import { Text } from '@/primitives/Text'
 
 /*
  * Foundation/Spacing — the named steps Box/Flex/Grid/Stack resolve p/gap
@@ -17,7 +18,7 @@ export const SpacingScale: Story = {
         {Object.entries(spacing).map(([name, px]) => (
           <Flex key={name} align="center" gap="md">
             <Box style={{ width: px, height: 16, background: color.primary }} />
-            <span className="text-sm text-muted-foreground">{name} — {px}px</span>
+            <Text as="span" size="caption" color={color.mutedForeground}>{name} — {px}px</Text>
           </Flex>
         ))}
       </Stack>

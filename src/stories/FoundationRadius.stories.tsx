@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Flex, Container, color, radius } from '@/foundation'
+import { Text } from '@/primitives/Text'
 
 /*
  * Foundation/Radius — the named corner-radius steps, over the single
@@ -19,7 +20,7 @@ export const RadiusScale: Story = {
                 by rule and left this outline invisible (same demo bug the
                 Box story shipped with) */}
             <Box width={64} radius={name} style={{ height: 64, background: color.card, outline: `1px solid ${color.input}` }} />
-            <span className="text-xs text-muted-foreground">{name}</span>
+            <Text as="span" size="footnote" color={color.mutedForeground}>{name}</Text>
           </Flex>
         ))}
       </Flex>

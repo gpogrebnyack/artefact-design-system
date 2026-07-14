@@ -25,7 +25,7 @@ export function LayeredCard({ children, footer }: LayeredCardProps) {
   return (
     <div
       style={{
-        background: "rgba(0, 0, 0, 0.03)",
+        background: color.wash,
         borderRadius: radius.xl,
         overflow: "hidden",
         padding: 8,

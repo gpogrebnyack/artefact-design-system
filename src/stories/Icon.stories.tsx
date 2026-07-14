@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Icon, ICON_NAMES } from "@/primitives/Icon"
-import { color } from "@/foundation"
+import { Surface, color } from "@/foundation"
+import { Text } from "@/primitives/Text"
 
 /*
  * Icon — BASE PRIMITIVE (Phosphor). This gallery is the governed vocabulary:
@@ -25,23 +26,18 @@ export const Gallery: Story = {
       }}
     >
       {ICON_NAMES.map((name) => (
-        <div
+        /* Surface glass — the tokenized island (an earlier version
+           hand-rolled the fill + a backdrop blur that the no-blur-on-cards
+           rule has since outlawed) */
+        <Surface
           key={name}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 8,
-            padding: "16px 8px",
-            borderRadius: 14,
-            background: color.card,
-            WebkitBackdropFilter: "blur(10px)",
-            backdropFilter: "blur(10px)",
-          }}
+          variant="glass"
+          radius="lg"
+          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}
         >
           <Icon name={name} size={26} />
-          <span style={{ fontSize: 12, color: color.mutedForeground }}>{name}</span>
-        </div>
+          <Text as="span" size="footnote" color={color.mutedForeground}>{name}</Text>
+        </Surface>
       ))}
     </div>
   ),
@@ -64,8 +60,8 @@ export const Weights: Story = {
       ).map(([w, note]) => (
         <div key={w} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, maxWidth: 180 }}>
           <Icon name="team" size={30} weight={w} />
-          <span style={{ fontSize: 12, color: color.mutedForeground }}>{w}</span>
-          <span style={{ fontSize: 12, color: color.mutedForeground, textAlign: "center" }}>{note}</span>
+          <Text as="span" size="footnote" color={color.mutedForeground}>{w}</Text>
+          <Text as="span" size="footnote" color={color.mutedForeground} align="center">{note}</Text>
         </div>
       ))}
     </div>

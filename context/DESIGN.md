@@ -75,8 +75,9 @@ colors:
   chart-surface: "#fbfaf7"
   sand: "#cbb79c"  # idle-палочки аудио-волны (WaveformPlayer); прогресс красит их в accent
 
-  # --- оверлеи ---
+  # --- оверлеи / подложки ---
   scrim: "rgba(0, 0, 0, 0.1)"
+  wash: "rgba(0, 0, 0, 0.03)"  # тинт-обёртка LayeredCard (.rec/.up4-card источника)
 typography:
   footnote:
     fontFamily: "Struve, system-ui, sans-serif"

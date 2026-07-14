@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Flex, Container, Stack, color, semanticRoles, chartKeys } from '@/foundation'
+import { Text } from '@/primitives/Text'
 
 /*
  * Foundation/Colors — every color, one place, named by role. No more
@@ -15,7 +16,7 @@ function Swatch({ name, value, fg = color.secondary }: { name: string; value: st
   return (
     <Flex direction="column" gap="xs" align="center">
       <Box width={72} style={{ height: 48, background: value, color: fg }} radius="lg" />
-      <span className="text-xs text-muted-foreground">{name}</span>
+      <Text as="span" size="footnote" color={color.mutedForeground}>{name}</Text>
     </Flex>
   )
 }
@@ -52,25 +53,25 @@ function RoleRow({
 }: { name: string; base: string; foreground: string; hover: string; soft: string; softForeground: string; softStrong?: string }) {
   return (
     <Flex direction="column" gap="xs">
-      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{name}</span>
+      <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>{name}</Text>
       <Flex gap="sm">
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: base, color: foreground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <span className="text-xs font-medium">Aa</span>
+            <Text as="span" size="footnote" weight={600}>Aa</Text>
           </Box>
-          <span className="text-xs text-muted-foreground">base</span>
+          <Text as="span" size="footnote" color={color.mutedForeground}>base</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: hover, color: foreground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <span className="text-xs font-medium">Aa</span>
+            <Text as="span" size="footnote" weight={600}>Aa</Text>
           </Box>
-          <span className="text-xs text-muted-foreground">hover</span>
+          <Text as="span" size="footnote" color={color.mutedForeground}>hover</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: soft, color: softForeground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <span className="text-xs font-medium">Aa</span>
+            <Text as="span" size="footnote" weight={600}>Aa</Text>
           </Box>
-          <span className="text-xs text-muted-foreground">soft</span>
+          <Text as="span" size="footnote" color={color.mutedForeground}>soft</Text>
         </Flex>
         {/* soft-strong exists only where data sits on the tint (accent/
             green/warn — ScoreHeatmap's cells); 16px digits to show WHY:
@@ -80,7 +81,7 @@ function RoleRow({
             <Box width={84} style={{ height: 44, background: soft, color: softStrong, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
               <span style={{ fontSize: 16, fontWeight: 500, fontVariantNumeric: 'tabular-nums' }}>0/4</span>
             </Box>
-            <span className="text-xs text-muted-foreground">soft-strong</span>
+            <Text as="span" size="footnote" color={color.mutedForeground}>soft-strong</Text>
           </Flex>
         )}
       </Flex>
@@ -121,13 +122,13 @@ export const BrandAndSemantic: Story = {
             assistant dock) and the scrim backdrop behind its overlay panel
             (full demo: Foundation/Surface's `scrim` variant story). */}
         <Flex direction="column" gap="xs">
-          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">gradient &amp; scrim</span>
+          <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>gradient &amp; scrim</Text>
           <Flex gap="sm">
             <Flex direction="column" gap="xs" align="center">
               <Box width={84} style={{ height: 44, backgroundImage: color.accentGradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-                <span className="text-xs font-medium" style={{ color: color.secondary }}>Aa</span>
+                <Text as="span" size="footnote" weight={600} color={color.secondary}>Aa</Text>
               </Box>
-              <span className="text-xs text-muted-foreground">accentGradient</span>
+              <Text as="span" size="footnote" color={color.mutedForeground}>accentGradient</Text>
             </Flex>
             <Flex direction="column" gap="xs" align="center">
               <Box
@@ -139,10 +140,20 @@ export const BrandAndSemantic: Story = {
                 radius="lg"
               >
                 <Box style={{ background: color.scrim, backdropFilter: 'blur(4px)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-                  <span className="text-xs font-medium" style={{ color: color.secondary }}>Aa</span>
+                  <Text as="span" size="footnote" weight={600} color={color.secondary}>Aa</Text>
                 </Box>
               </Box>
-              <span className="text-xs text-muted-foreground">scrim (on a busy bg)</span>
+              <Text as="span" size="footnote" color={color.mutedForeground}>scrim (on a busy bg)</Text>
+            </Flex>
+            <Flex direction="column" gap="xs" align="center">
+              {/* wash is a 3% darkening — show it ON the page bg, framed by
+                  the paper card it wraps in LayeredCard */}
+              <Box width={84} style={{ height: 44, background: color.wash, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+                <Box style={{ background: color.secondary, padding: '4px 10px' }} radius="md">
+                  <Text as="span" size="footnote" weight={600}>Aa</Text>
+                </Box>
+              </Box>
+              <Text as="span" size="footnote" color={color.mutedForeground}>wash (LayeredCard)</Text>
             </Flex>
           </Flex>
         </Flex>
