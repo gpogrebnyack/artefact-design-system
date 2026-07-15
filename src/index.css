@@ -8,8 +8,18 @@
  * build:css) produces the single dist/style.css consumers import, instead of
  * shipping per-component CSS files as separate assets. */
 @import "./foundation/row.css";
+@import "./foundation/surface.css";
+@import "./foundation/interactive.css";
+@import "./components/composed/Chip.css";
+@import "./components/composed/CollapsibleGroup.css";
+@import "./components/composed/MomentCard.css";
+@import "./components/composed/ScoreHeatmap.css";
+@import "./components/composed/SparkLink.css";
+@import "./components/composed/SummaryNote.css";
+@import "./components/composed/TimeTag.css";
 @import "./components/composed/Toolbar.css";
 @import "./components/composed/TypingIndicator.css";
+@import "./components/composed/WaveformPlayer.css";
 @import "./sections/SidebarNav.css";
 @import "./sections/AssistantDock.css";
 

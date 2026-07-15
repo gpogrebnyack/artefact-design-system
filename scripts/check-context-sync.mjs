@@ -115,6 +115,28 @@ if (undocumented.length) {
   console.log(`✗ Компоненты есть в коде, но не упомянуты в context/COMPONENTS.md: ${undocumented.join(", ")}`)
 }
 
+// --- 3. CSS bundling: every component-scoped .css under src/ must be
+// @import-ed in src/index.css, or it silently never reaches dist/style.css —
+// Storybook masks this (Vite resolves the component's own `import "./X.css"`),
+// so npm consumers ship WITHOUT those styles. Real bug class: ten files
+// (focus rings, card hover, the whole dialog vocabulary) were missing from
+// every published build until a consumer playground exposed it.
+import { relative } from "node:path"
+const indexCss = readFileSync(join(ROOT, "src/index.css"), "utf8")
+const cssFiles = []
+for (const dir of ["src/foundation", "src/components/composed", "src/sections"]) {
+  for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true, recursive: true })) {
+    if (entry.isFile() && entry.name.endsWith(".css")) {
+      cssFiles.push(relative(join(ROOT, "src"), join(entry.parentPath ?? entry.path, entry.name)))
+    }
+  }
+}
+const unimported = cssFiles.filter((f) => !indexCss.includes(`@import "./${f}"`))
+if (unimported.length) {
+  drift = true
+  console.log(`✗ CSS не попадает в dist/style.css (нет @import в src/index.css): ${unimported.join(", ")}`)
+}
+
 if (!drift) {
   console.log("✓ context/DESIGN.md и context/COMPONENTS.md не расходятся с кодом.")
 }
