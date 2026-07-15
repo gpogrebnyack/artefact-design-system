@@ -38,6 +38,15 @@ const VARIANTS = {
     style: { background: color.secondary } as CSSProperties,
     description: "непрозрачный белый — чипы, попапы",
   },
+  outline: {
+    // Первый мерж из Mobbin-эксперимента (A3, 2026-07-15): на ОДНОЦВЕТНОЙ
+    // подложке заливкам нечем разделять — paper на paper невидим, а muted
+    // гасит -soft заливки контента (см. DESIGN.md → «Лестница слоёв»).
+    // Hairline --input (тот же, что у инпутов) — легальный ПОСЛЕДНИЙ
+    // уровень разделения; смягчение правила «no borders», не отмена.
+    style: { background: color.secondary, border: `1px solid ${color.input}` } as CSSProperties,
+    description: "paper + hairline-обводка — карточка на одноцветной подложке",
+  },
   muted: {
     style: { background: color.muted } as CSSProperties,
     description: "hover / выбранное состояние",
