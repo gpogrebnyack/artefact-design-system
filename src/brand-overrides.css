@@ -149,3 +149,15 @@ body {
 [data-slot="button-group-separator"] {
   background-color: var(--input);
 }
+
+/* --- PopoverContent — единственный плавающий слот этой генерации shadcn,
+       рисующий кромку ТОЛЬКО border+shadow (у dropdown/select/dialog есть
+       ring-1, который мы намеренно щадим). Оба его канала у нас глушатся
+       (--border: transparent + выключенные тени) → панель без кромки
+       сливалась и с paper-карточками, и с cream-фоном (найдено на A4
+       Mobbin-эксперимента: панель уведомлений). Та же подмена, что у
+       separator: border → --input, hairline «которому положено быть
+       видимым». --- */
+[data-slot="popover-content"] {
+  border-color: var(--input);
+}
