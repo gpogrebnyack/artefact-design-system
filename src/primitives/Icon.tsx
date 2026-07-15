@@ -59,10 +59,15 @@ export const PHOSPHOR_ICON_NAMES = Object.keys(ICON_CATALOG) as PhosphorIconName
 /*
  * The system uses EXACTLY TWO of Phosphor's six weights — enforced at the
  * type level AND in the data (only these two are compiled in):
- *  - "regular" (default) — all outline UI iconography;
- *  - "fill"    — glyphs acting as a SIGN, not an outline icon: media
- *    play/pause (outline vanishes at 10–26px), identity markers on tinted
- *    chips (priority flag), the ✦ spark of SparkLink.
+ *  - "fill"    — sign-glyphs (play/pause, ✦, markers on tinted chips) at any
+ *    size, and ANY object pictogram below 16px — outline washes out at
+ *    small sizes (правило переписано с семантического на РАЗМЕРНОЕ после
+ *    двух одинаковых промахов сборки, Mobbin-эксперимент 2026-07-15);
+ *  - "regular" — object pictograms ≥16px and SERVICE strokes (carets,
+ *    arrows, check/x, dots …) at any size: simple-stroke glyphs don't wash
+ *    out, and their fill variants change meaning (solid triangles etc.).
+ * The default is SELF-APPLYING: omit `weight` and Icon picks by this rule —
+ * see effectiveWeight below. Explicit `weight` always wins.
  * thin/light break down at working sizes on the warm background; bold is
  * emphasis-by-stroke (we emphasize by size/color instead); duotone bakes
  * two tones into the glyph where the system does it with the soft-chip +
@@ -71,10 +76,21 @@ export const PHOSPHOR_ICON_NAMES = Object.keys(ICON_CATALOG) as PhosphorIconName
  */
 export type IconAllowedWeight = "regular" | "fill"
 
+/** служебная графика из простых штрихов — regular на любом размере */
+const SERVICE_PREFIX = /^(caret-|arrow-|arrows-|trend-)/
+const SERVICE_EXACT = new Set<PhosphorIconName>([
+  "check", "checks", "x", "plus", "minus", "equals",
+  "dots-three", "dots-three-vertical", "dots-nine", "list",
+])
+const isServiceGlyph = (n: PhosphorIconName) => SERVICE_PREFIX.test(n) || SERVICE_EXACT.has(n)
+
 export type IconProps = {
   name: IconName
   /** px; matches the surrounding text/control size */
   size?: number
+  /** дефолт — по размерному правилу (см. блок весов выше): пиктограмма
+   *  <16px → fill, иначе regular; служебные штрихи — всегда regular.
+   *  Явное значение всегда побеждает автоматику. */
   weight?: IconAllowedWeight
   color?: string
   className?: string
@@ -88,12 +104,15 @@ const resolve = (name: IconName): PhosphorIconName =>
 export function Icon({
   name,
   size = 20,
-  weight = "regular",
+  weight,
   color = "currentColor",
   className,
   label,
 }: IconProps) {
-  const [regular, fill] = ICON_CATALOG[resolve(name)]
+  const glyph = resolve(name)
+  const [regular, fill] = ICON_CATALOG[glyph]
+  const effectiveWeight =
+    weight ?? (size < 16 && !isServiceGlyph(glyph) ? "fill" : "regular")
   return (
     <svg
       viewBox="0 0 256 256"
@@ -105,7 +124,7 @@ export function Icon({
       aria-label={label}
       role={label ? "img" : undefined}
     >
-      <path d={weight === "fill" ? fill : regular} />
+      <path d={effectiveWeight === "fill" ? fill : regular} />
     </svg>
   )
 }

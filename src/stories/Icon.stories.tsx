@@ -85,26 +85,37 @@ export const CatalogSearch: Story = {
 
 /*
  * Exactly TWO weights exist in this system — enforced by the `weight` prop
- * type AND by the data itself (only regular+fill are compiled into the
- * catalog; thin/light fall apart at working sizes, bold is
- * emphasis-by-stroke, duotone bakes two tones into the glyph where we use
- * the soft-chip + glyph pair). See DESIGN.md → Shapes.
+ * type AND by the data itself (only regular+fill are compiled). Правило
+ * выбора — РАЗМЕРНОЕ и самоприменяющееся: без явного `weight` пиктограмма
+ * <16px сама рендерится fill (контур замыливается), служебные штрихи
+ * (caret/arrow/check/…) — regular всегда. См. DESIGN.md → Shapes.
  */
 export const Weights: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
-      {(
-        [
-          ["regular", "дефолт — вся контурная UI-иконография"],
-          ["fill", "глиф-знак: play/pause, маркер на чипе, ✦"],
-        ] as const
-      ).map(([w, note]) => (
-        <div key={w} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, maxWidth: 180 }}>
-          <Icon name="team" size={30} weight={w} />
-          <Text as="span" size="footnote" color={color.mutedForeground}>{w}</Text>
-          <Text as="span" size="footnote" color={color.mutedForeground} align="center">{note}</Text>
-        </div>
-      ))}
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+        {(
+          [
+            ["regular", "пиктограммы ≥16px и служебные штрихи"],
+            ["fill", "глифы-знаки + любая пиктограмма <16px"],
+          ] as const
+        ).map(([w, note]) => (
+          <div key={w} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, maxWidth: 180 }}>
+            <Icon name="team" size={30} weight={w} />
+            <Text as="span" size="footnote" color={color.mutedForeground}>{w}</Text>
+            <Text as="span" size="footnote" color={color.mutedForeground} align="center">{note}</Text>
+          </div>
+        ))}
+      </div>
+      {/* автоматика дефолта: weight не указан нигде в этом ряду */}
+      <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+        <Icon name="calendar-blank" size={14} />
+        <Icon name="calendar-blank" size={20} />
+        <Icon name="caret-down" size={14} />
+        <Text as="span" size="footnote" color={color.mutedForeground}>
+          дефолт сам выбирает: 14px пиктограмма → fill · 20px → regular · caret 14px → regular (служебный)
+        </Text>
+      </div>
     </div>
   ),
 }
