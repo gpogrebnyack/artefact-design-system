@@ -1,6 +1,6 @@
 {
   "name": "artefact-design-system",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Артефакт design system — Foundation/Primitives/Components/Sections on top of shadcn/ui + Radix, published as an installable package.",
   "type": "module",
   "private": false,
@@ -38,7 +38,8 @@
     "build-storybook": "storybook build",
     "prepare": "simple-git-hooks",
     "prepublishOnly": "npm run build",
-    "postinstall": "node scripts/postinstall.mjs"
+    "postinstall": "node scripts/postinstall.mjs",
+    "generate:icons": "node scripts/generate-icon-catalog.mjs"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint:design && npm run check:context && npm run typecheck"
@@ -48,7 +49,6 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.23.0",
@@ -63,6 +63,7 @@
     "@chromatic-com/storybook": "^5.2.1",
     "@fontsource-variable/geist": "^5.2.9",
     "@google/design.md": "^0.3.0",
+    "@phosphor-icons/core": "^2.1.1",
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-mcp": "^0.6.0",
