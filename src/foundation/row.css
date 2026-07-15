@@ -13,6 +13,12 @@
  * convention.
  */
 .foundation-row {
+  /* width:100% — the section itself is typically a width:auto item of a
+     column Stack (every page stacks TitledRows), i.e. EXACTLY the Chromium
+     phantom-height shape from layout.tsx's Grid note: measured pre-stretch,
+     its inner auto-fit grid is single-column and tall, and the height never
+     re-resolves. main gets the same pin below for the stacked mode. */
+  width: 100%;
   display: grid;
   grid-template-columns: var(--foundation-row-rail, 180px) minmax(0, 1fr) var(--foundation-row-rail, 180px);
   column-gap: var(--foundation-row-gap, 20px);
@@ -32,6 +38,15 @@
 .foundation-row > .foundation-row-main {
   grid-column: 2;
   min-width: 0;
+  /* width:100% — the SAME Chromium phantom-height fix as Grid/
+     CollapsibleGroup (see layout.tsx): in stacked mode (<1120px) this grid
+     item, left at width:auto, gets its hypothetical height measured BEFORE
+     column-track stretch — an auto-fit Grid inside is single-column and
+     tall at that moment, and the height never re-resolves: the row ends up
+     hundreds of px taller than its content (532 vs 290 measured on the
+     experiment playground; Komanda/Dialog had the same bug at narrow
+     widths). */
+  width: 100%;
 }
 .foundation-row > .foundation-row-side {
   grid-column: 3;
