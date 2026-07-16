@@ -41,7 +41,9 @@ export function SummaryNote({ label, icon = "spark", children }: SummaryNoteProp
             {label}
           </Text>
         </Flex>
-        <Text as="p" size="body" style={{ lineHeight: 1.7 }}>
+        {/* div, не p: children бывают блочными (многоабзацный вердикт в
+            Mobbin-эксперименте ломал валидность HTML внутри <p>) */}
+        <Text as="div" size="body" style={{ lineHeight: 1.7 }}>
           {children}
         </Text>
       </Stack>

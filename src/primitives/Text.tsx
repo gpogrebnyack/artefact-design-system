@@ -42,6 +42,10 @@ export function Text({
     <As
       className={className}
       style={{
+        /* браузерные маргины h1–h6/p сброшены по умолчанию: каждый экран
+           писал margin:0 руками, забытый сброс давал рваный ритм (правило
+           из Mobbin-эксперимента). Вернуть отступ можно через style. */
+        margin: 0,
         fontSize: step.size,
         lineHeight: step.lineHeight,
         fontWeight: weight,

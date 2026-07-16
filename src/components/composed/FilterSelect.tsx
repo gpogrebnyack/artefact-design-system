@@ -31,7 +31,12 @@ export function FilterSelect({ label, placeholder, value, onValueChange, onClear
     <Surface
       variant="paper"
       radius="pill"
-      style={{ display: "inline-flex", alignItems: "stretch", overflow: "hidden", width: "max-content" }}
+      style={{
+        display: "inline-flex", alignItems: "stretch", overflow: "hidden", width: "max-content",
+        /* пилюля НЕ сжимается флексом: overflow hidden при сжатии резал
+           собственный текст и шеврон («Все критер|», ревью B2) */
+        flexShrink: 0,
+      }}
     >
       <Select value={value} onValueChange={onValueChange}>
         <SelectTrigger

@@ -19,15 +19,20 @@ export type TitledRowProps = {
   /** collapse the right rail and let main take its space (`.srow.no-side`) —
    *  an explicit page-level decision, NOT implied by an empty `side` */
   fullWidth?: boolean
+  /** «сцена»: main занимает ВСЮ полосу, включая титульный рельс — для
+   *  полноширинных лент (демо-сцены, full-bleed баннеры). Обычный
+   *  fullWidth схлопывает только правый рейл; до этого пропа сцену
+   *  приходилось рендерить вне TitledRow (Mobbin-эксперимент). */
+  fullBleed?: boolean
   rail?: number
   gap?: number
   children: ReactNode
 }
 
-export function TitledRow({ title, side, fullWidth = false, rail = 180, gap = 20, children }: TitledRowProps) {
+export function TitledRow({ title, side, fullWidth = false, fullBleed = false, rail = 180, gap = 20, children }: TitledRowProps) {
   return (
     <section
-      className={`foundation-row${fullWidth ? " foundation-row--no-side" : ""}`}
+      className={`foundation-row${fullWidth ? " foundation-row--no-side" : ""}${fullBleed ? " foundation-row--full-bleed" : ""}`}
       style={{ "--foundation-row-rail": `${rail}px`, "--foundation-row-gap": `${gap}px` } as CSSProperties}
     >
       {title && <div className="foundation-row-title">{title}</div>}

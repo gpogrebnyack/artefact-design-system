@@ -1,0 +1,63 @@
+import type { ReactNode } from "react"
+import { Flex, Stack, Surface, color } from "@/foundation"
+import { Icon } from "@/primitives/Icon"
+import { Text } from "@/primitives/Text"
+import { Sparkline } from "./charts/Sparkline"
+import type { SemanticTone } from "./SemanticTone"
+
+/*
+ * MetricCard — карточка «метрика с мини-графиком»: подпись → крупное число
+ * с дельтой слева, спарклайн справа. Форма — Steep (эталон карточки KPI в
+ * Mobbin-эксперименте: number+delta слева, sparkline на всю правую часть,
+ * точка на конце). Собиралась руками трижды за один день эксперимента
+ * (B1v2, C2, C3) — формализована по правилу трёх дублей.
+ *
+ * Отличие от MetricRow: Row — компактная стопка для списков внутри
+ * карточек; Card — самостоятельный остров с трендом-графиком для
+ * KPI-полос. Дельта следует правилу DESIGN.md: просевшая бизнес-метрика —
+ * `accent` (внимание), не `danger`; стрелки прямые ↑/↓ (язык метрик),
+ * диагональные trend-глифы — язык оценки (ScorePill).
+ */
+export type MetricCardProps = {
+  label: ReactNode
+  /** крупное число, уже отформатированное ("314 ₽") */
+  value: ReactNode
+  /** строка сравнения ("−32% к среднему") */
+  delta?: ReactNode
+  /** красит дельту и стрелку; обычно green (рост) / accent (просадка) */
+  tone?: SemanticTone
+  trend?: "up" | "down"
+  /** точки мини-графика; без них карточка — просто число с дельтой */
+  spark?: number[]
+  /** цвет спарклайна; по умолчанию следует tone (green → chart-2, иначе chart-1) */
+  sparkColor?: string
+}
+
+export function MetricCard({ label, value, delta, tone, trend, spark, sparkColor }: MetricCardProps) {
+  const deltaColor = tone ? color[tone] : color.mutedForeground
+  const lineColor = sparkColor ?? (tone === "green" ? "var(--chart-2)" : "var(--chart-1)")
+  return (
+    <Surface variant="glass" p="base" radius="xl">
+      <Stack gap="sm">
+        <Text as="span" size="footnote" color={color.mutedForeground}>
+          {label}
+        </Text>
+        <Flex gap="base" align="center" justify="space-between" wrap={false}>
+          <Stack gap="none">
+            <Text as="span" size="headline" weight={600}>
+              {value}
+            </Text>
+            {delta != null && (
+              <Text as="span" size="footnote" weight={600} color={deltaColor}
+                style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                {trend && <Icon name={trend === "up" ? "arrow-up" : "arrow-down"} size={12} />}
+                {delta}
+              </Text>
+            )}
+          </Stack>
+          {spark && <Sparkline data={spark} color={lineColor} width={120} height={36} showEndDot />}
+        </Flex>
+      </Stack>
+    </Surface>
+  )
+}

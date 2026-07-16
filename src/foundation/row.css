@@ -55,6 +55,19 @@
   align-self: start;
 }
 
+/* «сцена» — main на всю полосу, включая титульный рельс: единственная
+   колонка вместо трёх. Появился из Mobbin-эксперимента: полноширинную
+   демо-сцену нельзя было выразить через fullWidth (он схлопывает только
+   правый рейл, левый титульный 180px остаётся всегда). */
+.foundation-row.foundation-row--full-bleed {
+  grid-template-columns: 1fr;
+}
+.foundation-row--full-bleed > .foundation-row-title,
+.foundation-row--full-bleed > .foundation-row-main,
+.foundation-row--full-bleed > .foundation-row-side {
+  grid-column: 1;
+}
+
 @media (max-width: 1120px) {
   .foundation-row,
   .foundation-row.foundation-row--no-side {

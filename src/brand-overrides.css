@@ -161,3 +161,29 @@ body {
 [data-slot="popover-content"] {
   border-color: var(--input);
 }
+
+/* --- «Лестница слоёв», токенный хвост (Mobbin-эксперимент, кейс 3):
+       у Input/Textarea не было собственной заливки — на тёплых поверхностях
+       (popover paper-warm #fffdf8) поле сливалось с контейнером, разницу
+       держал один hairline. Даём paper-заливку: на тёплом фоне поле
+       читается полем, на белой карточке остаётся нейтральным. --- */
+input[data-slot="input"],
+textarea[data-slot="textarea"] {
+  background-color: var(--secondary);
+}
+
+/* --- TabsList — на общую 40px-шкалу контролов (рядом с Search/Button/
+       FilterSelect в тулбарах табы проседали: 32 vs 40, ревью B2). --- */
+[data-slot="tabs-list"] {
+  height: 40px;
+}
+
+/* --- ScrollArea: заставить работать max-height (раньше ограничивал только
+       явный height — с maxHeight контент вытекал за поповер, ревью A4).
+       Root получает overflow hidden, viewport наследует ограничение. --- */
+[data-slot="scroll-area"] {
+  overflow: hidden;
+}
+[data-slot="scroll-area-viewport"] {
+  max-height: inherit;
+}
