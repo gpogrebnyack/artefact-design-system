@@ -3,6 +3,11 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+/* Primitive color scales (12-step, Radix Colors grammar) — GENERATED file,
+ * rebuilt by `node scripts/gen-colors.mjs`. The :root block below only
+ * ALIASES these steps into semantic names; hex values live in one place. */
+@import "./foundation/scales.css";
+
 /* Component-scoped CSS that isn't expressible as Tailwind utilities/theme
  * vars — pulled in here so ONE Tailwind CLI pass (see package.json's
  * build:css) produces the single dist/style.css consumers import, instead of
@@ -28,8 +33,6 @@
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;
-    --color-chart-8: var(--chart-8);
-    --color-chart-7: var(--chart-7);
     --color-chart-6: var(--chart-6);
     --color-chart-5: var(--chart-5);
     --color-chart-4: var(--chart-4);
@@ -64,111 +67,106 @@
 }
 
 /* === Artefact / «Бодрый день» tokens mapped onto shadcn's theme contract ===
-   Variable NAMES are shadcn's (the contract components read); VALUES are ours.
-   Everything here is token-level theming — no component source is touched. */
+   Variable NAMES are shadcn's (the contract components read); VALUES are ours —
+   now ALIASES into the primitive scales (scales.css). The cream scale is
+   anchored to the system's historical neutrals, so every value below equals
+   what it always was; the alias just names which STEP that value is.
+   Everything here is token-level theming — no component source is touched.
+
+   (--chart-1..6 — the categorical data-viz palette — are declared in
+   scales.css with the primitives: they're validated constants of their own
+   domain, not aliases of any scale. See DESIGN.md → Charts.) */
 :root {
-    --background: #f9f6f0;                    /* --cream (body gets the gradient via the override layer) */
-    --foreground: #2c2c2a;                    /* --ink */
-    --card: rgba(255, 255, 255, 0.6);         /* --surface : 60% glass island */
-    --card-foreground: #2c2c2a;               /* --ink */
-    --popover: #fffdf8;                        /* --paper-warm : popovers stay opaque for readability */
-    --popover-foreground: #2c2c2a;            /* --ink */
-    --primary: #2c2c2a;                        /* --ink : our DEFAULT filled CTA is dark, not orange */
-    --primary-foreground: #f9f6f0;            /* --cream */
-    --secondary: #ffffff;                     /* --paper : secondary/quiet button */
-    --secondary-foreground: #2c2c2a;
-    --muted: #f1ece1;                          /* --cream-2 */
-    --muted-foreground: #6c6a63;              /* --ink-2 */
-    --accent: #f1ece1;                         /* shadcn's internal hover-accent (NOT our brand orange) */
-    --accent-foreground: #2c2c2a;
+    --background: var(--cream-2);              /* body gets the gradient via the override layer */
+    --foreground: var(--cream-12);             /* --ink */
+    --card: rgba(255, 255, 255, 0.6);          /* --surface : 60% glass island — deliberately off-scale */
+    --card-foreground: var(--cream-12);
+    --popover: var(--cream-1);                 /* paper-warm : popovers stay opaque for readability */
+    --popover-foreground: var(--cream-12);
+    --primary: var(--cream-12);                /* our DEFAULT filled CTA is dark, not orange */
+    --primary-foreground: var(--cream-2);
+    --secondary: #ffffff;                      /* --paper : deliberately off-scale (true white) */
+    --secondary-foreground: var(--cream-12);
+    --muted: var(--cream-3);
+    --muted-foreground: var(--cream-11);       /* --ink-2 */
+    --accent: var(--cream-3);                  /* shadcn's internal hover-accent (NOT our brand orange) */
+    --accent-foreground: var(--cream-12);
     --destructive: var(--brand-danger);        /* real red — distinct from --brand-accent, see below */
     --border: transparent;                     /* ← our RULE: no borders by default (token-level) */
-    --input: #e4e2da;                          /* --line-2 : inputs keep a hairline so they stay usable */
-    --ring: #f75506;                           /* --accent : focus ring is brand orange */
-    --chart-1: #f75506;
-    --chart-2: #1f7a54;
-    --chart-3: #c9805e;
-    --chart-4: #b3a48f;
-    --chart-5: #6c6a63;
-    /* 6–8: dashboard-prototype.html's own multi-series palette (--c-blue/
-       --c-sky/--c-purple verbatim). Hues that exist nowhere else in the
-       system — without them a chart matching the source pages' look was
-       literally inexpressible (the extraction originally kept only 5 of the
-       source's 9 categorical colors; the remaining 4 duplicate roles we
-       already have: c-ink=foreground, c-red≈danger, c-yellow≈warn,
-       c-wheat≈chart-4). */
-    --chart-6: #0089ff;
-    --chart-7: #99d6ff;
-    --chart-8: #c952de;
+    --input: var(--cream-6);                   /* inputs keep a hairline so they stay usable */
+    --ring: var(--orange-9);                   /* focus ring is brand orange */
     --radius: 0.875rem;                        /* 14px = our --radius */
 
     /* Komanda's own semantic tokens with NO shadcn-contract equivalent —
-       orange/green/warn/plum. (Paper-white, cream-2, and ink-2 already exist
-       verbatim as --secondary/--muted/--muted-foreground above — reuse those
-       instead of redeclaring them here.) Anything that needs brand orange as
-       a general-purpose color references THESE, never a literal hex.
+       orange/green/warn/plum. Anything that needs brand orange as a
+       general-purpose color references THESE, never a literal hex.
 
-       Each role gets the full set a real design system needs — base /
-       foreground / hover / soft / soft-foreground — not just base+bg:
-         - foreground: text color ON the base fill. Picked by measured WCAG
-           contrast (see .foreground comments below), not assumed white.
-         - hover: darkened via color-mix() so it recomputes from base
-           automatically — never a second hand-picked hex to keep in sync.
-         - soft / soft-foreground: the pale badge pairing (soft bg + base
-           color text) — this is what used to be named "-bg". */
-    --brand-accent: #f75506;
+       Each role is a SLICE OF ONE SCALE by the step grammar (DESIGN.md →
+       Colors) — the role's hue lives in scales.css, this block only picks
+       the steps:
+         - base = step 9: the seed, verbatim — the brand color is never
+           resampled by the generator.
+         - foreground: text ON the base fill. Picked by measured WCAG
+           contrast (see comments below), not assumed white.
+         - hover = step 10 (the calibrated darker solid — replaces the old
+           color-mix(85%, black), which overshot past 10 and dulled the hue).
+         - soft = alpha step a3: translucent, composes correctly on ANY
+           light surface incl. the cream page bg (this is what retired the
+           old "tints only on paper/glass" layering rule).
+         - soft-foreground = step 11: guaranteed AA on the soft tint
+           (4.6–7.5:1 measured across all hues; the old value pointed at
+           base/9 and gave 2.9–3:1 on accent/warn — a real caught bug).
+         - soft-strong = step 12: emphasis for DATA on the tint (16px
+           digits, ScoreHeatmap cells). No longer a readability crutch —
+           soft-foreground already passes — just stronger. */
+    --brand-accent: var(--orange-9);
     --brand-accent-foreground: #ffffff; /* 3.36:1 on accent — passes AA large-text (buttons); matches existing convention */
-    --brand-accent-hover: color-mix(in srgb, var(--brand-accent) 85%, black);
-    --brand-accent-soft: #fdeee5;
-    --brand-accent-soft-foreground: var(--brand-accent);
-    /* -soft-strong: DATA-grade foreground on the -soft tint. The soft pair's
-       own foreground is fine for 12px/600 labels (badges, pills) but fails
-       contrast for primary data (dialog-v2's criteria heatmap shows 16px
-       score fractions on the tint — its midFg() darkens every band for
-       exactly this reason). Hexes are the source page's own, not invented:
-       #a83c08 / #0f5e3f / #856700. */
-    --brand-accent-soft-strong: #a83c08;
+    --brand-accent-hover: var(--orange-10);
+    --brand-accent-soft: var(--orange-a3);
+    --brand-accent-soft-foreground: var(--orange-11);
+    --brand-accent-soft-strong: var(--orange-12);
     /* komanda.html's own --accent-grad — found missing while rebuilding the
        AI assistant dock (.primary.askbtn). The ONE gradient in either source
        page; kept scoped to accent (not given the full role structure above)
        since nothing else in either source uses a gradient fill. */
     --brand-accent-gradient: linear-gradient(135deg, #ffb88c 0%, #f75506 50%, #ff5e62 100%);
 
-    --brand-green: #1f7a54;
+    --brand-green: var(--jade-9);
     --brand-green-foreground: #ffffff; /* 5.29:1 — passes AA normal text */
-    --brand-green-hover: color-mix(in srgb, var(--brand-green) 85%, black);
-    --brand-green-soft: #eaf2ea;
-    --brand-green-soft-foreground: var(--brand-green);
-    --brand-green-soft-strong: #0f5e3f; /* see -soft-strong note at accent */
+    --brand-green-hover: var(--jade-10);
+    --brand-green-soft: var(--jade-a3);
+    --brand-green-soft-foreground: var(--jade-11);
+    --brand-green-soft-strong: var(--jade-12);
 
-    --brand-warn: #b8862f;
-    --brand-warn-foreground: #2c2c2a; /* ink: 4.32:1 vs 3.24:1 for white — measurably better, no prior convention to preserve */
-    --brand-warn-hover: color-mix(in srgb, var(--brand-warn) 85%, black);
-    --brand-warn-soft: #f6edda;
-    --brand-warn-soft-foreground: var(--brand-warn);
-    --brand-warn-soft-strong: #856700; /* see -soft-strong note at accent */
+    --brand-warn: var(--ochre-9);
+    --brand-warn-foreground: var(--cream-12); /* ink: 4.32:1 vs 3.24:1 for white — measurably better, no prior convention to preserve */
+    --brand-warn-hover: var(--ochre-10);
+    --brand-warn-soft: var(--ochre-a3);
+    --brand-warn-soft-foreground: var(--ochre-11);
+    --brand-warn-soft-strong: var(--ochre-12);
 
-    --brand-plum: #7a4d7d;
+    --brand-plum: var(--plum-9);
     --brand-plum-foreground: #ffffff; /* 6.59:1 — passes AA normal text */
-    --brand-plum-hover: color-mix(in srgb, var(--brand-plum) 85%, black);
-    --brand-plum-soft: #f1e6f0;
-    --brand-plum-soft-foreground: var(--brand-plum);
+    --brand-plum-hover: var(--plum-10);
+    --brand-plum-soft: var(--plum-a3);
+    --brand-plum-soft-foreground: var(--plum-11);
 
-    /* Danger — a genuine red, NOT the same hue as --brand-accent. Neither
-       source page (komanda.html / dashboard.html) has a red at all, so this
-       is a deliberate addition, not extracted — picked so it reads as its
-       own color, not "orange but sadder": hue ~5.5° (true red) vs accent's
-       ~20° (red-orange), and pulled down to accent/green/warn's saturation
-       family (~59%) instead of accent's outlier ~95%, since danger should
-       read as a serious status, not compete with the one loud brand color.
-       Wired as shadcn's --destructive slot above. */
-    --brand-danger: #b23a2e;
+    /* Danger — a genuine red (the brick scale), NOT the same hue as
+       --brand-accent. Neither source page (komanda.html / dashboard.html)
+       has a red at all, so this is a deliberate addition, not extracted —
+       picked so it reads as its own color, not "orange but sadder": hue
+       ~5.5° (true red) vs accent's ~20° (red-orange), and pulled down to
+       accent/green/warn's saturation family (~59%) instead of accent's
+       outlier ~95%, since danger should read as a serious status, not
+       compete with the one loud brand color. Wired as shadcn's
+       --destructive slot above. */
+    --brand-danger: var(--brick-9);
     --brand-danger-foreground: #ffffff; /* 5.94:1 — passes AA normal text */
-    --brand-danger-hover: color-mix(in srgb, var(--brand-danger) 85%, black);
-    --brand-danger-soft: #f6e1df;
-    --brand-danger-soft-foreground: var(--brand-danger);
+    --brand-danger-hover: var(--brick-10);
+    --brand-danger-soft: var(--brick-a3);
+    --brand-danger-soft-foreground: var(--brick-11);
 
-    --brand-ink-3: #a3a094;
+    --brand-ink-3: var(--cream-9);
 
     /* komanda.html's .askpanel backdrop — a dark low-opacity scrim behind a
        heavily blurred overlay. Also found missing while rebuilding the

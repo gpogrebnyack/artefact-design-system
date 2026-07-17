@@ -7,6 +7,10 @@ import { Text } from '@/primitives/Text'
  * split between "shadcn contract" and "brand" — that split hid a real bug
  * (two different colors both called `accent` in different objects). See
  * `color` in tokens.ts for the full role breakdown.
+ *
+ * Two layers (Radix Colors methodology, DESIGN.md → Colors): the Scales
+ * story below shows the PRIMITIVES (12-step scales, scales.css, generated);
+ * every other story shows the SEMANTIC layer — the only one components use.
  */
 const meta: Meta = { title: 'Foundation/Colors', parameters: { layout: 'fullscreen' } }
 export default meta
@@ -19,6 +23,42 @@ function Swatch({ name, value, fg = color.secondary }: { name: string; value: st
       <Text as="span" size="footnote" color={color.mutedForeground}>{name}</Text>
     </Flex>
   )
+}
+
+// The primitive scales — the raw material UNDER the semantic layer. Shown
+// for understanding and for building new semantic aliases; components never
+// reference a step directly (that's the same mistake as a hardcoded hex —
+// see DESIGN.md → Do's and Don'ts). Regenerate: node scripts/gen-colors.mjs.
+const SCALE_NAMES = ['cream', 'orange', 'jade', 'ochre', 'plum', 'brick'] as const
+const STEP_ROLES = ['фон стр.', 'фон тонк.', 'soft (a3)', 'заливка hover', 'заливка active', 'граница тонк.', 'граница', 'граница hover', 'SOLID = сид', 'solid hover', 'текст на soft', 'текст сильный']
+
+export const Scales: Story = {
+  render: () => (
+    <Container size={1100} p="xl">
+      <Stack gap="lg">
+        <Flex gap="xs" style={{ marginLeft: 60, flexWrap: 'nowrap' }}>
+          {STEP_ROLES.map((role, i) => (
+            <Box key={i} width={64} style={{ textAlign: 'center', flexShrink: 0 }}>
+              <Text as="span" size="footnote" color={color.mutedForeground} style={{ fontSize: 10, lineHeight: 1.2, display: 'inline-block' }}>{i + 1}<br />{role}</Text>
+            </Box>
+          ))}
+        </Flex>
+        {SCALE_NAMES.map((scale) => (
+          <Flex key={scale} gap="xs" align="center" style={{ flexWrap: 'nowrap' }}>
+            <Box width={52} style={{ flexShrink: 0 }}>
+              <Text as="span" size="footnote" weight={600} color={color.mutedForeground}>{scale}</Text>
+            </Box>
+            {Array.from({ length: 12 }, (_, i) => (
+              <Box key={i} width={64} style={{ height: 40, background: `var(--${scale}-${i + 1})`, flexShrink: 0 }} radius="md" />
+            ))}
+          </Flex>
+        ))}
+        <Text as="p" size="footnote" color={color.mutedForeground}>
+          Каждая роль-alias — срез одной шкалы: base=9 (сид) · hover=10 · soft=a3 (alpha) · soft-foreground=11 · soft-strong=12. Компоненты потребляют только семантический слой.
+        </Text>
+      </Stack>
+    </Container>
+  ),
 }
 
 export const PageAndSurface: Story = {
@@ -56,20 +96,23 @@ function RoleRow({
       <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>{name}</Text>
       <Flex gap="sm">
         <Flex direction="column" gap="xs" align="center">
-          <Box width={84} style={{ height: 44, background: base, color: foreground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <Text as="span" size="footnote" weight={600}>Aa</Text>
+          <Box width={84} style={{ height: 44, background: base, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+            {/* color explicitly on Text — its default (color.foreground) would
+                silently override the Box's inherited color (caught visually
+                during the scales migration: "white" foregrounds rendered ink) */}
+            <Text as="span" size="footnote" weight={600} color={foreground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>base</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
-          <Box width={84} style={{ height: 44, background: hover, color: foreground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <Text as="span" size="footnote" weight={600}>Aa</Text>
+          <Box width={84} style={{ height: 44, background: hover, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+            <Text as="span" size="footnote" weight={600} color={foreground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>hover</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
-          <Box width={84} style={{ height: 44, background: soft, color: softForeground, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <Text as="span" size="footnote" weight={600}>Aa</Text>
+          <Box width={84} style={{ height: 44, background: soft, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+            <Text as="span" size="footnote" weight={600} color={softForeground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>soft</Text>
         </Flex>
@@ -162,12 +205,10 @@ export const BrandAndSemantic: Story = {
   ),
 }
 
-// From `chartKeys` (tokens.ts) — a 6th chart color added to `color` shows up
-// here automatically. (Auditing this against the fix for `scrim`/`danger`
-// also caught a real mistake in the old hand-written version: chart5 used
-// to override to a dark foreground — measured contrast is actually 5.41:1
-// for white vs. 2.58:1 for ink, so the override was making legibility
-// *worse*, not better. Dropped.)
+// From `chartKeys` (tokens.ts) — a chart color added to `color` shows up
+// here automatically. The palette is the CVD-validated categorical 6
+// (DESIGN.md → Charts): its own domain, fixed order, never a reuse of
+// accent/green — and never extended or "improved" by eye.
 export const Charts: Story = {
   render: () => (
     <Container size={900} p="xl">

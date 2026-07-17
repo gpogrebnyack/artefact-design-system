@@ -14,7 +14,9 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
 export type DistributionSegment = { label: string; count: string; widthPct: number }
 export type DistributionGroup = { name: string; total: string; segments: DistributionSegment[] }
 
-const SEGMENT_COLORS = [color.accent, color.chart2, color.chart3, color.chart4, color.chart5]
+// Сегменты — категории, не сигналы: только chart-палитра, в её фиксированном
+// порядке (раньше первым стоял color.accent — смысловая коллизия с CTA).
+const SEGMENT_COLORS = [color.chart1, color.chart2, color.chart3, color.chart4, color.chart5]
 const MAX_SEGMENTS = 5
 
 export function DistributionChart({ groups, rowHeight = 40 }: { groups: DistributionGroup[]; rowHeight?: number }) {
