@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { TitledRow, Surface, Stack, color } from '@/foundation'
 import { SparkLink } from '@/components/composed/SparkLink'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
+import { Heading } from '@/foundation'
 
 /*
  * Foundation/Layout/TitledRow — the section row both source pages build
@@ -36,11 +37,11 @@ export const WithSide: Story = {
   render: () => (
     <Frame>
       <TitledRow
-        title={<Text as="h2" size="headline" weight={400}>Вердикт</Text>}
+        title={<Heading as="h2" size="headline" weight="regular">Вердикт</Heading>}
         side={
           <Stack gap="xs">
-            <Text as="div" size="body" weight={600}>Потенциал заказа</Text>
-            <Text as="div" size="display" weight={600} color={color.accent} style={{ lineHeight: 1.05 }}>
+            <Text as="div" size="body" weight="semibold">Потенциал заказа</Text>
+            <Text as="div" size="display" weight="semibold" color={color.accent} style={{ lineHeight: 1.05 }}>
               ≈ 200 ₽
             </Text>
             <Text as="div" size="caption" color={color.mutedForeground}>
@@ -62,7 +63,7 @@ export const EmptySideStillReserved: Story = {
   render: () => (
     <Frame>
       <Stack gap="lg">
-        <TitledRow title={<Text as="h2" size="headline" weight={400}>Операции</Text>}>
+        <TitledRow title={<Heading as="h2" size="headline" weight="regular">Операции</Heading>}>
           <DemoPanel label="main — той же ширины, что у строк с side" />
         </TitledRow>
         <TitledRow>
@@ -79,10 +80,10 @@ export const FullWidth: Story = {
   render: () => (
     <Frame>
       <Stack gap="lg">
-        <TitledRow title={<Text as="h2" size="headline" weight={400}>Обычная строка</Text>}>
+        <TitledRow title={<Heading as="h2" size="headline" weight="regular">Обычная строка</Heading>}>
           <DemoPanel label="main обычной ширины" />
         </TitledRow>
-        <TitledRow fullWidth title={<Text as="h2" size="headline" weight={400}>На всю ширину</Text>}>
+        <TitledRow fullWidth title={<Heading as="h2" size="headline" weight="regular">На всю ширину</Heading>}>
           <DemoPanel label="fullWidth — явное решение, main забирает место рейла" />
         </TitledRow>
       </Stack>

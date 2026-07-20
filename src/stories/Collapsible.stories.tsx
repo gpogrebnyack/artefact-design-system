@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Icon } from '@/primitives/Icon'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 import { Flex, Stack, Surface, color, motion } from '@/foundation'
 
 /*
@@ -46,7 +46,7 @@ function AddressGroupDemo() {
           }}
         >
           <Flex align="center" gap="sm" wrap={false}>
-            <Text as="span" size="subhead" weight={600}>Большевистская 35</Text>
+            <Text as="span" size="subhead" weight="semibold">Большевистская 35</Text>
             <Text as="span" size="footnote" color={color.mutedForeground}>7 человек</Text>
             <span
               style={{

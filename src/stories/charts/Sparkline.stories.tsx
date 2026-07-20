@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Sparkline } from '@/components/composed/charts/Sparkline'
 import { Flex, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Sparkline — direction is DATA, not a state (an earlier Growing/Declining

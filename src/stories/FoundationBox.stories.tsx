@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Stack, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Foundation/Layout/Box — the base container every layout primitive extends

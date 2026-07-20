@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Container, Surface } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Foundation/Layout/Container — a centered content column of a given

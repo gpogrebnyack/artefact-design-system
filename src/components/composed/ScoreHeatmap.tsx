@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react"
 import { color, radius } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import "./ScoreHeatmap.css"
 
 /*
@@ -147,7 +147,7 @@ export function ScoreHeatmap({
           className="artefact-heatmap-detail"
           style={{ background: color[`${selTone}Soft`], borderRadius: 12 }}
         >
-          <Text as="div" size="body" weight={600} style={{ marginBottom: 8 }}>
+          <Text as="div" size="body" weight="semibold" style={{ marginBottom: 8 }}>
             {sel.name} · {sel.earned}/{sel.max} · {statusLabel(selRatio)}
           </Text>
           {sel.subs && sel.subs.length > 0 && (

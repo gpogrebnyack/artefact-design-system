@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { StepFunnel } from '@/components/composed/StepFunnel'
 import { Stack } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * StepFunnel — dialog-v2's `.up4-funnel`: how far an upsell attempt got

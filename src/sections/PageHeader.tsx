@@ -1,7 +1,8 @@
 import type { ReactNode } from "react"
 import { Flex, TitledRow } from "@/foundation"
 import { color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Heading } from "@/foundation"
+import { Text } from "@/foundation"
 
 /*
  * PageHeader — the page-top header both source pages open with (komanda's
@@ -28,9 +29,9 @@ export function PageHeader({ title, meta, action }: PageHeaderProps) {
   return (
     <TitledRow
       title={
-        <Text as="h1" size="headline" weight={600}>
+        <Heading as="h1" size="headline">
           {title}
-        </Text>
+        </Heading>
       }
     >
       <Flex justify="space-between" align="center" gap="base">

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Container, Flex, Stack, color, breakpoint } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Foundation/Breakpoints — the TWO breakpoints of the system (tokens.ts
@@ -42,7 +42,7 @@ export const TwoBreakpoints: Story = {
           {POINTS.map((p) => (
             <Stack key={p.name} gap="xs">
               <Flex align="center" gap="md">
-                <Text as="span" size="body" weight={600} style={{ width: 88 }}>{p.name}</Text>
+                <Text as="span" size="body" weight="semibold" style={{ width: 88 }}>{p.name}</Text>
                 <Text as="span" size="caption" style={{ fontVariantNumeric: 'tabular-nums' }}>{p.px}px</Text>
               </Flex>
               {/* the bar is the 0..1280 page width; the fill shows where the

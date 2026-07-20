@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Container, Flex, Stack, color, motion } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 import './FoundationMotion.css'
 
 /*

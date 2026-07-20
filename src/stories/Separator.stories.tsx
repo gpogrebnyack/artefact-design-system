@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Separator } from '@/components/ui/separator'
 import { Box, Flex, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 const meta: Meta<typeof Separator> = { title: 'Primitives/Separator', component: Separator }
 export default meta
@@ -10,7 +10,7 @@ type Story = StoryObj<typeof Separator>
 export const Horizontal: Story = {
   render: () => (
     <Box width={288}>
-      <Text as="div" size="caption" weight={600}>Татьяна Климова</Text>
+      <Text as="div" size="caption" weight="semibold">Татьяна Климова</Text>
       <Text as="div" size="caption" color={color.mutedForeground}>Сотрудник · Большевистская 35</Text>
       <Separator style={{ marginBlock: 12 }} />
       <Text as="div" size="caption" color={color.mutedForeground}>Средняя оценка за неделю: 7,1</Text>

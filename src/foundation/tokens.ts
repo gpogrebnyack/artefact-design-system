@@ -186,27 +186,43 @@ export const spacing = {
 
 export type SpacingKey = keyof typeof spacing
 
-/** Type scale (px + line-height) — the three named tokens komanda.html
- *  declares itself (--text-footnote/caption/body) extended upward with the
- *  heading sizes actually found in its markup (18/20/24), plus one larger
- *  step (`display`) for hero-scale contexts not yet exercised by either
- *  source page. */
-export const type = {
-  footnote: { size: 12, lineHeight: 1.45 }, // var(--text-footnote)
-  caption: { size: 14, lineHeight: 1.45 }, // var(--text-caption)
-  body: { size: 16, lineHeight: 1.55 }, // var(--text-body)
-  subhead: { size: 18, lineHeight: 1.35 },
-  title: { size: 20, lineHeight: 1.3 },
-  headline: { size: 24, lineHeight: 1.25 },
-  display: { size: 32, lineHeight: 1.15 },
-} as const
-
-export type TypeKey = keyof typeof type
-
 /** Font family — self-hosted Struve, see brand-overrides.css for @font-face. */
 export const font = {
   sans: "var(--font-sans)",
 } as const
+
+/** Font weights — the three Struve faces, NAMED (kills magic 400/500/600 at
+ *  call sites; `Text` accepts these names). Weight is a SEPARATE axis from
+ *  the size scale: a step is set at its resting weight, 500/600 applied per
+ *  use — see DESIGN.md Typography. 400 text · 500 UI chrome · 600 accent. No
+ *  bold: emphasis is size/color, not stroke weight (Struve ships no bold). */
+export const fontWeight = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+} as const
+
+export type FontWeightName = keyof typeof fontWeight
+
+/** Type scale — composite text styles (DTCG `typography` shape): each step
+ *  bundles fontFamily + size + lineHeight + letterSpacing, so a step maps 1:1
+ *  to a Figma text style / Style Dictionary typography token. Weight is the
+ *  one field deliberately NOT bundled — separate axis (see `fontWeight`).
+ *  letterSpacing tightens as size grows (Radix-calibrated): slightly loose at
+ *  footnote, negative tracking by display, so large headings don't read
+ *  rubbery. Steps: komanda's own --text-footnote/caption/body extended with
+ *  the heading sizes found in its markup (18/20/24) + one hero step. */
+export const type = {
+  footnote: { fontFamily: font.sans, size: 12, lineHeight: 1.45, letterSpacing: "0.0025em" },
+  caption:  { fontFamily: font.sans, size: 14, lineHeight: 1.45, letterSpacing: "0em" },
+  body:     { fontFamily: font.sans, size: 16, lineHeight: 1.55, letterSpacing: "0em" },
+  subhead:  { fontFamily: font.sans, size: 18, lineHeight: 1.35, letterSpacing: "-0.0025em" },
+  title:    { fontFamily: font.sans, size: 20, lineHeight: 1.3,  letterSpacing: "-0.005em" },
+  headline: { fontFamily: font.sans, size: 24, lineHeight: 1.25, letterSpacing: "-0.00625em" },
+  display:  { fontFamily: font.sans, size: 32, lineHeight: 1.15, letterSpacing: "-0.01em" },
+} as const
+
+export type TypeKey = keyof typeof type
 
 /** Motion — extracted from komanda.html, where these exact values recur
  *  across independent animations rather than being one-offs. `spring` is

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Flex, Container, Stack, color, semanticRoles, chartKeys } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Foundation/Colors — every color, one place, named by role. No more
@@ -46,7 +46,7 @@ export const Scales: Story = {
         {SCALE_NAMES.map((scale) => (
           <Flex key={scale} gap="xs" align="center" style={{ flexWrap: 'nowrap' }}>
             <Box width={52} style={{ flexShrink: 0 }}>
-              <Text as="span" size="footnote" weight={600} color={color.mutedForeground}>{scale}</Text>
+              <Text as="span" size="footnote" weight="semibold" color={color.mutedForeground}>{scale}</Text>
             </Box>
             {Array.from({ length: 12 }, (_, i) => (
               <Box key={i} width={64} style={{ height: 40, background: `var(--${scale}-${i + 1})`, flexShrink: 0 }} radius="md" />
@@ -60,7 +60,7 @@ export const Scales: Story = {
         {(['white', 'black'] as const).map((tone) => (
           <Flex key={tone} gap="xs" align="center" style={{ flexWrap: 'nowrap' }}>
             <Box width={52} style={{ flexShrink: 0 }}>
-              <Text as="span" size="footnote" weight={600} color={color.mutedForeground}>{tone}-a</Text>
+              <Text as="span" size="footnote" weight="semibold" color={color.mutedForeground}>{tone}-a</Text>
             </Box>
             {Array.from({ length: 12 }, (_, i) => (
               <Box key={i} width={64} style={{ height: 40, background: `linear-gradient(90deg, ${color.accent} 50%, ${color.background} 50%)`, flexShrink: 0, position: 'relative', overflow: 'hidden' }} radius="md">
@@ -109,26 +109,26 @@ function RoleRow({
 }: { name: string; base: string; foreground: string; hover: string; soft: string; softForeground: string; softStrong?: string }) {
   return (
     <Flex direction="column" gap="xs">
-      <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>{name}</Text>
+      <Text as="span" size="footnote" weight="semibold" color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>{name}</Text>
       <Flex gap="sm">
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: base, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
             {/* color explicitly on Text — its default (color.foreground) would
                 silently override the Box's inherited color (caught visually
                 during the scales migration: "white" foregrounds rendered ink) */}
-            <Text as="span" size="footnote" weight={600} color={foreground}>Aa</Text>
+            <Text as="span" size="footnote" weight="semibold" color={foreground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>base</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: hover, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <Text as="span" size="footnote" weight={600} color={foreground}>Aa</Text>
+            <Text as="span" size="footnote" weight="semibold" color={foreground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>hover</Text>
         </Flex>
         <Flex direction="column" gap="xs" align="center">
           <Box width={84} style={{ height: 44, background: soft, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-            <Text as="span" size="footnote" weight={600} color={softForeground}>Aa</Text>
+            <Text as="span" size="footnote" weight="semibold" color={softForeground}>Aa</Text>
           </Box>
           <Text as="span" size="footnote" color={color.mutedForeground}>soft</Text>
         </Flex>
@@ -181,11 +181,11 @@ export const BrandAndSemantic: Story = {
             assistant dock) and the overlay veil behind its assistant panel
             (full demo: Foundation/Surface's `overlay` variant story). */}
         <Flex direction="column" gap="xs">
-          <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>gradient &amp; overlay</Text>
+          <Text as="span" size="footnote" weight="semibold" color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>gradient &amp; overlay</Text>
           <Flex gap="sm">
             <Flex direction="column" gap="xs" align="center">
               <Box width={84} style={{ height: 44, backgroundImage: color.accentGradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-                <Text as="span" size="footnote" weight={600} color={color.secondary}>Aa</Text>
+                <Text as="span" size="footnote" weight="semibold" color={color.secondary}>Aa</Text>
               </Box>
               <Text as="span" size="footnote" color={color.mutedForeground}>accentGradient</Text>
             </Flex>
@@ -199,7 +199,7 @@ export const BrandAndSemantic: Story = {
                 radius="lg"
               >
                 <Box style={{ background: color.overlay, backdropFilter: 'blur(4px)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
-                  <Text as="span" size="footnote" weight={600} color={color.secondary}>Aa</Text>
+                  <Text as="span" size="footnote" weight="semibold" color={color.secondary}>Aa</Text>
                 </Box>
               </Box>
               <Text as="span" size="footnote" color={color.mutedForeground}>overlay (on a busy bg)</Text>
@@ -209,7 +209,7 @@ export const BrandAndSemantic: Story = {
                   framed by the paper card it wraps in LayeredCard */}
               <Box width={84} style={{ height: 44, background: color.surfaceWash, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
                 <Box style={{ background: color.secondary, padding: '4px 10px' }} radius="md">
-                  <Text as="span" size="footnote" weight={600}>Aa</Text>
+                  <Text as="span" size="footnote" weight="semibold">Aa</Text>
                 </Box>
               </Box>
               <Text as="span" size="footnote" color={color.mutedForeground}>surfaceWash (LayeredCard)</Text>

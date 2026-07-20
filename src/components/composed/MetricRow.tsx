@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { Stack } from "@/foundation"
 import { color } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import type { SemanticTone } from "./SemanticTone"
 
 /*
@@ -31,12 +31,12 @@ export function MetricRow({ label, value, delta, tone, trend }: MetricRowProps) 
         {label}
       </Text>
       {value != null && (
-        <Text as="span" size="body" weight={600}>
+        <Text as="span" size="body" weight="semibold">
           {value}
         </Text>
       )}
       {delta != null && (
-        <Text as="span" size="footnote" weight={600} color={deltaColor} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+        <Text as="span" size="footnote" weight="semibold" color={deltaColor} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
           {/* straight ↑/↓, matching the source's own `.einfo` deltas — the
               diagonal trend-up/trend-down glyphs are the SCORE's language
               (ScorePill), the source deliberately distinguishes the two */}

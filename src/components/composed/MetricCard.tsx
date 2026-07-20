@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Flex, Stack, Surface, color } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import { Sparkline } from "./charts/Sparkline"
 import type { SemanticTone } from "./SemanticTone"
 
@@ -47,11 +47,11 @@ export function MetricCard({ label, value, delta, tone, trend, spark, sparkColor
         </Text>
         <Flex gap="base" align="center" justify="space-between" wrap={false}>
           <Stack gap="none">
-            <Text as="span" size="headline" weight={600}>
+            <Text as="span" size="headline" weight="semibold">
               {value}
             </Text>
             {delta != null && (
-              <Text as="span" size="footnote" weight={600} color={deltaColor}
+              <Text as="span" size="footnote" weight="semibold" color={deltaColor}
                 style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                 {trend && <Icon name={trend === "up" ? "arrow-up" : "arrow-down"} size={12} />}
                 {delta}

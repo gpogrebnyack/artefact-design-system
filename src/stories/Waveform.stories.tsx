@@ -3,7 +3,7 @@ import { Waveform } from '@/components/composed/Waveform'
 import { Button } from '@/components/ui/button'
 import { Flex, color } from '@/foundation'
 import { Icon } from '@/primitives/Icon'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Waveform — static voice-sample bars. Same formalization story as

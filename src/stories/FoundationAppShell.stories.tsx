@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AppShell, TitledRow, Grid, Stack, Surface, color } from '@/foundation'
 import { SidebarNav, EXAMPLE_NAV_ITEMS } from '@/sections/SidebarNav'
 import { SparkLink } from '@/components/composed/SparkLink'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
+import { Heading } from '@/foundation'
 
 /*
  * Foundation/Layout/AppShell — the page-layout invariant every real page
@@ -42,7 +43,7 @@ export const PageAnatomy: Story = {
       }
     >
       <Stack gap="lg">
-        <TitledRow title={<Text as="h2" size="headline" weight={400}>Секция с сеткой</Text>}>
+        <TitledRow title={<Heading as="h2" size="headline" weight="regular">Секция с сеткой</Heading>}>
           <Grid minColWidth={240} gap="base">
             <DemoPanel label="AppShell — каркас" />
             <DemoPanel label="TitledRow — строка-секция" />
@@ -50,10 +51,10 @@ export const PageAnatomy: Story = {
           </Grid>
         </TitledRow>
         <TitledRow
-          title={<Text as="h2" size="headline" weight={400}>Секция с рейлом</Text>}
+          title={<Heading as="h2" size="headline" weight="regular">Секция с рейлом</Heading>}
           side={
             <Stack gap="xs">
-              <Text as="div" size="body" weight={600}>Инсайт</Text>
+              <Text as="div" size="body" weight="semibold">Инсайт</Text>
               <Text as="div" size="caption" color={color.mutedForeground}>
                 заметка на полях — правый рейл
               </Text>

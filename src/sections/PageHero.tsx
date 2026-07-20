@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { Stack, TitledRow, color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Heading } from "@/foundation"
+import { Text } from "@/foundation"
 
 /*
  * PageHero — страничная шапка ДЛЯ СПИСОЧНЫХ И ДЕТАЛЬНЫХ страниц: заголовок
@@ -47,9 +48,9 @@ export function PageHero({ title, crumbs, badge, sub, lead, action, fullWidth = 
           </Text>
         )}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-          <Text as="h1" size="display" weight={600} style={{ letterSpacing: "-0.02em" }}>
+          <Heading as="h1" size="display" style={{ letterSpacing: "-0.02em" }}>
             {title}
-          </Text>
+          </Heading>
           {action}
         </div>
         {badge && <div style={{ display: "flex", alignItems: "center", gap: 8 }}>{badge}</div>}

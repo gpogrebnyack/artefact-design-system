@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CollapsibleGroup } from '@/components/composed/CollapsibleGroup'
 import { StatusBadge } from '@/components/composed/SemanticTone'
 import { Grid, Surface } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * CollapsibleGroup — komanda's .addr-group formalized: group header

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { TimeTag } from '@/components/composed/TimeTag'
 import { Flex } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * TimeTag — dialog-v2's `.timetag`/`.tl-time`: the "jump the player to this

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 
 /*
  * StepFunnel — dialog-v2.html's `.up4-funnel`: a compact stage indicator
@@ -41,7 +41,7 @@ export function StepFunnel({ steps, reached, tone = "accent" }: StepFunnelProps)
             style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}
           >
             <span style={{ width: "100%", height: 6, borderRadius: 3, background: bar }} />
-            <Text as="span" size="footnote" weight={500} color={text}>
+            <Text as="span" size="footnote" weight="medium" color={text}>
               {label}
             </Text>
           </div>

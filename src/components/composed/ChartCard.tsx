@@ -2,7 +2,8 @@ import type { ReactNode } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Flex, Stack } from "@/foundation"
 import { color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Heading } from "@/foundation"
+import { Text } from "@/foundation"
 
 /*
  * ChartCard — dashboard-prototype.html's `.media-chart-card` +
@@ -31,9 +32,9 @@ export function ChartCard({ title, aside, sub, children }: ChartCardProps) {
         <Stack gap="base">
           <Flex justify="space-between" align="baseline" gap="base" wrap={false}>
             <Stack gap="xs">
-              <Text as="h3" size="body" weight={600}>
+              <Heading as="h3" size="body">
                 {title}
-              </Text>
+              </Heading>
               {sub != null && (
                 <Text as="span" size="footnote" color={color.mutedForeground}>
                   {sub}

@@ -9,7 +9,6 @@ export * from "./foundation"
 // Primitives — ours
 export * from "./primitives/Icon"
 export * from "./primitives/Image"
-export * from "./primitives/Text"
 
 // util
 export * from "./lib/utils"

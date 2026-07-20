@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { LayeredCard } from '@/components/composed/LayeredCard'
 import { Stack, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
+import { Heading } from '@/foundation'
 import { TimeTag } from '@/components/composed/TimeTag'
 
 /*
@@ -24,7 +25,7 @@ export const WithFooter: Story = {
       <LayeredCard
         footer={
           <Stack gap="xs">
-            <Text as="span" size="footnote" weight={600} color={color.textTertiary} style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <Text as="span" size="footnote" weight="semibold" color={color.textTertiary} style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Как лучше
             </Text>
             <Text as="div" size="body" style={{ lineHeight: 1.5 }}>
@@ -35,9 +36,9 @@ export const WithFooter: Story = {
         }
       >
         <Stack gap="sm">
-          <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25 }}>
+          <Heading as="div" size="body">
             Гость заказал только сэндвич, но сотрудник не предложил дополнить заказ напитком
-          </Text>
+          </Heading>
           <Text as="div" size="body" color={color.mutedForeground}>
             «Сэндвич подогреть?» <TimeTag time="00:05" onClick={() => {}} />
           </Text>

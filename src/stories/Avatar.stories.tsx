@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Flex, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 import { SemanticAvatarFallback } from '@/components/composed/SemanticTone'
 
 const meta: Meta<typeof Avatar> = {

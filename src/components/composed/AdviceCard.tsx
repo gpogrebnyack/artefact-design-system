@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Stack, color } from "@/foundation"
 import { Icon, type IconName } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 
 /*
  * AdviceCard — Components tier (Icon + Text + Foundation Stack). Found
@@ -31,7 +31,7 @@ export function AdviceCard({ icon, tone = "ink", value, text, note }: AdviceCard
       <Icon name={icon} size={40} color={iconColor} />
       {/* big number: regular weight + tight line-height, per DESIGN.md's
           own rule for large numbers — reuses the `display` type step. */}
-      {value != null && <Text as="span" size="display" weight={400}>{value}</Text>}
+      {value != null && <Text as="span" size="display" weight="regular">{value}</Text>}
       <Text as="span" size="caption" style={{ opacity: 0.72 }}>{text}</Text>
       {note && (
         <Text as="span" size="footnote" style={{ opacity: 0.68, marginTop: 2 }}>{note}</Text>

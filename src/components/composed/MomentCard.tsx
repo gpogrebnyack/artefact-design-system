@@ -1,6 +1,7 @@
 import { forwardRef, type ReactNode } from "react"
 import { color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
+import { Heading } from "@/foundation"
 import { TimeTag } from "./TimeTag"
 import "./MomentCard.css"
 
@@ -57,12 +58,11 @@ export const MomentCard = forwardRef<HTMLDivElement, MomentCardProps>(function M
       <span style={{ alignSelf: "flex-start", marginBottom: 12 }}>
         <TimeTag time={time} tone={isEnd ? "muted" : tone} />
       </span>
-      <Text
+      <Heading
         as="div"
         size="body"
-        weight={600}
         color={isEnd ? color.mutedForeground : undefined}
-        style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7, lineHeight: 1.25 }}
+        style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 7 }}
       >
         {!isEnd && (
           <span
@@ -77,7 +77,7 @@ export const MomentCard = forwardRef<HTMLDivElement, MomentCardProps>(function M
           />
         )}
         {title}
-      </Text>
+      </Heading>
       {description && (
         <Text as="div" size="footnote" color={color.mutedForeground} style={{ lineHeight: 1.5, marginBottom: 10 }}>
           {description}

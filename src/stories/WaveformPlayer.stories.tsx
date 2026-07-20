@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { WaveformPlayer, type WaveformPlayerHandle } from '@/components/composed/WaveformPlayer'
 import { Flex, Surface, color } from '@/foundation'
 import { Icon } from '@/primitives/Icon'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 import { TimeTag } from '@/components/composed/TimeTag'
 
 /*

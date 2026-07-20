@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { PageHero } from "@/sections/PageHero"
 import { Button } from "@/components/ui/button"
 import { StatusBadge } from "@/components/composed/SemanticTone"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import { color } from "@/foundation"
 
 /*

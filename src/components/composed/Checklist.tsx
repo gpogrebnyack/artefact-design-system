@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { color } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 
 /*
  * Checklist — dialog-v2.html's `.checklist`/`.cl-row`: the binary

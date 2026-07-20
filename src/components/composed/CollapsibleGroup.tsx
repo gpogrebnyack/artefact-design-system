@@ -3,7 +3,7 @@ import { Flex, motion } from "@/foundation"
 import "./CollapsibleGroup.css"
 import { color } from "@/foundation"
 import { Icon } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 
 /*
  * CollapsibleGroup — komanda.html's `.addr-group`: a clickable group header
@@ -60,7 +60,7 @@ export function CollapsibleGroup({
         className="artefact-collapsible-group-head artefact-focus-ring"
       >
         <Flex align="center" gap="sm" wrap={false}>
-          <Text as="span" size="subhead" weight={600}>
+          <Text as="span" size="subhead" weight="semibold">
             {title}
           </Text>
           {count != null && (

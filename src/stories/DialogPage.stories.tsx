@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useRef, useState, type ReactNode } from 'react'
 import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color, type as typeScale } from '@/foundation'
 import { Icon, type IconName } from '@/primitives/Icon'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
+import { Heading } from '@/foundation'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Checklist } from '@/components/composed/Checklist'
@@ -81,7 +82,7 @@ const ANS = {
 function SectionTitle({ children, sub }: { children: ReactNode; sub?: ReactNode }) {
   return (
     <Stack gap="xs">
-      <Text as="h2" size="headline" weight={400} style={{ margin: 0 }}>{children}</Text>
+      <Heading as="h2" size="headline" weight="regular" style={{ margin: 0 }}>{children}</Heading>
       {sub && <Text as="div" size="caption" color={color.mutedForeground}>{sub}</Text>}
     </Stack>
   )
@@ -101,7 +102,7 @@ function UppercaseLabel({ children }: { children: ReactNode }) {
     <Text
       as="span"
       size="footnote"
-      weight={600}
+      weight="semibold"
       color={color.textTertiary}
       style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}
     >
@@ -180,12 +181,12 @@ function DialogPageDemo() {
           {/* Заказ — page header row: crumb + h1 + meta (the rail carries
               the entity name, same PageHeader anatomy but with the crumb
               line PageHeader doesn't have — composed from parts instead) */}
-          <TitledRow title={<Text as="h2" size="headline" weight={400}>Заказ</Text>}>
+          <TitledRow title={<Heading as="h2" size="headline" weight="regular">Заказ</Heading>}>
             <Stack gap="sm">
               <Text as="div" size="caption" color={color.textTertiary}>
                 Заказы <span style={{ margin: '0 4px' }}>›</span> Сэндвич
               </Text>
-              <Text as="h1" size="display" weight={700} style={{ letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0 }}>
+              <Text as="h1" size="display" weight="semibold" style={{ letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0 }}>
                 Сэндвич
               </Text>
               <Flex align="center" gap="sm" style={{ marginTop: 6 }}>
@@ -215,8 +216,8 @@ function DialogPageDemo() {
           <TitledRow
             side={
               <Stack gap="xs">
-                <Text as="div" size="body" weight={600}>Потенциал заказа</Text>
-                <Text as="div" size="display" weight={600} color={color.accent} style={{ lineHeight: 1.05 }}>
+                <Text as="div" size="body" weight="semibold">Потенциал заказа</Text>
+                <Text as="div" size="display" weight="semibold" color={color.accent} style={{ lineHeight: 1.05 }}>
                   ≈ 200 ₽
                 </Text>
                 <Text as="div" size="caption" color={color.mutedForeground} style={{ lineHeight: 1.5 }}>
@@ -234,12 +235,12 @@ function DialogPageDemo() {
               <Surface variant="panel" radius="xl" style={{ padding: '20px 24px' }}>
                 <Flex align="flex-start" gap="4xl" wrap>
                   <VerdictStat label="Общий балл">
-                    <Text as="span" size="display" weight={600} color={color.accent} style={{ lineHeight: 1 }}>
+                    <Text as="span" size="display" weight="semibold" color={color.accent} style={{ lineHeight: 1 }}>
                       4.2
                     </Text>
                   </VerdictStat>
                   <VerdictStat label="Категория">
-                    <Text as="span" size="title" weight={600} style={{ lineHeight: 1.15 }}>Только еда</Text>
+                    <Text as="span" size="title" weight="semibold" style={{ lineHeight: 1.15 }}>Только еда</Text>
                     <Flex gap="xs" wrap>
                       <StatusBadge tone="success">✓ Еда</StatusBadge>
                       <StatusBadge tone="muted">— Напиток</StatusBadge>
@@ -248,7 +249,7 @@ function DialogPageDemo() {
                   </VerdictStat>
                   <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
                     <VerdictStat label="Сумма заказа">
-                      <Text as="span" size="title" weight={600} style={{ lineHeight: 1.15 }}>181 ₽</Text>
+                      <Text as="span" size="title" weight="semibold" style={{ lineHeight: 1.15 }}>181 ₽</Text>
                     </VerdictStat>
                   </div>
                 </Flex>
@@ -256,7 +257,7 @@ function DialogPageDemo() {
 
               <Surface variant="panel" radius="xl" p="lg">
                 <Stack gap="sm">
-                  <Text as="div" size="body" weight={600}>Резюме</Text>
+                  <Text as="div" size="body" weight="semibold">Резюме</Text>
                   <Text as="p" size="body" style={{ margin: 0, lineHeight: 1.6 }}>
                     Обслуживание прошло быстро и корректно в плане оформления заказа (сэндвича): бариста
                     уточнил необходимость подогрева и спросил карту лояльности. Однако сотрудник упустил
@@ -265,7 +266,7 @@ function DialogPageDemo() {
                     предложение сезонных напитков гостям, которые заказывают только еду.
                   </Text>
                   <Separator style={{ marginTop: 8 }} />
-                  <Text as="div" size="body" weight={600}>Сильные стороны</Text>
+                  <Text as="div" size="body" weight="semibold">Сильные стороны</Text>
                   <Stack gap="none">
                     {([
                       ['Своевременно уточнил наличие карты лояльности.', 3],
@@ -356,9 +357,9 @@ function DialogPageDemo() {
               >
                 <PriorityIcon icon="flag" label="Важно" bg={color.accentSoft} fg={color.accent} />
                 <Stack gap="sm">
-                  <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25, paddingRight: 34 }}>
+                  <Heading as="div" size="body" style={{ paddingRight: 34 }}>
                     Гость заказал только сэндвич, но сотрудник не предложил дополнить заказ сезонным напитком
-                  </Text>
+                  </Heading>
                   <Text as="div" size="body" color={color.mutedForeground} style={{ lineHeight: 1.5 }}>
                     «Сэндвич подогреть?» {jump(2)}
                   </Text>
@@ -377,9 +378,9 @@ function DialogPageDemo() {
               >
                 <PriorityIcon icon="warning" label="Внимание" bg={color.warningSoft} fg={color.foreground} />
                 <Stack gap="sm">
-                  <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25, paddingRight: 34 }}>
+                  <Heading as="div" size="body" style={{ paddingRight: 34 }}>
                     В начале диалога не использовано фирменное приветствие сети
-                  </Text>
+                  </Heading>
                   <Text as="div" size="body" color={color.mutedForeground} style={{ lineHeight: 1.5 }}>
                     «Доброе утро.» {jump(0)}
                   </Text>
@@ -449,9 +450,9 @@ function DialogPageDemo() {
                   <Stack gap="none">
                     <Flex justify="space-between" align="flex-start" gap="md" wrap={false}>
                       <Stack gap="none" style={{ minWidth: 0 }}>
-                        <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25, letterSpacing: '-0.02em' }}>
+                        <Heading as="div" size="body" style={{ letterSpacing: '-0.02em' }}>
                           {it.title}
-                        </Text>
+                        </Heading>
                         <Text as="div" size="footnote" color={color.textTertiary} style={{ marginTop: 3 }}>{it.ctx}</Text>
                       </Stack>
                       <StatusBadge tone={it.tone} style={{ flexShrink: 0 }}>{it.status}</StatusBadge>
@@ -459,7 +460,7 @@ function DialogPageDemo() {
                     <div style={{ margin: '16px 0 8px' }}>
                       <StepFunnel steps={UP_STEPS} reached={it.reached} tone={it.tone} />
                     </div>
-                    <Text as="div" size="footnote" weight={600} color={color[`${it.tone}SoftForeground`]}>
+                    <Text as="div" size="footnote" weight="semibold" color={color[`${it.tone}SoftForeground`]}>
                       {it.fmeta}
                     </Text>
                     <Text as="div" size="body" color={color.mutedForeground} style={{ lineHeight: 1.5, marginTop: 12 }}>

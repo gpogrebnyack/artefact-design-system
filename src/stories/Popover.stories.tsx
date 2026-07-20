@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 import { Stack, color } from '@/foundation'
 
 /*
@@ -25,7 +25,7 @@ export const Default: Story = {
       </PopoverTrigger>
       <PopoverContent style={{ width: 280 }}>
         <Stack gap="sm">
-          <Text as="div" weight={600}>Состав оценки</Text>
+          <Text as="div" weight="semibold">Состав оценки</Text>
           <Text as="div" size="caption" color={color.mutedForeground}>
             Тон диалога, скорость обслуживания и работа по скрипту — за последние 4 недели.
           </Text>

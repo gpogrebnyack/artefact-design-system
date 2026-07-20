@@ -1,42 +1,86 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Container, Stack, type as typeScale } from '@/foundation'
+import { Container, Stack, Flex, type as typeScale, fontWeight, color, Text as T, Heading as H } from '@/foundation'
 
 /*
- * Foundation/Typography — the named type steps every Text primitive picks
- * from (footnote/caption/body/subhead/title/headline/display).
+ * Foundation/Typography — the whole typography reference in one place, four
+ * stories: Weights · Text (size ramp) · Heading (size ramp) · Colors.
+ * (Text and Heading are the two primitives; their API is documented in
+ * COMPONENTS.md — these stories are the visual reference, not per-component
+ * autodocs.)
  */
 const meta: Meta = { title: 'Foundation/Typography', parameters: { layout: 'fullscreen' } }
 export default meta
 type Story = StoryObj
 
-export const TypeScale: Story = {
+const SIZES = Object.keys(typeScale) as (keyof typeof typeScale)[]
+
+// 1) Weights — the three Struve faces as named tokens; applied via weight="…".
+export const Weights: Story = {
   render: () => (
     <Container size={700} p="xl">
       <Stack gap="sm">
-        {Object.entries(typeScale).map(([name, t]) => (
-          <div key={name} style={{ fontSize: t.size, lineHeight: t.lineHeight }}>
-            {name} — {t.size}px / {t.lineHeight}
-          </div>
+        {(Object.keys(fontWeight) as (keyof typeof fontWeight)[]).map((w) => (
+          <T key={w} as="div" size="body" weight={w}>
+            {w} ({fontWeight[w]}) — {w === 'regular' ? 'обычный текст' : w === 'medium' ? 'UI-хром: кнопки, чипы, подписи' : 'акцент: имена, заголовки, значения'}
+          </T>
+        ))}
+        <T as="div" size="body" color={color.mutedForeground}>Курсива нет: цитата — «ёлочки» и подложка, не наклон.</T>
+      </Stack>
+    </Container>
+  ),
+}
+
+// 2) Text — the size ramp on Text (prose leading). Meta = size · lh · ls per step.
+export const Text: Story = {
+  render: () => (
+    <Container size={820} p="xl">
+      <Stack gap="lg">
+        {SIZES.map((s) => (
+          <Flex key={s} align="baseline" gap="lg" wrap={false}>
+            <T as="div" size={s} style={{ flex: 1 }}>{s} — съешь ещё этих булочек</T>
+            <T as="span" size="footnote" color={color.mutedForeground} style={{ fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+              {typeScale[s].size}px · lh {typeScale[s].lineHeight} · ls {typeScale[s].letterSpacing}
+            </T>
+          </Flex>
         ))}
       </Stack>
     </Container>
   ),
 }
 
-/* The system's whole weight/style vocabulary — deliberately tiny: Struve
- * self-hosts upright 400/500/600 (500 landed later from the designer's
- * .otf — before that every fontWeight:500 silently fell back to 400). No
- * italic exists (faked slant was swept out — DESIGN.md → Typography);
- * Light/Bold from the delivery are deliberately NOT wired. Mirrors the
- * two-weight icon rule (Primitives/Icon → Weights). */
-export const Weights: Story = {
+// 3) Heading — the SAME size ramp, same layout as Text, so you can compare
+// side by side: identical sizes, but tighter leading (metadata shows the
+// Heading line-height). H1–H6 via `as`, size via `size` — both full scale.
+export const Heading: Story = {
+  render: () => (
+    <Container size={820} p="xl">
+      <Stack gap="lg">
+        {SIZES.map((s) => (
+          <Flex key={s} align="baseline" gap="lg" wrap={false}>
+            <H as="div" size={s} style={{ flex: 1 }}>{s} — Команда</H>
+            <T as="span" size="footnote" color={color.mutedForeground} style={{ fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+              {typeScale[s].size}px · lh {Math.min(Number(typeScale[s].lineHeight), 1.25)} · ls {typeScale[s].letterSpacing}
+            </T>
+          </Flex>
+        ))}
+      </Stack>
+    </Container>
+  ),
+}
+
+// 4) Colors — type in the semantic color roles. The roles themselves live in
+// Foundation/Colors; this just shows them applied to text.
+export const Colors: Story = {
   render: () => (
     <Container size={700} p="xl">
-      <Stack gap="sm">
-        <div style={{ fontSize: 16, fontWeight: 400 }}>400 — весь обычный текст</div>
-        <div style={{ fontSize: 16, fontWeight: 500 }}>500 — UI-хром: кнопки, чипы, подписи контролов</div>
-        <div style={{ fontSize: 16, fontWeight: 600 }}>600 — акцент: имена, заголовки блоков, значения</div>
-        <div style={{ fontSize: 16 }}>Курсива нет: цитата — «ёлочки» и подложка, не наклон.</div>
+      <Stack gap="xs">
+        <T as="div" size="body">Основной текст — foreground</T>
+        <T as="div" size="body" color={color.mutedForeground}>Вторичный — mutedForeground</T>
+        <T as="div" size="body" color={color.textTertiary}>Третичный — textTertiary</T>
+        <T as="div" size="caption" weight="semibold" color={color.success}>Высокая оценка — success</T>
+        <T as="div" size="caption" weight="semibold" color={color.warning}>Мало смен — warning</T>
+        <T as="div" size="caption" weight="semibold" color={color.accent}>Требует внимания — accent</T>
+        <T as="div" size="caption" weight="semibold" color={color.danger}>Ошибка — danger</T>
       </Stack>
     </Container>
   ),

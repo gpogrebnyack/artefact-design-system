@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Surface, Flex, Stack, color, SURFACE_VARIANTS, type SurfaceVariant } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 const meta: Meta<typeof Surface> = { title: 'Foundation/Surface', component: Surface }
 export default meta
@@ -39,7 +39,7 @@ export const Variants: Story = {
         const override = DEMO_OVERRIDES[variant]
         return (
           <Surface key={variant} variant={variant} p="lg" width={220} style={override?.wrapperStyle}>
-            <Text as="div" size="body" weight={600} color={override?.textColor}>{variant}</Text>
+            <Text as="div" size="body" weight="semibold" color={override?.textColor}>{variant}</Text>
             <Text as="div" size="caption" color={override?.textColor ?? color.mutedForeground} style={{ opacity: override?.textColor ? 0.8 : undefined }}>
               {description}
             </Text>
@@ -58,7 +58,7 @@ export const AsACardBase: Story = {
   render: () => (
     <Surface variant="panel" p="lg" width={280}>
       <Stack gap="xs">
-        <Text as="div" size="subhead" weight={600}>Татьяна Климова</Text>
+        <Text as="div" size="subhead" weight="semibold">Татьяна Климова</Text>
         <Text as="div" size="caption" color={color.mutedForeground}>Бариста · Большевистская 35</Text>
       </Stack>
     </Surface>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Grid, Surface, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Foundation/Layout/Grid — the card grid that decides its own column count
@@ -30,7 +30,7 @@ export const AutoFitReflow: Story = {
       <Grid minColWidth={260} gap="base">
         {ITEMS.map((it) => (
           <Surface key={it.title} variant="panel" p="lg" radius="xl">
-            <Text as="div" size="body" weight={600}>{it.title}</Text>
+            <Text as="div" size="body" weight="semibold">{it.title}</Text>
             <Text as="div" size="caption" color={color.mutedForeground} style={{ marginTop: 4 }}>
               {it.body}
             </Text>

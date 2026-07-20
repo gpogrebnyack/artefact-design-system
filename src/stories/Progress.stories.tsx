@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Progress } from '@/components/ui/progress'
 import { Flex, Stack, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * Progress — DETERMINATE linear progress, and only that:

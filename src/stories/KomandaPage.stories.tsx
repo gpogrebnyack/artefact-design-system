@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useMemo, useState, type ReactNode } from 'react'
 import { AppShell, Flex, Grid, Stack, Surface, TitledRow, color } from '@/foundation'
 import { Icon } from '@/primitives/Icon'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
+import { Heading } from '@/foundation'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -97,13 +98,13 @@ function EmployeeCard({ e }: { e: Employee }) {
               <SemanticAvatarFallback tone={e.tone}>{e.initials}</SemanticAvatarFallback>
             </Avatar>
             <Stack gap="none">
-              <Text as="span" size="body" weight={600}>{e.name}</Text>
+              <Text as="span" size="body" weight="semibold">{e.name}</Text>
               <Text as="span" size="footnote" color={color.mutedForeground}>Сотрудник</Text>
             </Stack>
           </Flex>
           {/* score in the card is plain colored text — the pill (`.sval`)
               is the insights-row language, the source keeps them distinct */}
-          <Text as="span" size="title" weight={600} color={color[e.tone]}>
+          <Text as="span" size="title" weight="semibold" color={color[e.tone]}>
             {e.score}
           </Text>
         </Flex>
@@ -148,11 +149,11 @@ function PointManagerCard({ initials, name, badge }: { initials: string; name: s
               <SemanticAvatarFallback tone="roleManager">{initials}</SemanticAvatarFallback>
             </Avatar>
             <Stack gap="none">
-              <Text as="span" size="body" weight={600}>{name}</Text>
+              <Text as="span" size="body" weight="semibold">{name}</Text>
               <Text as="span" size="footnote" color={color.mutedForeground}>Сотрудник</Text>
             </Stack>
           </Flex>
-          <Text as="span" size="title" weight={600} color={color.mutedForeground}>—</Text>
+          <Text as="span" size="title" weight="semibold" color={color.mutedForeground}>—</Text>
         </Flex>
         <Flex gap="xs">
           <StatusBadge tone="roleManager">{badge}</StatusBadge>
@@ -178,7 +179,7 @@ function NetworkManagerCard({ initials, name }: { initials: string; name: string
         </Avatar>
         <Stack gap="xs">
           <Stack gap="none">
-            <Text as="span" size="body" weight={600}>{name}</Text>
+            <Text as="span" size="body" weight="semibold">{name}</Text>
             <Text as="span" size="footnote" color={color.mutedForeground}>Управляющий сетью</Text>
           </Stack>
           <div>
@@ -194,7 +195,7 @@ function InsightHeader({ icon, label, tone }: { icon: 'star' | 'warning'; label:
   return (
     <Flex align="center" gap="xs">
       <Icon name={icon} size={14} color={color[tone]} />
-      <Text as="span" size="footnote" weight={600} color={color[tone]} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <Text as="span" size="footnote" weight="semibold" color={color[tone]} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>
         {label}
       </Text>
     </Flex>
@@ -212,7 +213,7 @@ function InsightPersonRow({ initials, name, addr, pill }: { initials: string; na
           {/* same size as the card name — the source uses --text-body for
               BOTH .ename and .iline .nm; a person's name doesn't shrink in
               compact rows */}
-          <Text as="span" size="body" weight={600}>{name}</Text>
+          <Text as="span" size="body" weight="semibold">{name}</Text>
           <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
         </Stack>
       </Flex>
@@ -233,7 +234,7 @@ function UnknownVoiceCard({ addr, samples, onAssign }: { addr: string; samples: 
             </SemanticAvatarFallback>
           </Avatar>
           <Stack gap="none">
-            <Text as="span" size="body" weight={600}>Неизвестный сотрудник</Text>
+            <Text as="span" size="body" weight="semibold">Неизвестный сотрудник</Text>
             <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
           </Stack>
         </Flex>
@@ -265,7 +266,7 @@ function ProcessingCard({ addr }: { addr: string }) {
             </SemanticAvatarFallback>
           </Avatar>
           <Stack gap="none">
-            <Text as="span" size="body" weight={600}>Идёт обработка</Text>
+            <Text as="span" size="body" weight="semibold">Идёт обработка</Text>
             <Text as="span" size="footnote" color={color.mutedForeground}>{addr}</Text>
           </Stack>
         </Flex>
@@ -405,7 +406,7 @@ function KomandaPageDemo() {
 
           {/* Состав */}
           <TitledRow
-            title={<Text as="h2" size="title" weight={600}>Состав</Text>}
+            title={<Heading as="h2" size="title">Состав</Heading>}
             side={
               <Button
                 variant="link"

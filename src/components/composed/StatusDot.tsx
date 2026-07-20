@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import type { StatusTone } from "./SemanticTone"
 
 /*

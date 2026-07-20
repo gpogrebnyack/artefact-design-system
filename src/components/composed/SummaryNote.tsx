@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Flex, Stack, Surface, color } from "@/foundation"
 import { Icon, type IconName } from "@/primitives/Icon"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import type { StatusTone } from "./SemanticTone"
 import "./SummaryNote.css"
 
@@ -34,7 +34,7 @@ export function SummaryNote({ label, icon = "spark", children }: SummaryNoteProp
           <Text
             as="span"
             size="footnote"
-            weight={600}
+            weight="semibold"
             color={color.accent}
             style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
           >

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Image } from '@/primitives/Image'
 import { Flex, color, radius } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 // Inline SVG data URI — a real, loadable «illustration» with no external request.
 const LANDSCAPE =

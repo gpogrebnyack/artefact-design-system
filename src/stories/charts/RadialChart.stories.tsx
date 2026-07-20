@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { RadialChart } from '@/components/composed/charts/RadialChart'
 import { Flex, color } from '@/foundation'
-import { Text } from '@/primitives/Text'
+import { Text } from '@/foundation'
 
 /*
  * RadialChart — the score ring (the vivid pair is ITS language, see the
@@ -28,7 +28,7 @@ export const Bands: Story = {
           value={b.value}
           color={b.tone}
           label={
-            <Text as="span" size="title" weight={600} color={b.tone}>
+            <Text as="span" size="title" weight="semibold" color={b.tone}>
               {b.label}
             </Text>
           }

@@ -2,7 +2,7 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Icon, ICON_NAMES, PHOSPHOR_ICON_NAMES } from "@/primitives/Icon"
 import { Surface, color } from "@/foundation"
-import { Text } from "@/primitives/Text"
+import { Text } from "@/foundation"
 import { Input } from "@/components/ui/input"
 
 /*
