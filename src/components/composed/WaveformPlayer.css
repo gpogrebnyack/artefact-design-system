@@ -23,7 +23,7 @@
   flex: none;
   width: 2px;
   min-width: 2px;
-  background: var(--brand-sand);
+  background: var(--brand-waveform-idle);
   border-radius: 2px;
   opacity: 0.8;
   transition: background 60ms, opacity 60ms;
@@ -52,7 +52,7 @@
   background: var(--brand-accent);
 }
 .artefact-wave-mark--green {
-  background: var(--brand-green);
+  background: var(--brand-success);
 }
 .artefact-wave-mark--on {
   opacity: 0.24;

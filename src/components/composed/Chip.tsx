@@ -15,7 +15,7 @@ export function Chip({ children, style, ...props }: ButtonHTMLAttributes<HTMLBut
     <Surface
       as="button"
       type="button"
-      variant="glass"
+      variant="panel"
       radius="pill"
       className="artefact-chip artefact-focus-ring artefact-pressable"
       style={{

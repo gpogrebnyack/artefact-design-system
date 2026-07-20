@@ -25,8 +25,8 @@
   color: var(--foreground);
 }
 .artefact-timetag--green {
-  background: var(--brand-green-soft);
-  color: var(--brand-green-soft-foreground);
+  background: var(--brand-success-soft);
+  color: var(--brand-success-soft-foreground);
 }
 .artefact-timetag--accent {
   background: var(--brand-accent-soft);

@@ -153,6 +153,31 @@
     --brick-a10: rgba(150, 13, 0, 0.867);
     --brick-a11: rgba(111, 12, 0, 0.804);
     --brick-a12: rgba(47, 6, 0, 0.855);
+    /* white / black overlay alphas — verbatim Radix ladder */
+    --white-a1: rgba(255, 255, 255, 0.05);
+    --white-a2: rgba(255, 255, 255, 0.1);
+    --white-a3: rgba(255, 255, 255, 0.15);
+    --white-a4: rgba(255, 255, 255, 0.2);
+    --white-a5: rgba(255, 255, 255, 0.3);
+    --white-a6: rgba(255, 255, 255, 0.4);
+    --white-a7: rgba(255, 255, 255, 0.5);
+    --white-a8: rgba(255, 255, 255, 0.6);
+    --white-a9: rgba(255, 255, 255, 0.7);
+    --white-a10: rgba(255, 255, 255, 0.8);
+    --white-a11: rgba(255, 255, 255, 0.9);
+    --white-a12: rgba(255, 255, 255, 0.95);
+    --black-a1: rgba(0, 0, 0, 0.05);
+    --black-a2: rgba(0, 0, 0, 0.1);
+    --black-a3: rgba(0, 0, 0, 0.15);
+    --black-a4: rgba(0, 0, 0, 0.2);
+    --black-a5: rgba(0, 0, 0, 0.3);
+    --black-a6: rgba(0, 0, 0, 0.4);
+    --black-a7: rgba(0, 0, 0, 0.5);
+    --black-a8: rgba(0, 0, 0, 0.6);
+    --black-a9: rgba(0, 0, 0, 0.7);
+    --black-a10: rgba(0, 0, 0, 0.8);
+    --black-a11: rgba(0, 0, 0, 0.9);
+    --black-a12: rgba(0, 0, 0, 0.95);
     /* charts — categorical, CVD-validated, fixed order (own domain, not scale-derived) */
     --chart-1: #c66243;
     --chart-2: #bea333;

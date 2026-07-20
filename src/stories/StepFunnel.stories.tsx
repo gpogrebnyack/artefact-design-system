@@ -26,7 +26,7 @@ export const States: Story = {
       </Stack>
       <Stack gap="xs">
         <Text as="span" size="footnote">Только упомянул</Text>
-        <StepFunnel steps={STEPS} reached={2} tone="warn" />
+        <StepFunnel steps={STEPS} reached={2} tone="warning" />
       </Stack>
       <Stack gap="xs">
         <Text as="span" size="footnote">Доведено до продажи</Text>

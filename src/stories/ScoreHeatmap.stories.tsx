@@ -17,7 +17,7 @@ type Story = StoryObj<typeof ScoreHeatmap>
 
 export const Default: Story = {
   render: () => (
-    <Surface variant="glass" radius="xl" style={{ padding: '16px 20px', maxWidth: 840 }}>
+    <Surface variant="panel" radius="xl" style={{ padding: '16px 20px', maxWidth: 840 }}>
       <ScoreHeatmap
         total={{ earned: 6, max: 14 }}
         groups={[

@@ -27,8 +27,8 @@ export const Colors: Story = {
     <Stack gap="xs">
       <Text as="div" size="body">Оценка растёт стабильно</Text>
       <Text as="div" size="body" color={color.mutedForeground}>Большевистская 35 · Сотрудник</Text>
-      <Text as="div" size="caption" weight={600} color={color.green}>Высокая оценка</Text>
-      <Text as="div" size="caption" weight={600} color={color.warn}>Мало смен на этой неделе</Text>
+      <Text as="div" size="caption" weight={600} color={color.success}>Высокая оценка</Text>
+      <Text as="div" size="caption" weight={600} color={color.warning}>Мало смен на этой неделе</Text>
       <Text as="div" size="caption" weight={600} color={color.accent}>Требует внимания</Text>
     </Stack>
   ),

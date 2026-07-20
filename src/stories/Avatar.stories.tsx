@@ -63,15 +63,15 @@ export const Fallbacks: Story = {
 // --- tone is data-driven (score band / role), applied to the fallback via our
 //     tokens — Radix's spec has no tones, same as our vanilla approach. ---
 /* Role tones come from SemanticAvatarFallback (Components tier) — NOT a
- * hand-rolled `style={{background: color.greenSoft, ...}}`: that inline
+ * hand-rolled `style={{background: color.successSoft, ...}}`: that inline
  * copy-paste is exactly the pattern the component was created to kill,
  * and an earlier version of THIS story was teaching it. Full tone story:
  * Components/SemanticAvatarFallback. */
 export const WithSemanticTone: Story = {
   render: () => (
     <Flex gap="sm" align="center">
-      <Avatar size="lg"><SemanticAvatarFallback tone="green">ТК</SemanticAvatarFallback></Avatar>
-      <Avatar size="lg"><SemanticAvatarFallback tone="warn">АШ</SemanticAvatarFallback></Avatar>
+      <Avatar size="lg"><SemanticAvatarFallback tone="success">ТК</SemanticAvatarFallback></Avatar>
+      <Avatar size="lg"><SemanticAvatarFallback tone="warning">АШ</SemanticAvatarFallback></Avatar>
       <Avatar size="lg"><SemanticAvatarFallback tone="muted">А</SemanticAvatarFallback></Avatar>
     </Flex>
   ),

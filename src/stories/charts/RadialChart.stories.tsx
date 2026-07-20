@@ -14,8 +14,8 @@ export default meta
 type Story = StoryObj<typeof RadialChart>
 
 const BANDS = [
-  { value: 74, tone: color.green, label: '7,4' },
-  { value: 61, tone: color.warn, label: '6,1' },
+  { value: 74, tone: color.success, label: '7,4' },
+  { value: 61, tone: color.warning, label: '6,1' },
   { value: 50, tone: color.accent, label: '5,0' },
 ] as const
 

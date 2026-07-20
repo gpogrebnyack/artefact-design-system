@@ -27,7 +27,7 @@ export type SummaryNoteProps = {
 
 export function SummaryNote({ label, icon = "spark", children }: SummaryNoteProps) {
   return (
-    <Surface variant="glass" p="lg" radius="xl">
+    <Surface variant="panel" p="lg" radius="xl">
       <Stack gap="sm">
         <Flex align="center" gap="xs">
           <Icon name={icon} size={13} color={color.accent} />

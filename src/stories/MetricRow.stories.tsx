@@ -17,7 +17,7 @@ type Story = StoryObj<typeof MetricRow>
 export const Pair: Story = {
   render: () => (
     <Flex gap="2xl">
-      <MetricRow label="Средний чек" value="401 ₽" delta="+1% к среднему" tone="green" trend="up" />
+      <MetricRow label="Средний чек" value="401 ₽" delta="+1% к среднему" tone="success" trend="up" />
       <MetricRow label="Допродажи / нед" value="−21 989 ₽ к плану" delta="недобор на допродажах" tone="accent" trend="down" />
     </Flex>
   ),

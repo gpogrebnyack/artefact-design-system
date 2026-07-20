@@ -16,7 +16,7 @@ export const Default: Story = {
   render: () => (
     <Flex gap="lg" align="center">
       <Flex direction="column" gap="xs" align="center">
-        <Sparkline data={[5.9, 6.0, 6.1, 6.2, 6.3]} color={color.green} />
+        <Sparkline data={[5.9, 6.0, 6.1, 6.2, 6.3]} color={color.success} />
         <Text as="span" size="footnote" color={color.mutedForeground}>рост</Text>
       </Flex>
       <Flex direction="column" gap="xs" align="center">
@@ -28,5 +28,5 @@ export const Default: Story = {
 }
 
 export const NoEndDot: Story = {
-  args: { data: [7.0, 7.0, 7.05, 7.1, 7.1], color: color.green, showEndDot: false },
+  args: { data: [7.0, 7.0, 7.05, 7.1, 7.1], color: color.success, showEndDot: false },
 }

@@ -166,6 +166,14 @@ const HUES = {
  * fixed: series 1 always takes chart-1, never re-sorted by rank. */
 const CHART = ["#c66243", "#bea333", "#158353", "#2badc1", "#5055ab", "#c162a4"]
 
+/* white/black overlay alpha ladders — VERBATIM @radix-ui/colors v3
+ * (black-alpha.css / white-alpha.css), not computed: these are pure-white/
+ * pure-black veils for overlays (scrims, washes, tint-over-image), the
+ * Radix answer to "white and black don't belong in a hue scale".
+ * Anchors that motivated adopting them: the old scrim rgba(0,0,0,.1) is
+ * exactly black-a2; the old glass card rgba(255,255,255,.6) was white-a8. */
+const OVERLAY_ALPHAS = [0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
+
 // ---------- emit ----------
 import { writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -185,6 +193,10 @@ const emitScale = (name, steps, withAlpha = true) => {
 
 emitScale("cream", creamScale())
 for (const [name, seed] of Object.entries(HUES)) emitScale(name, chromaticScale(seed))
+
+out.push("    /* white / black overlay alphas — verbatim Radix ladder */")
+OVERLAY_ALPHAS.forEach((a, i) => out.push(`    --white-a${i + 1}: rgba(255, 255, 255, ${a});`))
+OVERLAY_ALPHAS.forEach((a, i) => out.push(`    --black-a${i + 1}: rgba(0, 0, 0, ${a});`))
 
 out.push("    /* charts — categorical, CVD-validated, fixed order (own domain, not scale-derived) */")
 CHART.forEach((hex, i) => out.push(`    --chart-${i + 1}: ${hex};`))

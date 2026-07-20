@@ -40,8 +40,8 @@ export function Checklist({ items, columns = 2 }: ChecklistProps) {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              background: item.done ? color.greenSoft : color.accentSoft,
-              color: item.done ? color.greenSoftForeground : color.accentSoftForeground,
+              background: item.done ? color.successSoft : color.accentSoft,
+              color: item.done ? color.successSoftForeground : color.accentSoftForeground,
             }}
           >
             <Icon name={item.done ? "check" : "close"} size={15} />

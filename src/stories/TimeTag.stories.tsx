@@ -20,7 +20,7 @@ export const Tones: Story = {
   render: () => (
     <Flex gap="sm" align="center">
       <TimeTag time="00:15" onClick={() => {}} />
-      <TimeTag time="00:15 – 00:17" tone="green" onClick={() => {}} />
+      <TimeTag time="00:15 – 00:17" tone="success" onClick={() => {}} />
       <TimeTag time="00:00 – 00:01" tone="accent" onClick={() => {}} />
       <TimeTag time="00:22" />
     </Flex>

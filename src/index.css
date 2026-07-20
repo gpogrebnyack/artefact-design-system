@@ -79,7 +79,14 @@
 :root {
     --background: var(--cream-2);              /* body gets the gradient via the override layer */
     --foreground: var(--cream-12);             /* --ink */
-    --card: rgba(255, 255, 255, 0.6);          /* --surface : 60% glass island — deliberately off-scale */
+    /* card: SOLID panel since the glass retirement (2026-07-20). The old
+       value was rgba(255,255,255,.6) = white-a8 — measured over the page it
+       composited to ≈#fdfbf9, i.e. cream-1 within 2 RGB units. Nothing
+       scrolls or shifts behind cards (near-flat gradient), so translucency
+       bought nothing but compositing cost and unpredictable screenshots.
+       card and popover now deliberately SHARE the panel-warm surface (same
+       precedent as destructive == danger: two contract slots, one color). */
+    --card: var(--cream-1);
     --card-foreground: var(--cream-12);
     --popover: var(--cream-1);                 /* paper-warm : popovers stay opaque for readability */
     --popover-foreground: var(--cream-12);
@@ -97,9 +104,10 @@
     --ring: var(--orange-9);                   /* focus ring is brand orange */
     --radius: 0.875rem;                        /* 14px = our --radius */
 
-    /* Komanda's own semantic tokens with NO shadcn-contract equivalent —
-       orange/green/warn/plum. Anything that needs brand orange as a
-       general-purpose color references THESE, never a literal hex.
+    /* Komanda's own semantic tokens with NO shadcn-contract equivalent.
+       Named by INTENT: accent (brand) + success/warning/danger (status) +
+       role-manager (IDENTITY — which kind, not how-good; see tokens.ts).
+       Anything that needs one of these references THESE names, never a hex.
 
        Each role is a SLICE OF ONE SCALE by the step grammar (DESIGN.md →
        Colors) — the role's hue lives in scales.css, this block only picks
@@ -131,25 +139,25 @@
        since nothing else in either source uses a gradient fill. */
     --brand-accent-gradient: linear-gradient(135deg, #ffb88c 0%, #f75506 50%, #ff5e62 100%);
 
-    --brand-green: var(--jade-9);
-    --brand-green-foreground: #ffffff; /* 5.29:1 — passes AA normal text */
-    --brand-green-hover: var(--jade-10);
-    --brand-green-soft: var(--jade-a3);
-    --brand-green-soft-foreground: var(--jade-11);
-    --brand-green-soft-strong: var(--jade-12);
+    --brand-success: var(--jade-9);
+    --brand-success-foreground: #ffffff; /* 5.29:1 — passes AA normal text */
+    --brand-success-hover: var(--jade-10);
+    --brand-success-soft: var(--jade-a3);
+    --brand-success-soft-foreground: var(--jade-11);
+    --brand-success-soft-strong: var(--jade-12);
 
-    --brand-warn: var(--ochre-9);
-    --brand-warn-foreground: var(--cream-12); /* ink: 4.32:1 vs 3.24:1 for white — measurably better, no prior convention to preserve */
-    --brand-warn-hover: var(--ochre-10);
-    --brand-warn-soft: var(--ochre-a3);
-    --brand-warn-soft-foreground: var(--ochre-11);
-    --brand-warn-soft-strong: var(--ochre-12);
+    --brand-warning: var(--ochre-9);
+    --brand-warning-foreground: var(--cream-12); /* ink: 4.32:1 vs 3.24:1 for white — measurably better, no prior convention to preserve */
+    --brand-warning-hover: var(--ochre-10);
+    --brand-warning-soft: var(--ochre-a3);
+    --brand-warning-soft-foreground: var(--ochre-11);
+    --brand-warning-soft-strong: var(--ochre-12);
 
-    --brand-plum: var(--plum-9);
-    --brand-plum-foreground: #ffffff; /* 6.59:1 — passes AA normal text */
-    --brand-plum-hover: var(--plum-10);
-    --brand-plum-soft: var(--plum-a3);
-    --brand-plum-soft-foreground: var(--plum-11);
+    --brand-role-manager: var(--plum-9);
+    --brand-role-manager-foreground: #ffffff; /* 6.59:1 — passes AA normal text */
+    --brand-role-manager-hover: var(--plum-10);
+    --brand-role-manager-soft: var(--plum-a3);
+    --brand-role-manager-soft-foreground: var(--plum-11);
 
     /* Danger — a genuine red (the brick scale), NOT the same hue as
        --brand-accent. Neither source page (komanda.html / dashboard.html)
@@ -166,32 +174,51 @@
     --brand-danger-soft: var(--brick-a3);
     --brand-danger-soft-foreground: var(--brick-11);
 
-    --brand-ink-3: var(--cream-9);
+    /* Naming note (2026-07-20 systematization): the one-off tokens below
+       follow {category}-{role} naming (text-/surface-/overlay), common
+       design-token practice (Primer/Atlassian/DTCG). The shadcn contract
+       slots above KEEP shadcn's names — vendored components read them,
+       renaming them means forking. */
 
-    /* komanda.html's .askpanel backdrop — a dark low-opacity scrim behind a
-       heavily blurred overlay. Also found missing while rebuilding the
-       assistant dock; distinct from --card (light glass) so it gets its own
-       name rather than reusing an unrelated token. */
-    --brand-scrim: rgba(0, 0, 0, 0.1);
+    --brand-text-tertiary: var(--cream-9); /* 3rd-level ink (no-data states) — one step past muted-foreground */
+
+    /* selected/current surface — one neutral step darker than the hover
+       fill (--muted = cream-3), so a persistent selection out-ranks the
+       transient hover. Needed because on a near-white panel (card = cream-1)
+       "raised white" is invisible; selection has to go darker, not lighter.
+       Used by SidebarNav's active item; reusable for any current/selected
+       neutral fill. */
+    --brand-surface-selected: var(--cream-5);
+
+    /* komanda.html's .askpanel backdrop — a dark low-opacity veil behind a
+       heavily blurred overlay (assistant dock). Exactly black-a2 on the
+       Radix overlay ladder. Distinct from --card (light panel). */
+    --brand-overlay: var(--black-a2);
 
     /* Found while assembling dashboard-prototype.html — a token that exists
        in THAT source page's own :root but not in komanda.html's: a quiet
        off-white backdrop specifically for data-viz surfaces (stopmenu bars,
        chart panels), distinct from --card/--popover. Real, not invented. */
-    --brand-chart-surface: #fbfaf7;
+    --brand-surface-data: #fbfaf7;
 
     /* dialog-v2.html's own tinted card-wrapper wash (.rec/.up4-card
        background) — the neutral layer LayeredCard's advice zone sits on.
-       A near-invisible darkening, not a gray: must stay translucent so the
-       page gradient tints it. */
-    --brand-wash: rgba(0, 0, 0, 0.03);
+       A near-invisible darkening; deliberately BELOW the overlay ladder's
+       first step (black-a1 = .05 doubles it) — extracted value, keep. */
+    --brand-surface-wash: rgba(0, 0, 0, 0.03);
 
-    /* Found while assembling dialog-v2.html — the warm sand of the audio
-       waveform's idle bars (#cbb79c hardcoded in the source page). Warmer
-       and darker than any cream/hairline we have (input #e4e2da reads
-       invisible at 2px bars; ink-3 #a3a094 is cold gray). Playback progress
-       recolors bars to --brand-accent, so idle must sit between the two. */
-    --brand-sand: #cbb79c;
+    /* Component token of WaveformPlayer (named for its one consumer, the
+       component-token pattern): the warm sand of the audio waveform's idle
+       bars (#cbb79c, hardcoded in dialog-v2.html). Warmer and darker than
+       any cream step at 2px bar width; playback progress recolors bars to
+       --brand-accent, so idle must sit between cream and accent. */
+    --brand-waveform-idle: #cbb79c;
+
+    /* The page's signature background — a warm radial applied to <body> in
+       brand-overrides.css. Like --brand-accent-gradient, it's a bespoke
+       multi-stop treatment (source page's own --bg), so it lives as a named
+       token rather than three loose hexes inlined in a component. */
+    --brand-page-gradient: radial-gradient(119.69% 100% at 50.05% 100%, #f7ede4 0%, #f5f2eb 75.06%, #fcf3e8 100%);
 }
 
 .dark {

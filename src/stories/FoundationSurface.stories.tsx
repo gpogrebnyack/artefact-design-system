@@ -10,14 +10,16 @@ type Story = StoryObj<typeof Surface>
 // A couple of variants need a small demo-only assist to stay legible:
 // `plain` has no background of its own (color.border is transparent by
 // design rule — see the Divider bug — so a demo that wants a visible edge
-// reaches for color.input instead); `scrim` is dark, so it needs light text
-// and a busy backdrop to show the blur at all. Everything else needs none
-// of this — it's just here so those two don't render illegibly, not a
+// reaches for color.input instead); `overlay` is dark, so it needs light
+// text and a busy backdrop to show the blur at all. Everything else needs
+// none of this — it's just here so those two don't render illegibly, not a
 // second source of truth for which variants exist.
 const DEMO_OVERRIDES: Partial<Record<SurfaceVariant, { wrapperStyle?: CSSProperties; textColor?: string }>> = {
   plain: { wrapperStyle: { outline: `1px dashed ${color.input}` } },
-  scrim: {
-    wrapperStyle: { backgroundImage: 'linear-gradient(135deg, #FFB88C, #F75506 50%, #FF5E62)' },
+  overlay: {
+    // the busy backdrop is the system's ONE gradient — use the token, don't
+    // re-hardcode its stops (they'd drift from --brand-accent-gradient)
+    wrapperStyle: { backgroundImage: color.accentGradient },
     textColor: color.secondary,
   },
 }
@@ -54,7 +56,7 @@ export const Variants: Story = {
 // This IS how a Card (Components tier) is meant to be built: Surface + Text.
 export const AsACardBase: Story = {
   render: () => (
-    <Surface variant="glass" p="lg" width={280}>
+    <Surface variant="panel" p="lg" width={280}>
       <Stack gap="xs">
         <Text as="div" size="subhead" weight={600}>Татьяна Климова</Text>
         <Text as="div" size="caption" color={color.mutedForeground}>Бариста · Большевистская 35</Text>

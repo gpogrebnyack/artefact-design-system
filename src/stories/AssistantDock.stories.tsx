@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AssistantDock } from '@/sections/AssistantDock'
+import { color } from '@/foundation'
 
 /*
  * Sections/AssistantDock — komanda.html's floating AI-assistant dock,
@@ -15,8 +16,8 @@ const meta: Meta<typeof AssistantDock> = {
   parameters: { layout: 'fullscreen' },
   decorators: [
     (Story) => (
-      <div style={{ minHeight: '1400px', background: 'var(--background)', position: 'relative' }}>
-        <div style={{ padding: 24, color: 'var(--muted-foreground)', maxWidth: 600 }}>
+      <div style={{ minHeight: '1400px', background: color.background, position: 'relative' }}>
+        <div style={{ padding: 24, color: color.mutedForeground, maxWidth: 600 }}>
           Прокрути вниз, нажми на плашку ассистента, закрой — вернётся не пилюля, а плавающий "орб" (если проскроллено &gt; 120px). Это настоящая state-машина, не статичный кадр.
         </div>
         <Story />

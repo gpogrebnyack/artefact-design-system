@@ -25,7 +25,7 @@ export const Pair: Story = {
       </div>
       <div style={{ flex: "1 1 260px" }}>
         <MetricCard label="Допродажи" value="3 020 ₽" delta="+8% к среднему"
-          tone="green" trend="up" spark={[2700, 2750, 2830, 2900, 2960, 3020]} />
+          tone="success" trend="up" spark={[2700, 2750, 2830, 2900, 2960, 3020]} />
       </div>
     </Flex>
   ),
@@ -37,7 +37,7 @@ export const NumberOnly: Story = {
     label: "Разговоров за неделю",
     value: "1 842",
     delta: "+4% к прошлой неделе",
-    tone: "green",
+    tone: "success",
     trend: "up",
   },
 }

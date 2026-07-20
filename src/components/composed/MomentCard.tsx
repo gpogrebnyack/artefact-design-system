@@ -21,7 +21,7 @@ export type MomentCardProps = {
   /** formatted time range ("00:05 – 00:08") */
   time: ReactNode
   /** verdict: green (done right) / accent (missed); `end` = the dashed terminal card */
-  tone: "green" | "accent" | "end"
+  tone: "success" | "accent" | "end"
   title: ReactNode
   description?: ReactNode
   quote?: ReactNode

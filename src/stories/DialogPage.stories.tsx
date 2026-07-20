@@ -40,7 +40,7 @@ type MomentDef = {
   id: number
   t: string // "00:00 – 00:01"
   crit: string
-  tone: 'green' | 'accent'
+  tone: 'success' | 'accent'
   desc: string
   quote?: string
 }
@@ -49,8 +49,8 @@ const MOMENTS: MomentDef[] = [
   { id: 0, t: '00:00 – 00:01', crit: 'Приветствие', tone: 'accent', desc: 'Поздоровался стандартно «Доброе утро.», без фирменного «Бодрый день».', quote: 'Доброе утро.' },
   { id: 1, t: '00:02 – 00:04', crit: 'Выявление потребностей', tone: 'accent', desc: 'Сразу перешёл к оформлению заказа, без открытых вопросов о предпочтениях гостя.' },
   { id: 2, t: '00:05 – 00:08', crit: 'Допродажи', tone: 'accent', desc: 'Уточнил подогрев, но не предложил напиток или добавку к сэндвичу.', quote: 'Сэндвич подогреть?' },
-  { id: 3, t: '00:15 – 00:17', crit: 'Карта лояльности', tone: 'green', desc: 'Своевременно уточнил наличие карты лояльности.', quote: 'Карту, пожалуйста.' },
-  { id: 4, t: '00:21 – 00:22', crit: 'Завершение', tone: 'green', desc: 'Чётко озвучил итоговую сумму — но на этом запись обрывается.', quote: 'Сто восемьдесят один.' },
+  { id: 3, t: '00:15 – 00:17', crit: 'Карта лояльности', tone: 'success', desc: 'Своевременно уточнил наличие карты лояльности.', quote: 'Карту, пожалуйста.' },
+  { id: 4, t: '00:21 – 00:22', crit: 'Завершение', tone: 'success', desc: 'Чётко озвучил итоговую сумму — но на этом запись обрывается.', quote: 'Сто восемьдесят один.' },
 ]
 
 const END_MOMENT = { t: '00:22', h: 'Запись обрывается', d: 'Повтор заказа и прощание не попали в запись — оценить их невозможно.' }
@@ -90,7 +90,7 @@ function SectionTitle({ children, sub }: { children: ReactNode; sub?: ReactNode 
 function VerdictStat({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
     <Stack gap="xs" style={{ flex: 'none' }}>
-      <Text as="span" size="caption" color={color.ink3}>{label}</Text>
+      <Text as="span" size="caption" color={color.textTertiary}>{label}</Text>
       {children}
     </Stack>
   )
@@ -102,7 +102,7 @@ function UppercaseLabel({ children }: { children: ReactNode }) {
       as="span"
       size="footnote"
       weight={600}
-      color={color.ink3}
+      color={color.textTertiary}
       style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}
     >
       {children}
@@ -182,7 +182,7 @@ function DialogPageDemo() {
               line PageHeader doesn't have — composed from parts instead) */}
           <TitledRow title={<Text as="h2" size="headline" weight={400}>Заказ</Text>}>
             <Stack gap="sm">
-              <Text as="div" size="caption" color={color.ink3}>
+              <Text as="div" size="caption" color={color.textTertiary}>
                 Заказы <span style={{ margin: '0 4px' }}>›</span> Сэндвич
               </Text>
               <Text as="h1" size="display" weight={700} style={{ letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0 }}>
@@ -192,7 +192,7 @@ function DialogPageDemo() {
                 {/* the source's .unassigned pill is a step bigger than the
                     tag-grade StatusBadge (caption text, 28px) — it's an
                     ACTION in the h1 meta row, not a status tag */}
-                <StatusBadge tone="plum" asChild>
+                <StatusBadge tone="roleManager" asChild>
                   <button
                     type="button"
                     className="artefact-focus-ring artefact-pressable"
@@ -202,7 +202,7 @@ function DialogPageDemo() {
                     <Icon name="target" size={14} /> Назначить профиль
                   </button>
                 </StatusBadge>
-                <Text as="span" size="caption" color={color.ink3}>
+                <Text as="span" size="caption" color={color.textTertiary}>
                   · сегодня, 11:26 · 1 мин · 🏪 Новосибирск, Димитрова 2
                 </Text>
               </Flex>
@@ -231,7 +231,7 @@ function DialogPageDemo() {
             }
           >
             <Stack gap="md">
-              <Surface variant="glass" radius="xl" style={{ padding: '20px 24px' }}>
+              <Surface variant="panel" radius="xl" style={{ padding: '20px 24px' }}>
                 <Flex align="flex-start" gap="4xl" wrap>
                   <VerdictStat label="Общий балл">
                     <Text as="span" size="display" weight={600} color={color.accent} style={{ lineHeight: 1 }}>
@@ -241,7 +241,7 @@ function DialogPageDemo() {
                   <VerdictStat label="Категория">
                     <Text as="span" size="title" weight={600} style={{ lineHeight: 1.15 }}>Только еда</Text>
                     <Flex gap="xs" wrap>
-                      <StatusBadge tone="green">✓ Еда</StatusBadge>
+                      <StatusBadge tone="success">✓ Еда</StatusBadge>
                       <StatusBadge tone="muted">— Напиток</StatusBadge>
                       <StatusBadge tone="muted">— Добавка</StatusBadge>
                     </Flex>
@@ -254,7 +254,7 @@ function DialogPageDemo() {
                 </Flex>
               </Surface>
 
-              <Surface variant="glass" radius="xl" p="lg">
+              <Surface variant="panel" radius="xl" p="lg">
                 <Stack gap="sm">
                   <Text as="div" size="body" weight={600}>Резюме</Text>
                   <Text as="p" size="body" style={{ margin: 0, lineHeight: 1.6 }}>
@@ -273,7 +273,7 @@ function DialogPageDemo() {
                       ['Общался вежливо и нейтрально, без слов-паразитов.', null],
                     ] as const).map(([text, turn], i) => (
                       <Flex key={i} gap="sm" align="flex-start" wrap={false} style={{ padding: '4px 0' }}>
-                        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color.green, flex: 'none', marginTop: 10 }} />
+                        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color.success, flex: 'none', marginTop: 10 }} />
                         <Text as="span" size="body" style={{ lineHeight: 1.6 }}>
                           {text} {turn != null && jump(turn)}
                         </Text>
@@ -289,7 +289,7 @@ function DialogPageDemo() {
               horizontally scrolling moment strip, one Surface */}
           <TitledRow title={<SectionTitle>Хронология</SectionTitle>}>
             <div ref={playerPanelRef}>
-              <Surface variant="glass" radius="xl" style={{ overflow: 'hidden' }}>
+              <Surface variant="panel" radius="xl" style={{ overflow: 'hidden' }}>
                 <div style={{ padding: 20, borderBottom: `1px solid ${color.input}` }}>
                   <WaveformPlayer
                     ref={playerRef}
@@ -334,7 +334,7 @@ function DialogPageDemo() {
 
           {/* Оценка по критериям */}
           <TitledRow title={<SectionTitle sub="6 групп критериев · итог 6 / 14">Оценка по критериям</SectionTitle>}>
-            <Surface variant="glass" radius="xl" style={{ padding: '16px 20px' }}>
+            <Surface variant="panel" radius="xl" style={{ padding: '16px 20px' }}>
               <ScoreHeatmap groups={heatGroups} total={{ earned: 6, max: 14 }} />
             </Surface>
           </TitledRow>
@@ -375,7 +375,7 @@ function DialogPageDemo() {
                   </Stack>
                 }
               >
-                <PriorityIcon icon="warning" label="Внимание" bg={color.warnSoft} fg={color.foreground} />
+                <PriorityIcon icon="warning" label="Внимание" bg={color.warningSoft} fg={color.foreground} />
                 <Stack gap="sm">
                   <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25, paddingRight: 34 }}>
                     В начале диалога не использовано фирменное приветствие сети
@@ -390,7 +390,7 @@ function DialogPageDemo() {
 
           {/* Чеклист */}
           <TitledRow title={<SectionTitle>Чеклист</SectionTitle>}>
-            <Surface variant="glass" radius="xl" style={{ padding: '16px 20px 20px' }}>
+            <Surface variant="panel" radius="xl" style={{ padding: '16px 20px 20px' }}>
               <Checklist
                 items={[
                   { done: false, label: 'Назвал конкретную позицию' },
@@ -422,7 +422,7 @@ function DialogPageDemo() {
                 },
                 {
                   title: 'Добавка: сироп / альт. молоко', ctx: 'оформление заказа',
-                  status: 'Только упомянул', tone: 'warn' as const, reached: 2, turn: 2, gain: '≈70 ₽',
+                  status: 'Только упомянул', tone: 'warning' as const, reached: 2, turn: 2, gain: '≈70 ₽',
                   fmeta: 'Упомянул, но не довёл',
                   quote: 'Сироп добавить не хотите?',
                   gap: 'Упомянул вскользь, без аргумента и уверенного призыва — гость легко отказался.',
@@ -435,7 +435,7 @@ function DialogPageDemo() {
                     <Stack gap="xs" style={{ flex: 1 }}>
                       <Flex justify="space-between" align="center" gap="sm">
                         <UppercaseLabel>Готовый скрипт</UppercaseLabel>
-                        <StatusBadge tone="green">Потенциал {it.gain}</StatusBadge>
+                        <StatusBadge tone="success">Потенциал {it.gain}</StatusBadge>
                       </Flex>
                       <Text as="div" size="body" style={{ lineHeight: 1.5 }}>{it.script}</Text>
                       <div style={{ marginTop: 'auto', paddingTop: 12 }}>
@@ -452,7 +452,7 @@ function DialogPageDemo() {
                         <Text as="div" size="body" weight={600} style={{ lineHeight: 1.25, letterSpacing: '-0.02em' }}>
                           {it.title}
                         </Text>
-                        <Text as="div" size="footnote" color={color.ink3} style={{ marginTop: 3 }}>{it.ctx}</Text>
+                        <Text as="div" size="footnote" color={color.textTertiary} style={{ marginTop: 3 }}>{it.ctx}</Text>
                       </Stack>
                       <StatusBadge tone={it.tone} style={{ flexShrink: 0 }}>{it.status}</StatusBadge>
                     </Flex>

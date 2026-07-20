@@ -29,7 +29,7 @@ export type MetricCardProps = {
   trend?: "up" | "down"
   /** точки мини-графика; без них карточка — просто число с дельтой */
   spark?: number[]
-  /** цвет спарклайна; по умолчанию следует tone (green → color.green, иначе color.accent) */
+  /** цвет спарклайна; по умолчанию следует tone (green → color.success, иначе color.accent) */
   sparkColor?: string
 }
 
@@ -38,9 +38,9 @@ export function MetricCard({ label, value, delta, tone, trend, spark, sparkColor
   // Спарклайн, окрашенный по СОСТОЯНИЮ метрики — семантика, не категория:
   // semantic-токены, не chart-палитра (DESIGN.md → Charts). До разделения
   // доменов chart-1/2 буквально равнялись accent/green — пиксели не менялись.
-  const lineColor = sparkColor ?? (tone === "green" ? color.green : color.accent)
+  const lineColor = sparkColor ?? (tone === "success" ? color.success : color.accent)
   return (
-    <Surface variant="glass" p="base" radius="xl">
+    <Surface variant="panel" p="base" radius="xl">
       <Stack gap="sm">
         <Text as="span" size="footnote" color={color.mutedForeground}>
           {label}

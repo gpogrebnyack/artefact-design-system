@@ -45,9 +45,9 @@
 body {
   font-family: var(--font-sans);
   font-feature-settings: "ss10" 1;                 /* one-story «a», our brand rule */
-  /* page background: our radial gradient (--bg). shadcn gives only a solid
+  /* page background: our radial gradient token. shadcn gives only a solid
      --background; the gradient is a page treatment applied here. */
-  background: radial-gradient(119.69% 100% at 50.05% 100%, #f7ede4 0%, #f5f2eb 75.06%, #fcf3e8 100%);
+  background: var(--brand-page-gradient);
   background-attachment: fixed;
   min-height: 100vh;
 }

@@ -22,7 +22,7 @@ export const Stacked: Story = {
     series: [
       { key: 'offered', label: 'Предложено', color: color.accent },
       { key: 'refused', label: 'Отказ', color: color.danger },
-      { key: 'skipped', label: 'Не предложено', color: color.warn },
+      { key: 'skipped', label: 'Не предложено', color: color.warning },
     ],
   },
 }

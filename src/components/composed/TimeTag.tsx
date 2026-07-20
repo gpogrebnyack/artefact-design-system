@@ -19,7 +19,7 @@ import "./TimeTag.css"
  * renders as a plain span with no play affordance (the source's dashed
  * end-card time has no triangle: nothing to play).
  */
-export type TimeTagTone = "muted" | "green" | "accent"
+export type TimeTagTone = "muted" | "success" | "accent"
 
 export type TimeTagProps = {
   time: ReactNode

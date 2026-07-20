@@ -19,7 +19,7 @@ export type StepFunnelProps = {
   /** stages actually completed, 0..steps.length; steps.length = sold */
   reached: number
   /** tone of the stage where the attempt broke (ignored when all reached) */
-  tone?: "accent" | "warn"
+  tone?: "accent" | "warning"
 }
 
 export function StepFunnel({ steps, reached, tone = "accent" }: StepFunnelProps) {
@@ -28,10 +28,10 @@ export function StepFunnel({ steps, reached, tone = "accent" }: StepFunnelProps)
       {steps.map((label, i) => {
         const state = i < reached ? "ok" : i === reached ? tone : "none"
         const bar =
-          state === "ok" ? color.green : state === "none" ? color.muted : color[state]
+          state === "ok" ? color.success : state === "none" ? color.muted : color[state]
         const text =
           state === "ok"
-            ? color.green
+            ? color.success
             : state === "none"
               ? color.mutedForeground
               : color[`${state}SoftForeground`]

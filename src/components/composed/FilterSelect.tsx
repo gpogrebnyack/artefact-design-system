@@ -61,10 +61,10 @@ export function FilterSelect({ label, placeholder, value, onValueChange, onClear
             aria-label={`Сбросить ${label.toLowerCase()}`}
             style={{
               width: 36, display: "flex", alignItems: "center", justifyContent: "center",
-              border: "none", background: "transparent", color: color.ink3, cursor: "pointer", padding: 0,
+              border: "none", background: "transparent", color: color.textTertiary, cursor: "pointer", padding: 0,
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = color.muted; e.currentTarget.style.color = color.accent }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = color.ink3 }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = color.textTertiary }}
           >
             <Icon name="close" size={14} />
           </button>

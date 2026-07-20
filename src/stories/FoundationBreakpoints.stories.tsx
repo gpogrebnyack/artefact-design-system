@@ -50,7 +50,7 @@ export const TwoBreakpoints: Story = {
               <Box radius="pill" style={{ height: 10, background: color.muted, position: 'relative', overflow: 'hidden' }}>
                 <Box
                   radius="pill"
-                  style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${(p.px / MAX) * 100}%`, background: color.sand }}
+                  style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${(p.px / MAX) * 100}%`, background: color.waveformIdle }}
                 />
               </Box>
               <Text as="span" size="footnote" color={color.mutedForeground}>{p.what}</Text>

@@ -2,22 +2,23 @@
  * SidebarNav — the app-shell left rail. This is THE ONE block that stays a
  * bespoke SECTION (not composed from generic primitives): it's a fixed layout
  * fixture, not content. Styles are hand-authored CSS mirroring komanda.html's
- * `.sidebar` verbatim — full-height glass rail, sticky, custom hover tooltips
+ * `.sidebar` verbatim — full-height solid rail, sticky, custom hover tooltips
  * with a hover-bridge, and a real mobile collapse. Doing this in CSS (not
  * Tailwind arbitrary classes) keeps it pixel-faithful and dodges JIT scanning.
  *
  * Colors reference the REAL tokens declared once in index.css (Foundation
  * layer, see src/foundation/tokens.ts `color`/`brand`) — never local hex
  * copies. --card/--secondary/--muted/--muted-foreground/--foreground are
- * shadcn's contract vars; --brand-* are komanda's own orange/green tokens
+ * shadcn's contract vars; --brand-* are komanda's own semantic tokens (accent/success/…)
  * that have no shadcn equivalent.
  */
 .sidebar {
   width: 74px;
   flex: none;
   background: var(--card);
-  /* no backdrop blur: the source .sidebar has none — content never sits
-     behind it, and blur over the flat page gradient is invisible */
+  /* solid panel (cream-1) since the glass retirement (2026-07-20). No
+     backdrop blur: nothing scrolls behind the rail, and blur over the flat
+     page gradient is invisible — the source .sidebar had none either. */
   border-radius: var(--radius-2xl);
   padding: 18px 0 16px;
   display: flex;
@@ -52,7 +53,7 @@
   width: auto;
 }
 
-/* client chip — WHITE (paper) backing, green inner badge */
+/* client chip — WHITE (paper) backing, success-tinted inner badge */
 .sidebar .client {
   width: 44px;
   height: 44px;
@@ -70,8 +71,8 @@
   width: 24px;
   height: 24px;
   border-radius: var(--radius-sm);
-  background: var(--brand-green-bg);
-  color: var(--brand-green);
+  background: var(--brand-success-soft);
+  color: var(--brand-success);
   font-size: 12px;
   font-weight: 600;
   display: flex;
@@ -103,7 +104,12 @@
   color: var(--foreground);
 }
 .sidebar .nav a.active {
-  background: var(--secondary);
+  /* selected: a neutral fill one step DARKER than the hover (--muted =
+     cream-3), so the persistent selected state out-ranks the transient
+     hover. The old value was --secondary (pure white) on the cream-1 panel
+     — invisible after the glass→solid change (white on near-white), and
+     quieter than the hover, which inverted the hierarchy. */
+  background: var(--brand-surface-selected);
   color: var(--foreground);
 }
 
@@ -119,7 +125,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--brand-accent-bg);
+  background: var(--brand-accent-soft);
   color: var(--brand-accent);
   font-size: 14px;
   font-weight: 600;

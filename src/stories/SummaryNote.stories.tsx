@@ -18,7 +18,7 @@ type Story = StoryObj<typeof SummaryNote>
 export const ClickableStats: Story = {
   render: () => (
     <SummaryNote label="Сводка команды">
-      Сильнее всех команда <SummaryStat tone="green" onClick={() => {}}>Большевистская 35</SummaryStat>,
+      Сильнее всех команда <SummaryStat tone="success" onClick={() => {}}>Большевистская 35</SummaryStat>,
       у них есть чему поучиться. Самый большой недобор на допродажах на{' '}
       <SummaryStat tone="accent" onClick={() => {}}>Советская 5</SummaryStat>.{' '}
       <SummaryStat tone="muted" onClick={() => {}}>Распознано 3 новых голоса</SummaryStat> — их нужно
@@ -30,7 +30,7 @@ export const ClickableStats: Story = {
 export const StaticStats: Story = {
   render: () => (
     <SummaryNote label="Сводка недели">
-      Средний чек вырос до <SummaryStat tone="green">468 ₽</SummaryStat>, недобор на допродажах
+      Средний чек вырос до <SummaryStat tone="success">468 ₽</SummaryStat>, недобор на допродажах
       сократился до <SummaryStat tone="accent">−12 400 ₽</SummaryStat>. Без onClick вставка —
       просто подсветка, не кнопка.
     </SummaryNote>

@@ -17,9 +17,9 @@ type Story = StoryObj<typeof ScorePill>
 export const ScoreBands: Story = {
   render: () => (
     <Flex gap="sm" align="center">
-      <ScorePill value="7,1" tone="green" />
-      <ScorePill value="6,3" tone="green" trend="up" />
-      <ScorePill value="5,0" tone="warn" />
+      <ScorePill value="7,1" tone="success" />
+      <ScorePill value="6,3" tone="success" trend="up" />
+      <ScorePill value="5,0" tone="warning" />
       <ScorePill value="5,6" tone="accent" trend="down" />
     </Flex>
   ),

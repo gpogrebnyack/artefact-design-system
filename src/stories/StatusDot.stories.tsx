@@ -17,7 +17,7 @@ type Story = StoryObj<typeof StatusDot>
 export const States: Story = {
   render: () => (
     <Stack gap="sm">
-      <StatusDot tone="green">Пользуется ежедневно</StatusDot>
+      <StatusDot tone="success">Пользуется ежедневно</StatusDot>
       <StatusDot tone="accent">Давно не заходил</StatusDot>
       <StatusDot tone="muted">Доступ не выдан</StatusDot>
     </Stack>

@@ -24,7 +24,7 @@ export const WithFooter: Story = {
       <LayeredCard
         footer={
           <Stack gap="xs">
-            <Text as="span" size="footnote" weight={600} color={color.ink3} style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <Text as="span" size="footnote" weight={600} color={color.textTertiary} style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Как лучше
             </Text>
             <Text as="div" size="body" style={{ lineHeight: 1.5 }}>

@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Icon>
 
 const Tile = ({ name }: { name: (typeof ICON_NAMES)[number] }) => (
   <Surface
-    variant="glass"
+    variant="panel"
     radius="lg"
     style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}
   >

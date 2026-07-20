@@ -29,7 +29,7 @@ export const AutoFitReflow: Story = {
     <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
       <Grid minColWidth={260} gap="base">
         {ITEMS.map((it) => (
-          <Surface key={it.title} variant="glass" p="lg" radius="xl">
+          <Surface key={it.title} variant="panel" p="lg" radius="xl">
             <Text as="div" size="body" weight={600}>{it.title}</Text>
             <Text as="div" size="caption" color={color.mutedForeground} style={{ marginTop: 4 }}>
               {it.body}

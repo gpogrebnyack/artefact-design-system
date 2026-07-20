@@ -60,7 +60,7 @@
      this, but this element is a plain div + CSS class, not a Surface, so
      nothing carried the values over) — computed style confirmed
      background:transparent + backdrop-filter:none before this fix. */
-  background: var(--brand-scrim);
+  background: var(--brand-overlay);
   -webkit-backdrop-filter: blur(40px) saturate(1.4);
   backdrop-filter: blur(40px) saturate(1.4);
   opacity: 0;

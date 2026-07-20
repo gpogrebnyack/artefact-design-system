@@ -46,8 +46,8 @@ export type ScoreHeatmapProps = {
   statusLabel?: (ratio: number) => ReactNode
 }
 
-function bandTone(ratio: number): "green" | "warn" | "accent" {
-  return ratio >= 0.7 ? "green" : ratio >= 0.4 ? "warn" : "accent"
+function bandTone(ratio: number): "success" | "warning" | "accent" {
+  return ratio >= 0.7 ? "success" : ratio >= 0.4 ? "warning" : "accent"
 }
 
 function defaultStatusLabel(ratio: number): string {
@@ -60,7 +60,7 @@ function subScoreColor(score: string): string {
   const r = m ? e / m : 0
   // source subColor(): full = vivid green, zero = vivid accent, partial =
   // the darkened in-between (its #c2540c ≈ our accentSoftStrong)
-  return r >= 1 ? color.green : r > 0 ? color.accentSoftStrong : color.accentSoftForeground
+  return r >= 1 ? color.success : r > 0 ? color.accentSoftStrong : color.accentSoftForeground
 }
 
 function Fraction({ earned, max }: { earned: number; max: number }) {

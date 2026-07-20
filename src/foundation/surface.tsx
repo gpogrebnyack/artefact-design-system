@@ -24,15 +24,15 @@ import "./interactive.css"
  */
 
 const VARIANTS = {
-  glass: {
-    // NO backdrop blur — audited against all three source pages: they never
-    // blur cards, only OVERLAYS (assistant panel/field, mobile header).
-    // "Glass" on a card is purely the 60% white fill letting the warm page
-    // gradient through; blur here was our invention with zero visible
-    // effect (cards sit on a near-flat gradient, nothing scrolls behind
-    // them) at a real compositing cost per card. Blur lives in `scrim`.
+  panel: {
+    // Formerly `glass` (renamed 2026-07-20, glass retired): the old 60%
+    // white fill composited over the near-flat page gradient to ≈cream-1
+    // anyway — nothing scrolls behind cards, translucency bought nothing
+    // but compositing cost. Now literally cream-1 via color.card; blur was
+    // never here (audited against all three source pages: they only blur
+    // OVERLAYS — see `overlay` below).
     style: { background: color.card } as CSSProperties,
-    description: "60% белого — карточки-острова (без блюра)",
+    description: "panel-warm (cream-1) — карточки-острова",
   },
   paper: {
     style: { background: color.secondary } as CSSProperties,
@@ -41,9 +41,9 @@ const VARIANTS = {
   outline: {
     // Первый мерж из Mobbin-эксперимента (A3, 2026-07-15): на ОДНОЦВЕТНОЙ
     // подложке заливкам нечем разделять — paper на paper невидим, а muted
-    // гасит -soft заливки контента (см. DESIGN.md → «Лестница слоёв»).
-    // Hairline --input (тот же, что у инпутов) — легальный ПОСЛЕДНИЙ
-    // уровень разделения; смягчение правила «no borders», не отмена.
+    // гасит -soft заливки контента (см. DESIGN.md → «Разделение
+    // поверхностей»). Hairline --input (тот же, что у инпутов) — легальный
+    // ПОСЛЕДНИЙ уровень разделения; смягчение правила «no borders», не отмена.
     style: { background: color.secondary, border: `1px solid ${color.input}` } as CSSProperties,
     description: "paper + hairline-обводка — карточка на одноцветной подложке",
   },
@@ -55,9 +55,11 @@ const VARIANTS = {
     style: { background: "transparent" } as CSSProperties,
     description: "без фона — только контур",
   },
-  scrim: {
-    style: { background: color.scrim, backdropFilter: "blur(40px) saturate(1.4)" } as CSSProperties,
-    description: "тёмная подложка + сильный блюр — фон позади оверлей-панели",
+  overlay: {
+    // Formerly `scrim`. Blur is the language of OVERLAYS — surfaces that
+    // truly float over moving content (assistant panel) — never of cards.
+    style: { background: color.overlay, backdropFilter: "blur(40px) saturate(1.4)" } as CSSProperties,
+    description: "тёмная вуаль (black-a2) + сильный блюр — фон позади оверлей-панели",
   },
 } satisfies Record<string, { style: CSSProperties; description: string }>
 
@@ -76,7 +78,7 @@ export type SurfaceProps = ComponentProps<typeof Box> & {
   interactive?: boolean
 }
 
-export function Surface({ variant = "glass", radius = "xl", interactive = false, className, style, ...box }: SurfaceProps) {
+export function Surface({ variant = "panel", radius = "xl", interactive = false, className, style, ...box }: SurfaceProps) {
   const { backdropFilter, ...rest } = VARIANTS[variant].style
   return (
     <Box

@@ -24,7 +24,7 @@ const ITEMS = [
 
 export const TwoColumns: Story = {
   render: () => (
-    <Surface variant="glass" radius="xl" style={{ padding: '16px 20px 20px', maxWidth: 720 }}>
+    <Surface variant="panel" radius="xl" style={{ padding: '16px 20px 20px', maxWidth: 720 }}>
       <Checklist items={ITEMS} />
     </Surface>
   ),
@@ -32,7 +32,7 @@ export const TwoColumns: Story = {
 
 export const OneColumn: Story = {
   render: () => (
-    <Surface variant="glass" radius="xl" style={{ padding: '16px 20px 20px', maxWidth: 360 }}>
+    <Surface variant="panel" radius="xl" style={{ padding: '16px 20px 20px', maxWidth: 360 }}>
       <Checklist items={ITEMS.slice(0, 4)} columns={1} />
     </Surface>
   ),

@@ -29,7 +29,7 @@
   "scripts": {
     "build:js": "tsup",
     "build:css": "tailwindcss -i src/index.css -o dist/style.css --minify && mkdir -p dist/fonts && cp src/fonts/*.woff2 dist/fonts/",
-    "build": "npm run lint:design && npm run check:context && npm run typecheck && npm run build:js && npm run build:css",
+    "build": "npm run lint:design && npm run check:context && npm run check:css-vars && npm run typecheck && npm run build:js && npm run build:css",
     "lint:design": "node scripts/lint-design-summary.mjs",
     "check:context": "node scripts/check-context-sync.mjs",
     "typecheck": "tsc --noEmit",
@@ -39,10 +39,11 @@
     "prepare": "simple-git-hooks",
     "prepublishOnly": "npm run build",
     "postinstall": "node scripts/postinstall.mjs",
-    "generate:icons": "node scripts/generate-icon-catalog.mjs"
+    "generate:icons": "node scripts/generate-icon-catalog.mjs",
+    "check:css-vars": "node scripts/check-css-vars.mjs"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run lint:design && npm run check:context && npm run typecheck"
+    "pre-commit": "npm run lint:design && npm run check:context && npm run check:css-vars && npm run typecheck"
   },
   "peerDependencies": {
     "react": "^19.0.0",

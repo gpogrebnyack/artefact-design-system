@@ -17,20 +17,24 @@
 /** Color — ONE place, every color, named by role. References to the CSS
  *  custom properties defined in index.css; values live there ONCE, this is
  *  just a typed name for each. (Previously split into `color` (shadcn's
- *  contract slots) and a separate `brand` object (orange/green/warn/plum) —
+ *  contract slots) and a separate `brand` object (then named by hue: orange/green/warn/plum) —
  *  merged because that split actively hid a bug: shadcn's own `--accent`
  *  slot is its internal hover fill (cream-2, == `muted`), which collided in
  *  name with our real brand orange in the other object. One namespace, no
  *  same-named-different-color trap.) */
 export const color = {
   // --- page / surface ---
-  background: "var(--background)", // cream
-  foreground: "var(--foreground)", // ink
-  card: "var(--card)", // 60% glass island
+  // Naming: shadcn-contract slots keep shadcn's names (vendored components
+  // read them); our OWN one-offs follow {category}{Role} — textTertiary,
+  // surfaceData, surfaceWash, overlay, waveformIdle.
+  background: "var(--background)", // cream-2 — the page
+  foreground: "var(--foreground)", // cream-12 — ink
+  card: "var(--card)", // cream-1 — SOLID panel (glass retired 2026-07-20; shares the panel-warm value with popover deliberately)
   cardForeground: "var(--card-foreground)",
-  popover: "var(--popover)", // paper-warm — stays opaque for readability
+  popover: "var(--popover)", // cream-1 — paper-warm, stays opaque for readability
   popoverForeground: "var(--popover-foreground)",
-  ink3: "var(--brand-ink-3)", // #a3a094 — tertiary ink, one step past mutedForeground. A neutral text tone (no-data states), not a status color — lives here, not with the semantic roles below.
+  textTertiary: "var(--brand-text-tertiary)", // cream-9 — 3rd-level ink (no-data states), one step past mutedForeground. A neutral text tone, not a status color — lives here, not with the semantic roles below.
+  surfaceSelected: "var(--brand-surface-selected)", // cream-5 — selected/current neutral fill, one step darker than muted (hover). On a near-white panel selection must go darker, not lighter (white is invisible). SidebarNav active item.
 
   // --- controls ---
   primary: "var(--primary)", // ink — default filled CTA (dark, not orange)
@@ -59,25 +63,32 @@ export const color = {
   accentSoftStrong: "var(--brand-accent-soft-strong)", // orange-12 — DATA emphasis on the tint (heatmap fractions); softForeground already passes AA, this is stronger, not a crutch
   accentGradient: "var(--brand-accent-gradient)", // komanda's ONE gradient — .primary.askbtn on the assistant dock
 
-  green: "var(--brand-green)", // jade-9 #1f7a54 — score-band "good" (komanda's own band(): score ≥7)
-  greenForeground: "var(--brand-green-foreground)",
-  greenHover: "var(--brand-green-hover)",
-  greenSoft: "var(--brand-green-soft)",
-  greenSoftForeground: "var(--brand-green-soft-foreground)",
-  greenSoftStrong: "var(--brand-green-soft-strong)", // jade-12 — see accentSoftStrong
+  success: "var(--brand-success)", // jade-9 #1f7a54 — score-band "good" (komanda's own band(): score ≥7)
+  successForeground: "var(--brand-success-foreground)",
+  successHover: "var(--brand-success-hover)",
+  successSoft: "var(--brand-success-soft)",
+  successSoftForeground: "var(--brand-success-soft-foreground)",
+  successSoftStrong: "var(--brand-success-soft-strong)", // jade-12 — see accentSoftStrong
 
-  warn: "var(--brand-warn)", // ochre-9 #b8862f — score-band "caution" (band(): 5 ≤ score < 7)
-  warnForeground: "var(--brand-warn-foreground)",
-  warnHover: "var(--brand-warn-hover)",
-  warnSoft: "var(--brand-warn-soft)",
-  warnSoftForeground: "var(--brand-warn-soft-foreground)",
-  warnSoftStrong: "var(--brand-warn-soft-strong)", // ochre-12 — see accentSoftStrong
+  warning: "var(--brand-warning)", // ochre-9 #b8862f — score-band "caution" (band(): 5 ≤ score < 7)
+  warningForeground: "var(--brand-warning-foreground)",
+  warningHover: "var(--brand-warning-hover)",
+  warningSoft: "var(--brand-warning-soft)",
+  warningSoftForeground: "var(--brand-warning-soft-foreground)",
+  warningSoftStrong: "var(--brand-warning-soft-strong)", // ochre-12 — see accentSoftStrong
 
-  plum: "var(--brand-plum)", // plum-9 #7a4d7d — role tint: network manager (not a score band)
-  plumForeground: "var(--brand-plum-foreground)",
-  plumHover: "var(--brand-plum-hover)",
-  plumSoft: "var(--brand-plum-soft)",
-  plumSoftForeground: "var(--brand-plum-soft-foreground)",
+  // IDENTITY token, not a status. success/warning/danger/accent above say
+  // "how good is this?"; roleManager says "WHICH kind is this" — it marks the
+  // network-/point-manager role, a category of person, not a judgment. Named
+  // by what it marks (not by its plum hue — the hue lives on the `plum`
+  // primitive scale). Sibling in spirit to the chart palette (categorical),
+  // not to the score bands. Don't reuse it as a generic status; a new
+  // role-hue would be roleTrainee/roleSupervisor/… (an identity palette).
+  roleManager: "var(--brand-role-manager)", // plum-9 #7a4d7d — the manager-role identity tint (not a score band)
+  roleManagerForeground: "var(--brand-role-manager-foreground)",
+  roleManagerHover: "var(--brand-role-manager-hover)",
+  roleManagerSoft: "var(--brand-role-manager-soft)",
+  roleManagerSoftForeground: "var(--brand-role-manager-soft-foreground)",
 
   danger: "var(--brand-danger)", // brick-9 #b23a2e — real destructive red. NOT accent — neither source page has a red, this is a deliberate addition (see index.css)
   dangerForeground: "var(--brand-danger-foreground)",
@@ -98,10 +109,10 @@ export const color = {
   chart4: "var(--chart-4)", // #2badc1 teal — <3:1 vs surface: legend/labels required
   chart5: "var(--chart-5)", // #5055ab indigo
   chart6: "var(--chart-6)", // #c162a4 magenta
-  chartSurface: "var(--brand-chart-surface)", // #fbfaf7 — quiet backdrop for data-viz surfaces (dashboard-prototype.html only)
-  scrim: "var(--brand-scrim)", // rgba(0,0,0,.1) — dark low-opacity backdrop behind a heavily blurred overlay (assistant dock)
-  sand: "var(--brand-sand)", // #cbb79c — audio waveform idle bars (dialog-v2.html); playback progress recolors them to accent
-  wash: "var(--brand-wash)", // rgba(0,0,0,.03) — LayeredCard's tinted wrapper (dialog-v2's .rec/.up4-card background)
+  surfaceData: "var(--brand-surface-data)", // #fbfaf7 — quiet backdrop for data-viz surfaces (dashboard-prototype.html only)
+  overlay: "var(--brand-overlay)", // black-a2 — dark low-opacity veil behind a heavily blurred overlay (assistant dock)
+  waveformIdle: "var(--brand-waveform-idle)", // #cbb79c — WaveformPlayer's component token: idle bars; playback progress recolors them to accent
+  surfaceWash: "var(--brand-surface-wash)", // rgba(0,0,0,.03) — LayeredCard's tinted wrapper (dialog-v2's .rec/.up4-card background); deliberately below black-a1
 } as const
 
 type ColorKey = keyof typeof color

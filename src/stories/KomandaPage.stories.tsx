@@ -46,7 +46,7 @@ type Story = StoryObj
 
 // --- source data (komanda.html verbatim) ---
 
-type ScoreTone = Extract<SemanticTone, 'green' | 'warn' | 'accent'>
+type ScoreTone = Extract<SemanticTone, 'success' | 'warning' | 'accent'>
 type Tag = { label: string; tone?: ScoreTone } // tone-less = neutral gray
 type Metric = { value: string; delta: string; tone?: ScoreTone; trend?: 'up' | 'down' }
 type Employee = {
@@ -59,28 +59,28 @@ type Employee = {
 }
 
 const BOLSHEVISTSKAYA: Employee[] = [
-  { initials: 'ТК', name: 'Татьяна Климова', score: '7,1', tone: 'green', tags: [{ label: 'Высокая оценка', tone: 'green' }, { label: 'Растёт', tone: 'green' }], check: { value: '470 ₽', delta: '1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '5 200 ₽', delta: '86% к среднему', tone: 'green', trend: 'up' }, daily: true },
-  { initials: 'К', name: 'Кирилл', score: '6,3', tone: 'green', tags: [{ label: 'Растёт', tone: 'green' }], check: { value: '480 ₽', delta: '3% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '4 885 ₽', delta: '75% к среднему', tone: 'green', trend: 'up' } },
-  { initials: 'Я', name: 'Яна', score: '6,1', tone: 'green', tags: [{ label: 'Мало смен' }], check: { value: '528 ₽', delta: '14% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '0 ₽', delta: 'нет за неделю', tone: 'accent', trend: 'down' } },
-  { initials: 'А', name: 'Алина', score: '6,0', tone: 'green', check: { value: '460 ₽', delta: '1% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '4 970 ₽', delta: '78% к среднему', tone: 'green', trend: 'up' } },
-  { initials: 'П', name: 'Полина', score: '5,9', tone: 'warn', tags: [{ label: 'Растёт', tone: 'green' }], check: { value: '540 ₽', delta: '16% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '1 430 ₽', delta: '49% к среднему', tone: 'accent', trend: 'down' } },
-  { initials: 'А', name: 'Анастасия', score: '5,6', tone: 'warn', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '450 ₽', delta: '3% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '1 200 ₽', delta: '57% к среднему', tone: 'accent', trend: 'down' } },
-  { initials: 'Н', name: 'Николай', score: '5,5', tone: 'warn', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '464 ₽', delta: 'на уровне среднего' }, upsell: { value: '2 110 ₽', delta: '24% к среднему', tone: 'accent', trend: 'down' }, daily: true },
+  { initials: 'ТК', name: 'Татьяна Климова', score: '7,1', tone: 'success', tags: [{ label: 'Высокая оценка', tone: 'success' }, { label: 'Растёт', tone: 'success' }], check: { value: '470 ₽', delta: '1% к среднему', tone: 'success', trend: 'up' }, upsell: { value: '5 200 ₽', delta: '86% к среднему', tone: 'success', trend: 'up' }, daily: true },
+  { initials: 'К', name: 'Кирилл', score: '6,3', tone: 'success', tags: [{ label: 'Растёт', tone: 'success' }], check: { value: '480 ₽', delta: '3% к среднему', tone: 'success', trend: 'up' }, upsell: { value: '4 885 ₽', delta: '75% к среднему', tone: 'success', trend: 'up' } },
+  { initials: 'Я', name: 'Яна', score: '6,1', tone: 'success', tags: [{ label: 'Мало смен' }], check: { value: '528 ₽', delta: '14% к среднему', tone: 'success', trend: 'up' }, upsell: { value: '0 ₽', delta: 'нет за неделю', tone: 'accent', trend: 'down' } },
+  { initials: 'А', name: 'Алина', score: '6,0', tone: 'success', check: { value: '460 ₽', delta: '1% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '4 970 ₽', delta: '78% к среднему', tone: 'success', trend: 'up' } },
+  { initials: 'П', name: 'Полина', score: '5,9', tone: 'warning', tags: [{ label: 'Растёт', tone: 'success' }], check: { value: '540 ₽', delta: '16% к среднему', tone: 'success', trend: 'up' }, upsell: { value: '1 430 ₽', delta: '49% к среднему', tone: 'accent', trend: 'down' } },
+  { initials: 'А', name: 'Анастасия', score: '5,6', tone: 'warning', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '450 ₽', delta: '3% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '1 200 ₽', delta: '57% к среднему', tone: 'accent', trend: 'down' } },
+  { initials: 'Н', name: 'Николай', score: '5,5', tone: 'warning', tags: [{ label: 'Оценка снижается', tone: 'accent' }], check: { value: '464 ₽', delta: 'на уровне среднего' }, upsell: { value: '2 110 ₽', delta: '24% к среднему', tone: 'accent', trend: 'down' }, daily: true },
 ]
 
 const SOVETSKAYA: Employee[] = [
-  { initials: 'АШ', name: 'Александра Шипилова', score: '5,0', tone: 'warn', tags: [{ label: 'Низкая оценка', tone: 'warn' }], check: { value: '314 ₽', delta: '32% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '3 020 ₽', delta: '8% к среднему', tone: 'green', trend: 'up' } },
+  { initials: 'АШ', name: 'Александра Шипилова', score: '5,0', tone: 'warning', tags: [{ label: 'Низкая оценка', tone: 'warning' }], check: { value: '314 ₽', delta: '32% к среднему', tone: 'accent', trend: 'down' }, upsell: { value: '3 020 ₽', delta: '8% к среднему', tone: 'success', trend: 'up' } },
 ]
 
 const DIMITROVA: Employee[] = [
-  { initials: 'МО', name: 'Максим Орлов', score: '6,0', tone: 'green', check: { value: '470 ₽', delta: '1% к среднему', tone: 'green', trend: 'up' }, upsell: { value: '2 300 ₽', delta: '18% к среднему', tone: 'accent', trend: 'down' } },
+  { initials: 'МО', name: 'Максим Орлов', score: '6,0', tone: 'success', check: { value: '470 ₽', delta: '1% к среднему', tone: 'success', trend: 'up' }, upsell: { value: '2 300 ₽', delta: '18% к среднему', tone: 'accent', trend: 'down' } },
 ]
 
 // --- page-local assemblies (deliberately NOT components — the test is
 //     whether the kit's parts are enough to build them cleanly) ---
 
 function AccessStatus() {
-  return <StatusDot tone="green">Пользуется ежедневно</StatusDot>
+  return <StatusDot tone="success">Пользуется ежедневно</StatusDot>
 }
 
 function TagBadge({ tag }: { tag: Tag }) {
@@ -89,7 +89,7 @@ function TagBadge({ tag }: { tag: Tag }) {
 
 function EmployeeCard({ e }: { e: Employee }) {
   return (
-    <Surface variant="glass" p="base" radius="xl" interactive>
+    <Surface variant="panel" p="base" radius="xl" interactive>
       <Stack gap="md">
         <Flex justify="space-between" align="flex-start" gap="base" wrap={false}>
           <Flex align="center" gap="sm" wrap={false}>
@@ -140,12 +140,12 @@ function PointManagerCard({ initials, name, badge }: { initials: string; name: s
   // of a score, no metrics — the source keeps the separators and the empty
   // metrics zone so the card reads in the same family as its neighbors
   return (
-    <Surface variant="glass" p="base" radius="xl">
+    <Surface variant="panel" p="base" radius="xl">
       <Stack gap="md" style={{ height: '100%' }}>
         <Flex justify="space-between" align="flex-start" gap="base" wrap={false}>
           <Flex align="center" gap="sm" wrap={false}>
             <Avatar>
-              <SemanticAvatarFallback tone="plum">{initials}</SemanticAvatarFallback>
+              <SemanticAvatarFallback tone="roleManager">{initials}</SemanticAvatarFallback>
             </Avatar>
             <Stack gap="none">
               <Text as="span" size="body" weight={600}>{name}</Text>
@@ -155,7 +155,7 @@ function PointManagerCard({ initials, name, badge }: { initials: string; name: s
           <Text as="span" size="title" weight={600} color={color.mutedForeground}>—</Text>
         </Flex>
         <Flex gap="xs">
-          <StatusBadge tone="plum">{badge}</StatusBadge>
+          <StatusBadge tone="roleManager">{badge}</StatusBadge>
         </Flex>
         {/* no metrics block -> no dividers around the empty zone: a
             Separator only exists BETWEEN two non-empty blocks (see the
@@ -171,10 +171,10 @@ function PointManagerCard({ initials, name, badge }: { initials: string; name: s
 
 function NetworkManagerCard({ initials, name }: { initials: string; name: string }) {
   return (
-    <Surface variant="glass" p="base" radius="xl">
+    <Surface variant="panel" p="base" radius="xl">
       <Flex align="center" gap="sm" wrap={false}>
         <Avatar>
-          <SemanticAvatarFallback tone="plum">{initials}</SemanticAvatarFallback>
+          <SemanticAvatarFallback tone="roleManager">{initials}</SemanticAvatarFallback>
         </Avatar>
         <Stack gap="xs">
           <Stack gap="none">
@@ -182,7 +182,7 @@ function NetworkManagerCard({ initials, name }: { initials: string; name: string
             <Text as="span" size="footnote" color={color.mutedForeground}>Управляющий сетью</Text>
           </Stack>
           <div>
-            <StatusBadge tone="plum">Все адреса</StatusBadge>
+            <StatusBadge tone="roleManager">Все адреса</StatusBadge>
           </div>
         </Stack>
       </Flex>
@@ -190,7 +190,7 @@ function NetworkManagerCard({ initials, name }: { initials: string; name: string
   )
 }
 
-function InsightHeader({ icon, label, tone }: { icon: 'star' | 'warning'; label: string; tone: 'green' | 'accent' }) {
+function InsightHeader({ icon, label, tone }: { icon: 'star' | 'warning'; label: string; tone: 'success' | 'accent' }) {
   return (
     <Flex align="center" gap="xs">
       <Icon name={icon} size={14} color={color[tone]} />
@@ -364,24 +364,24 @@ function KomandaPageDemo() {
               {/* SummaryStat clicks do what the source's .stat onclicks do:
                   filter the roster / jump to the unknowns */}
               <SummaryNote label="Сводка команды">
-                Сильнее всех команда <SummaryStat tone="green" onClick={() => setAddr('bolshevistskaya')}>Большевистская 35</SummaryStat>, у них есть чему поучиться.
+                Сильнее всех команда <SummaryStat tone="success" onClick={() => setAddr('bolshevistskaya')}>Большевистская 35</SummaryStat>, у них есть чему поучиться.
                 Самый большой недобор на допродажах на <SummaryStat tone="accent" onClick={() => setAddr('sovetskaya')}>Советская 5</SummaryStat>.{' '}
                 <SummaryStat tone="muted" onClick={() => { setTab('unknown'); setAddr(undefined) }}>Распознано 3 новых голоса</SummaryStat> — их нужно сопоставить с сотрудниками.
                 Доступ в приложение пока выдан 2 из 14 линейных.
               </SummaryNote>
 
               <Grid columns={2} gap="base">
-                <Surface variant="glass" p="lg" radius="xl">
+                <Surface variant="panel" p="lg" radius="xl">
                   <Stack gap="md">
-                    <InsightHeader icon="star" label="Лучшие на неделе" tone="green" />
-                    <InsightPersonRow initials="ТК" name="Татьяна Климова" addr="Большевистская 35" pill={<ScorePill value="7,1" tone="green" />} />
-                    <InsightPersonRow initials="К" name="Кирилл" addr="Большевистская 35" pill={<ScorePill value="6,3" tone="green" trend="up" />} />
+                    <InsightHeader icon="star" label="Лучшие на неделе" tone="success" />
+                    <InsightPersonRow initials="ТК" name="Татьяна Климова" addr="Большевистская 35" pill={<ScorePill value="7,1" tone="success" />} />
+                    <InsightPersonRow initials="К" name="Кирилл" addr="Большевистская 35" pill={<ScorePill value="6,3" tone="success" trend="up" />} />
                   </Stack>
                 </Surface>
-                <Surface variant="glass" p="lg" radius="xl">
+                <Surface variant="panel" p="lg" radius="xl">
                   <Stack gap="md">
                     <InsightHeader icon="warning" label="Требуют внимания" tone="accent" />
-                    <InsightPersonRow initials="АШ" name="Александра Шипилова" addr="Советская 5" pill={<ScorePill value="5,0" tone="warn" />} />
+                    <InsightPersonRow initials="АШ" name="Александра Шипилова" addr="Советская 5" pill={<ScorePill value="5,0" tone="warning" />} />
                     <InsightPersonRow initials="А" name="Анастасия" addr="Большевистская 35" pill={<ScorePill value="5,6" tone="accent" trend="down" />} />
                   </Stack>
                 </Surface>
@@ -462,7 +462,7 @@ function KomandaPageDemo() {
                   key={g.id}
                   title={g.title}
                   count={<GroupCount n={g.employees.length + (g.pointManager ? 1 : 0)} />}
-                  extra={g.unknown ? <StatusBadge tone="warn">1 неизвестный</StatusBadge> : undefined}
+                  extra={g.unknown ? <StatusBadge tone="warning">1 неизвестный</StatusBadge> : undefined}
                   open={!collapsed[g.id]}
                   onOpenChange={(open) => setCollapsed((prev) => ({ ...prev, [g.id]: !open }))}
                 >

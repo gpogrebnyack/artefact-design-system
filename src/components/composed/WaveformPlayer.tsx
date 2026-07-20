@@ -36,7 +36,7 @@ export type WaveformPlayerMark = {
   /** seconds */
   start: number
   end?: number
-  tone: "green" | "accent"
+  tone: "success" | "accent"
 }
 
 export type WaveformPlayerHandle = {

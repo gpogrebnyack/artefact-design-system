@@ -5,7 +5,7 @@ import { color, semanticRoles } from "@/foundation"
 
 /*
  * Components tier — `Badge`/`Avatar` (shadcn/vendored) have no notion of our
- * OWN semantic roles (accent/green/warn/plum/danger), even though every one
+ * OWN semantic roles (accent/success/warning/roleManager/danger), even though every one
  * of those roles already ships the full base/foreground/hover/soft/
  * soft-foreground set in tokens.ts specifically for this. Two real consumer
  * sessions independently hand-rolled the same `style={{backgroundColor:
@@ -16,7 +16,7 @@ import { color, semanticRoles } from "@/foundation"
  *
  * Both use the pale `Soft`/`SoftForeground` pair — CORRECTED against the
  * real source page: komanda.html's own avatars (`.eava`, manager avatars)
- * paint `background: var(--green-bg)` etc., i.e. the SOFT pair, not the
+ * paint `background: var(--brand-success-soft)` etc., i.e. the SOFT pair, not the
  * vivid one. The earlier "vivid pair on avatars" doctrine here came from a
  * consumer session's reinvention, not from the source — rebuilding
  * komanda.html verbatim (Pages/Komanda) exposed the mismatch. The vivid

@@ -9,7 +9,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--brand-ink-3);
+  background: var(--brand-text-tertiary);
   display: inline-block;
   animation: typing-blink 1.2s infinite;
 }

@@ -17,5 +17,8 @@
   transition: background 150ms; /* 150ms = motion.fast — lockstep */
 }
 .artefact-collapsible-group-head:hover {
-  background: rgba(255, 255, 255, 0.4);
+  /* soft white wash over the warm page bg — white-a6 is exactly this
+     rgba(255,255,255,.4), and a translucent white veil is precisely what the
+     white-a ladder is for */
+  background: var(--white-a6);
 }

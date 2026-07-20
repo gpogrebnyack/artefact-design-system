@@ -22,15 +22,15 @@ type Story = StoryObj<typeof WaveformPlayer>
 const MARKS = [
   { id: 0, start: 0, end: 1, tone: 'accent' as const },
   { id: 2, start: 5, end: 8, tone: 'accent' as const },
-  { id: 3, start: 15, end: 17, tone: 'green' as const },
-  { id: 4, start: 21, end: 22, tone: 'green' as const },
+  { id: 3, start: 15, end: 17, tone: 'success' as const },
+  { id: 4, start: 21, end: 22, tone: 'success' as const },
 ]
 
 function Demo() {
   const ref = useRef<WaveformPlayerHandle>(null)
   return (
     <div style={{ maxWidth: 840 }}>
-      <Surface variant="glass" radius="xl" style={{ padding: 20 }}>
+      <Surface variant="panel" radius="xl" style={{ padding: 20 }}>
         <WaveformPlayer
           ref={ref}
           duration={22}
@@ -46,7 +46,7 @@ function Demo() {
       </Surface>
       <Flex gap="sm" align="center" style={{ marginTop: 16 }}>
         <Text as="span" size="caption" color={color.mutedForeground}>Момент «Карта лояльности»:</Text>
-        <TimeTag time="00:15" tone="green" onClick={() => ref.current?.seek(15, { play: true })} />
+        <TimeTag time="00:15" tone="success" onClick={() => ref.current?.seek(15, { play: true })} />
       </Flex>
     </div>
   )

@@ -53,8 +53,24 @@ export const Scales: Story = {
             ))}
           </Flex>
         ))}
+        {/* white/black overlay ladders (verbatim Radix): pure-white/black
+            veils for overlays — the answer to "white and black don't belong
+            in a hue scale". Shown over a checker-like accent strip so the
+            translucency is visible. overlay = black-a2. */}
+        {(['white', 'black'] as const).map((tone) => (
+          <Flex key={tone} gap="xs" align="center" style={{ flexWrap: 'nowrap' }}>
+            <Box width={52} style={{ flexShrink: 0 }}>
+              <Text as="span" size="footnote" weight={600} color={color.mutedForeground}>{tone}-a</Text>
+            </Box>
+            {Array.from({ length: 12 }, (_, i) => (
+              <Box key={i} width={64} style={{ height: 40, background: `linear-gradient(90deg, ${color.accent} 50%, ${color.background} 50%)`, flexShrink: 0, position: 'relative', overflow: 'hidden' }} radius="md">
+                <Box style={{ position: 'absolute', inset: 0, background: `var(--${tone}-a${i + 1})` }} />
+              </Box>
+            ))}
+          </Flex>
+        ))}
         <Text as="p" size="footnote" color={color.mutedForeground}>
-          Каждая роль-alias — срез одной шкалы: base=9 (сид) · hover=10 · soft=a3 (alpha) · soft-foreground=11 · soft-strong=12. Компоненты потребляют только семантический слой.
+          Каждая роль-alias — срез одной шкалы: base=9 (сид) · hover=10 · soft=a3 (alpha) · soft-foreground=11 · soft-strong=12. white-a/black-a — вуали для оверлеев (overlay = black-a2). Компоненты потребляют только семантический слой.
         </Text>
       </Stack>
     </Container>
@@ -71,9 +87,9 @@ export const PageAndSurface: Story = {
         <Swatch name="primary" value={color.primary} />
         <Swatch name="secondary" value={color.secondary} fg={color.foreground} />
         <Swatch name="muted" value={color.muted} fg={color.foreground} />
-        {/* ink3 lives here, not with the semantic roles below — it's a
-            neutral text tone (no-data states), not a status color. */}
-        <Swatch name="ink3" value={color.ink3} fg={color.secondary} />
+        {/* textTertiary lives here, not with the semantic roles below —
+            it's a neutral text tone (no-data states), not a status color. */}
+        <Swatch name="textTertiary" value={color.textTertiary} fg={color.secondary} />
         {/* input — the ONE visible hairline (border is transparent by rule);
             separators, chart grids and demo outlines all reach for this */}
         <Swatch name="input" value={color.input} fg={color.foreground} />
@@ -162,10 +178,10 @@ export const BrandAndSemantic: Story = {
 
         {/* not a role (no hover/soft — see the earlier "destructive/ink3"
             question) — komanda's ONE gradient (.primary.askbtn on the
-            assistant dock) and the scrim backdrop behind its overlay panel
-            (full demo: Foundation/Surface's `scrim` variant story). */}
+            assistant dock) and the overlay veil behind its assistant panel
+            (full demo: Foundation/Surface's `overlay` variant story). */}
         <Flex direction="column" gap="xs">
-          <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>gradient &amp; scrim</Text>
+          <Text as="span" size="footnote" weight={600} color={color.mutedForeground} style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>gradient &amp; overlay</Text>
           <Flex gap="sm">
             <Flex direction="column" gap="xs" align="center">
               <Box width={84} style={{ height: 44, backgroundImage: color.accentGradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
@@ -178,25 +194,25 @@ export const BrandAndSemantic: Story = {
                 width={84}
                 style={{
                   height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  backgroundImage: `linear-gradient(135deg, ${color.accent}, ${color.plum})`,
+                  backgroundImage: `linear-gradient(135deg, ${color.accent}, ${color.roleManager})`,
                 }}
                 radius="lg"
               >
-                <Box style={{ background: color.scrim, backdropFilter: 'blur(4px)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+                <Box style={{ background: color.overlay, backdropFilter: 'blur(4px)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
                   <Text as="span" size="footnote" weight={600} color={color.secondary}>Aa</Text>
                 </Box>
               </Box>
-              <Text as="span" size="footnote" color={color.mutedForeground}>scrim (on a busy bg)</Text>
+              <Text as="span" size="footnote" color={color.mutedForeground}>overlay (on a busy bg)</Text>
             </Flex>
             <Flex direction="column" gap="xs" align="center">
-              {/* wash is a 3% darkening — show it ON the page bg, framed by
-                  the paper card it wraps in LayeredCard */}
-              <Box width={84} style={{ height: 44, background: color.wash, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
+              {/* surfaceWash is a 3% darkening — show it ON the page bg,
+                  framed by the paper card it wraps in LayeredCard */}
+              <Box width={84} style={{ height: 44, background: color.surfaceWash, display: 'flex', alignItems: 'center', justifyContent: 'center' }} radius="lg">
                 <Box style={{ background: color.secondary, padding: '4px 10px' }} radius="md">
                   <Text as="span" size="footnote" weight={600}>Aa</Text>
                 </Box>
               </Box>
-              <Text as="span" size="footnote" color={color.mutedForeground}>wash (LayeredCard)</Text>
+              <Text as="span" size="footnote" color={color.mutedForeground}>surfaceWash (LayeredCard)</Text>
             </Flex>
           </Flex>
         </Flex>
@@ -217,11 +233,11 @@ export const Charts: Story = {
           {chartKeys.map((key) => <Swatch key={key} name={key} value={color[key]} />)}
         </Flex>
         {/* data-viz companions outside the chartN pattern: the quiet chart
-            backdrop and the waveform's idle-bar sand (played bars recolor
-            to accent — see WaveformPlayer) */}
+            backdrop and WaveformPlayer's component token for idle bars
+            (played bars recolor to accent) */}
         <Flex gap="md">
-          <Swatch name="chartSurface" value={color.chartSurface} fg={color.foreground} />
-          <Swatch name="sand" value={color.sand} fg={color.foreground} />
+          <Swatch name="surfaceData" value={color.surfaceData} fg={color.foreground} />
+          <Swatch name="waveformIdle" value={color.waveformIdle} fg={color.foreground} />
         </Flex>
       </Stack>
     </Container>

@@ -39,7 +39,7 @@ export const DetailPage: Story = {
     title: "Период с диапазоном дат",
     badge: (
       <>
-        <StatusBadge tone="green">Готов</StatusBadge>
+        <StatusBadge tone="success">Готов</StatusBadge>
         <StatusBadge tone="muted">Боевой, без контроля</StatusBadge>
       </>
     ),
