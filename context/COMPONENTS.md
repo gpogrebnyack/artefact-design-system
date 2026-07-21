@@ -162,15 +162,17 @@ Primitives + Foundation, собранные в конкретную повтор
 
 ### Тулбары и сегмент-контролы — какой когда
 
-Три компонента дают визуально похожий «сегментированный» ряд — роли разные:
+Похожий «сегментированный» ряд дают несколько компонентов — роли разные:
 
 - **Переключение состояния/периода** (Часы/Дни/Недели, вкладкоподобное) → `ToolbarToggleGroup` + `ToolbarToggleItem` (roving focus, aria-состояние «выбрано»); голый примитив под ним — `ToggleGroup`.
 - **Ряд независимых действий-кнопок** (два спаренных icon-баттона, сортировка) → `ButtonGroup` (Primitives) — каждая кнопка делает действие, ничего не «выбрано».
+- **Главное действие + меню его вариантов** (Копировать рекап ▾, Синхронизировать ▾) → `SplitButton` (Components). **Не собирай из `ButtonGroup`+`DropdownMenu`**: у `ButtonGroup` pill-оверрайд выключен, он фьюзит сегменты в 14px-ПРЯМОУГОЛЬНИК — язык toggle/фильтров, инородный нашим pill-кнопкам (проверено на meeting-recap: split из группы читался разъединённым rect'ом рядом с pill-CTA). `SplitButton` держит цельную pill-форму.
 - **Переход между разделами/страницами** → `NavigationMenu` (Components) — настоящие `<a href>` в `<nav>`-ландмарке: URL/history, открытие в новой вкладке, «navigation» для скринридера. Правило одной строкой: **меняешь данные на экране — ToggleGroup, меняешь экран — NavigationMenu**; «абстрактный» ToggleGroup вместо навигации теряет весь контракт ссылки.
 
 | Компонент | API | Когда брать / не брать |
 |---|---|---|
 | `Toolbar` + `ToolbarGroup` + `ToolbarToggleGroup` + `ToolbarToggleItem` + `ToolbarSeparator` + `ToolbarButton` 🟢 | `Toolbar({orientation, bare})`; `ToolbarToggleGroup({value, onValueChange})` | На `radix-ui` Toolbar напрямую (у shadcn нет рецепта). **`bare=true` обязателен**, если внутри ровно одна самоокрашенная группа — иначе пилюля-в-пилюле. |
+| `SplitButton` 🟢 | `children, icon?, onClick?, menu, menuLabel, variant?("secondary"дефолт\|"outline"\|"ghost"\|"default"), align?, disabled?`; `menu` — ReactNode из `DropdownMenuItem`/`DropdownMenuRadioGroup` | Главное действие + ▾-меню его вариантов, в pill-форме. Заливка `secondary` по умолчанию: два сегмента одного фона читаются как один контрол, шов их делит. `outline` даёт разъединённый вид — есть для гибкости, но не дефолт. Внешние углы pill, внутренние срезаны (инлайн-радиус бьёт brand-pill правило). |
 
 ### Списки и композиционные оболочки (shadcn/vendored)
 
