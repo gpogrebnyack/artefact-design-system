@@ -33,6 +33,13 @@
 
 .artefact-moment-strip {
   display: flex;
+  /* min-width:0 + max-width:100% pin the strip to its container so the
+     horizontal scroll actually engages instead of the row of fixed-width
+     cards expanding the parent (and the whole page) — found live: a consumer
+     placed the strip in a rail-narrowed column and it blew the page ~400px
+     wide. A horizontal scroller must never be able to widen its ancestor. */
+  min-width: 0;
+  max-width: 100%;
   gap: 14px;
   overflow-x: auto;
   padding: 24px;

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { spacing, type SpacingKey } from "./tokens"
 
 /*
  * AppShell — the page-layout invariant every real page lives in: a sidebar
@@ -16,11 +17,34 @@ import type { ReactNode } from "react"
  * deleted during an unrelated cleanup, and every page since then hand-rolled
  * its own (wrong) shell inline — this replaces that ad hoc duplication.
  */
-export function AppShell({ sidebar, children }: { sidebar: ReactNode; children: ReactNode }) {
+export function AppShell({
+  sidebar,
+  children,
+  gap = "lg",
+}: {
+  sidebar: ReactNode
+  children: ReactNode
+  /** vertical rhythm between page sections. The content column stacks its
+   *  children itself — pages must NOT wrap sections in their own Stack (that
+   *  was the old ad-hoc pattern; forgetting it left sections flush). Override
+   *  only for a deliberately different rhythm. */
+  gap?: SpacingKey
+}) {
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       {sidebar}
-      <div style={{ flex: 1, minWidth: 0, maxWidth: 1280, marginInline: "auto", padding: "26px 24px 90px" }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          maxWidth: 1280,
+          marginInline: "auto",
+          padding: "26px 24px 90px",
+          display: "flex",
+          flexDirection: "column",
+          gap: spacing[gap],
+        }}
+      >
         {children}
       </div>
     </div>

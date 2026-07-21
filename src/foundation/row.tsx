@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading } from "./Heading"
 import "./row.css"
 
 /*
@@ -35,7 +36,21 @@ export function TitledRow({ title, side, fullWidth = false, fullBleed = false, r
       className={`foundation-row${fullWidth ? " foundation-row--no-side" : ""}${fullBleed ? " foundation-row--full-bleed" : ""}`}
       style={{ "--foundation-row-rail": `${rail}px`, "--foundation-row-gap": `${gap}px` } as CSSProperties}
     >
-      {title && <div className="foundation-row-title">{title}</div>}
+      {title != null && (
+        <div className="foundation-row-title">
+          {/* A bare string title becomes the section Heading (h2) — otherwise
+              it renders as unstyled body text and loses both the heading look
+              and the semantic level (the mistake a consumer makes when the
+              prop just takes a string). Pass your own node to override. */}
+          {typeof title === "string" ? (
+            <Heading as="h2" size="headline" weight="regular">
+              {title}
+            </Heading>
+          ) : (
+            title
+          )}
+        </div>
+      )}
       <div className="foundation-row-main">{children}</div>
       {side && <div className="foundation-row-side">{side}</div>}
     </section>
