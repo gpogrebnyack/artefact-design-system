@@ -92,7 +92,15 @@
     --popover-foreground: var(--cream-12);
     --primary: var(--cream-12);                /* our DEFAULT filled CTA is dark, not orange */
     --primary-foreground: var(--cream-2);
-    --secondary: #ffffff;                      /* --paper : deliberately off-scale (true white) */
+    /* --paper: NESTED surface fill. Was off-scale #fff — which sat a hair from
+       --card (cream-1) and vanished when stacked on it (paper-on-panel bug,
+       recurring). Now a translucent warm-dark from the cream-alpha ladder: it
+       composites ONE STEP DARKER than WHATEVER it sits on (canvas, panel, or
+       another card), so a nested surface always separates from its parent,
+       context-free. Elevation model: canvas(cream-2) < panel(cream-1, raised
+       light) ; anything nested on a panel darkens via this. (Dark theme mirrors
+       it with white-a — nested goes lighter on a dark base.) */
+    --secondary: var(--cream-a2);
     --secondary-foreground: var(--cream-12);
     --muted: var(--cream-3);
     --muted-foreground: var(--cream-11);       /* --ink-2 */
@@ -230,7 +238,12 @@
     --popover-foreground: oklch(0.985 0 0);
     --primary: oklch(0.922 0 0);
     --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
+    /* --paper (dark): same nested-surface logic mirrored — a white-alpha that
+       composites one step LIGHTER than its parent on a dark base (raised = lighter
+       in dark, the inverse of light theme). NB: dark theme as a whole is still
+       not fully designed/wired (ThemeProvider unmounted) — this only keeps the
+       surface-elevation logic consistent, not a finished dark palette. */
+    --secondary: var(--white-a3);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
