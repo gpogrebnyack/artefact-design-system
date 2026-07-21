@@ -16,7 +16,7 @@ const meta: Meta = { title: 'Foundation/Colors', parameters: { layout: 'fullscre
 export default meta
 type Story = StoryObj
 
-function Swatch({ name, value, fg = color.secondary }: { name: string; value: string; fg?: string }) {
+function Swatch({ name, value, fg = color.accentForeground }: { name: string; value: string; fg?: string }) {
   return (
     <Flex direction="column" gap="xs" align="center">
       <Box width={72} style={{ height: 48, background: value, color: fg }} radius="lg" />

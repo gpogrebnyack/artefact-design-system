@@ -39,7 +39,7 @@ export const color = {
   // --- controls ---
   primary: "var(--primary)", // ink — default filled CTA (dark, not orange)
   primaryForeground: "var(--primary-foreground)",
-  secondary: "var(--secondary)", // paper (white) — quiet button, chips
+  secondary: "var(--secondary)", // вложенная поверхность (cream-alpha, темнее родителя); НЕ белый — для белого-на-акценте бери accentForeground, для непрозрачной бумаги card
   secondaryForeground: "var(--secondary-foreground)",
   muted: "var(--muted)", // cream-2 — hover fill, tag pills (== shadcn's own --accent slot)
   mutedForeground: "var(--muted-foreground)", // ink-2
@@ -223,6 +223,31 @@ export const type = {
 } as const
 
 export type TypeKey = keyof typeof type
+
+/** Role → type-step map — the semantic layer over the raw scale, so pages use a
+ *  ROLE (h1/h2/h3/body/…) and never pick a step by eye. ONE role per step, no
+ *  variations. Weight is a separate axis (see `fontWeight`); large roles
+ *  (h1 / hero) take Regular, emphasis comes from weight not size.
+ *    footnote 12 — eyebrow, метаданные, мелкие подписи
+ *    caption  14 — вторичный / пояснительный текст
+ *    body     16 — основной текст абзацев (дефолт)
+ *    h3       18 — заголовок карточки
+ *    h2       20 — заголовок секции
+ *    h1       24 — заголовок страницы
+ *    hero     32 — крупная одиночная цифра / hero (скупо)
+ *  NB: the Radix stand (radix-theme-exp) stays on Radix's native step scale, where
+ *  the top steps are 28 / 35 / 60 instead of 32 — same roles, different renderer. */
+export const typeRole = {
+  footnote: type.footnote,
+  caption:  type.caption,
+  body:     type.body,
+  h3:       type.subhead,
+  h2:       type.title,
+  h1:       type.headline,
+  hero:     type.display,
+} as const
+
+export type TypeRole = keyof typeof typeRole
 
 /** Motion — extracted from komanda.html, where these exact values recur
  *  across independent animations rather than being one-offs. `spring` is

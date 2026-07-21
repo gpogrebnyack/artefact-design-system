@@ -20,7 +20,7 @@ const DEMO_OVERRIDES: Partial<Record<SurfaceVariant, { wrapperStyle?: CSSPropert
     // the busy backdrop is the system's ONE gradient — use the token, don't
     // re-hardcode its stops (they'd drift from --brand-accent-gradient)
     wrapperStyle: { backgroundImage: color.accentGradient },
-    textColor: color.secondary,
+    textColor: color.accentForeground,
   },
 }
 

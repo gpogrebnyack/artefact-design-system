@@ -36,10 +36,11 @@ export function LayeredCard({ children, footer }: LayeredCardProps) {
       <div
         style={{
           position: "relative",
-          // secondary = --paper (solid white): the fact layer is OPAQUE
-          // paper, not the 60% glass of `card` — the wash must not bleed
-          // through the layer that carries the evidence text
-          background: color.secondary,
+          // OPAQUE paper: the fact layer must not let the wash bleed through.
+          // Uses `card` (opaque cream-1), NOT `secondary` — `secondary` is now
+          // the nested-surface ALPHA (darkens its parent), which would let the
+          // wash show through the evidence layer.
+          background: color.card,
           borderRadius: radius.lg,
           padding: 20,
         }}
