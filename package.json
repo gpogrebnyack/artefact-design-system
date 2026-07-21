@@ -1,6 +1,6 @@
 {
   "name": "artefact-design-system",
-  "version": "0.15.2",
+  "version": "0.15.3",
   "description": "Артефакт design system — Foundation/Primitives/Components/Sections on top of shadcn/ui + Radix, published as an installable package.",
   "type": "module",
   "private": false,
