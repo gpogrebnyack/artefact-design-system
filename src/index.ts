@@ -52,6 +52,7 @@ export * from "./components/ui/toggle-group"
 export * from "./components/ui/tooltip"
 
 // Components — our composites
+export * from "./components/composed/AccentButton"
 export * from "./components/composed/AdviceCard"
 export * from "./components/composed/ChartCard"
 export * from "./components/composed/Checklist"
