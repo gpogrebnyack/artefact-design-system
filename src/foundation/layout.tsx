@@ -119,9 +119,19 @@ export function Flex({
   )
 }
 
-/** Stack — Flex preset for the common vertical layout case. */
-export function Stack({ gap = "base", ...props }: Omit<FlexProps, "direction">) {
-  return <Flex direction="column" gap={gap} {...props} />
+/** Stack — Flex preset for the common vertical layout case.
+ *  Defaults to `width:100%`: a vertical column almost always fills its
+ *  container's cross-axis, AND — the load-bearing reason — this self-protects
+ *  the recurring Chromium "phantom height" bug. A Stack that wraps an auto-fit
+ *  Grid (heading + grid of cards) is a column-flex item whose height Chromium
+ *  measures BEFORE the cross-stretch; at that moment the inner grid is single-
+ *  column and tall, and the stale height never re-resolves → the Stack reserves
+ *  ~2× its content (see Grid's note). Pinning width:100% here removes the
+ *  pre-stretch ambiguity at the source, so consumers no longer have to remember
+ *  to add it to every Grid-wrapping Stack. Override `width` for the rare Stack
+ *  that must shrink-wrap (e.g. sitting inline in a Flex row). */
+export function Stack({ gap = "base", width = "100%", ...props }: Omit<FlexProps, "direction">) {
+  return <Flex direction="column" gap={gap} width={width} {...props} />
 }
 
 type GridProps = BoxProps & {
