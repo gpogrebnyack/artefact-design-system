@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
-import { Heading } from "./Heading"
+import { SectionTitle } from "./Heading"
 import "./row.css"
 
 /*
@@ -41,14 +41,11 @@ export function TitledRow({ title, side, fullWidth = false, fullBleed = false, r
           {/* A bare string title becomes the section Heading (h2) — otherwise
               it renders as unstyled body text and loses both the heading look
               and the semantic level (the mistake a consumer makes when the
-              prop just takes a string). Pass your own node to override. */}
-          {typeof title === "string" ? (
-            <Heading as="h2" size="headline" weight="regular">
-              {title}
-            </Heading>
-          ) : (
-            title
-          )}
+              prop just takes a string). Size is `title` (20px), ONE STEP BELOW
+              the page title (h1 = `headline` 24px in PageHeader/PageHero) so
+              there's a real page→section hierarchy — matches Pages/Komanda's
+              `<Heading size="title">` sections. Pass your own node to override. */}
+          {typeof title === "string" ? <SectionTitle>{title}</SectionTitle> : title}
         </div>
       )}
       <div className="foundation-row-main">{children}</div>

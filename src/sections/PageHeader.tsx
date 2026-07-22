@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Flex, TitledRow } from "@/foundation"
 import { color } from "@/foundation"
-import { Heading } from "@/foundation"
+import { PageTitle } from "@/foundation"
 import { Text } from "@/foundation"
 
 /*
@@ -28,11 +28,7 @@ export type PageHeaderProps = {
 export function PageHeader({ title, meta, action }: PageHeaderProps) {
   return (
     <TitledRow
-      title={
-        <Heading as="h1" size="headline">
-          {title}
-        </Heading>
-      }
+      title={<PageTitle>{title}</PageTitle>}
     >
       <Flex justify="space-between" align="center" gap="base">
         {meta != null ? (
