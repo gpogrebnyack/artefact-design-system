@@ -9,11 +9,10 @@
 
 /* --- BRAND FONT: Struve — self-hosted .woff2 next to this stylesheet
        (src/fonts/, copied to dist/fonts/ at build), referenced by relative
-       url(): the Fontsource pattern, the same one this project already
-       uses for Geist (@fontsource-variable/geist). Bundlers resolve
-       relative url() in node_modules CSS and copy the assets — fonts load
-       in parallel, cache independently, and font-display:swap paints text
-       immediately. (An earlier version base64-INLINED the .otf files into
+       url(): the Fontsource pattern. Bundlers resolve relative url() in
+       node_modules CSS and copy the assets — fonts load in parallel, cache
+       independently, and font-display:swap paints text immediately. Struve
+       is the ONLY font the package ships; there is no secondary/preset face. (An earlier version base64-INLINED the .otf files into
        this sheet "so the package works anywhere" — that cost ~580KB of
        render-blocking CSS and wasn't the accepted practice; if you serve
        dist/style.css WITHOUT a bundler, keep dist/fonts/ next to it.)
@@ -40,7 +39,7 @@
   font-display: swap;
 }
 :root {
-  --font-sans: 'struve', system-ui, sans-serif;   /* override the preset's Geist */
+  --font-sans: 'struve', system-ui, sans-serif;   /* brand layer re-asserts Struve at :root */
 }
 body {
   font-family: var(--font-sans);

@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
 /* Primitive color scales (12-step, Radix Colors grammar) — GENERATED file,
  * rebuilt by `node scripts/gen-colors.mjs`. The :root block below only
@@ -32,7 +31,11 @@
 
 @theme inline {
     --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
+    /* Brand font is Struve (self-hosted @font-face in brand-overrides.css).
+       Set here too so the Tailwind `font-sans` utility resolves to it — no
+       dead Geist ghost in the generated CSS. brand-overrides re-asserts the
+       same value at :root as the brand layer. */
+    --font-sans: 'struve', system-ui, sans-serif;
     --color-chart-6: var(--chart-6);
     --color-chart-5: var(--chart-5);
     --color-chart-4: var(--chart-4);
@@ -273,7 +276,7 @@
 }
 
 /* brand-overrides.css MUST come after everything above — it wins the
- * cascade against shadcn's own utility classes (Struve over Geist, no
+ * cascade against shadcn's own utility classes (Struve font, no
  * shadows, pinned control sizing). In the original app this ordering came
  * from main.tsx importing it second; here it's just import order in the one
  * Tailwind entry file. */
