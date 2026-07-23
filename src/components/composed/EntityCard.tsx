@@ -1,8 +1,7 @@
 import type { ReactNode } from "react"
 import { Surface, Stack, Flex, Text, color } from "@/foundation"
-import { Avatar } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { SemanticAvatarFallback, type SemanticTone, type StatusTone } from "@/components/composed/SemanticTone"
+import { SemanticAvatar, type SemanticTone, type StatusTone } from "@/components/composed/SemanticTone"
 
 /*
  * EntityCard — Components tier. Карточка сущности (человек/точка/сделка):
@@ -49,9 +48,7 @@ export function EntityCard({
       <Stack gap="md">
         <Flex justify="space-between" align="flex-start" gap="base" wrap={false}>
           <Flex align="center" gap="sm" wrap={false} style={{ minWidth: 0 }}>
-            <Avatar>
-              <SemanticAvatarFallback tone={avatarTone}>{initials}</SemanticAvatarFallback>
-            </Avatar>
+            <SemanticAvatar tone={avatarTone}>{initials}</SemanticAvatar>
             <Stack gap="none" style={{ minWidth: 0 }}>
               <Text as="span" size="body" weight="semibold" truncate>{name}</Text>
               {subtitle != null && (

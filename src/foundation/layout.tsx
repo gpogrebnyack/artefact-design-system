@@ -139,6 +139,11 @@ type GridProps = BoxProps & {
   minColWidth?: Len
   /** OR a fixed column count */
   columns?: number
+  /** cap the auto-fit reflow: never MORE than this many columns, but still
+   *  drops to fewer (down to 1) when the container is too narrow for them.
+   *  For content-rich cards (e.g. `EntityCard`) that read cramped 3+-up.
+   *  Ignored when `columns` (a hard count) is set. */
+  maxColumns?: number
   gap?: Len
   align?: CSSProperties["alignItems"]
 }
@@ -153,8 +158,20 @@ type GridProps = BoxProps & {
  *  `align="stretch"` explicitly for the rarer case of wanting matched-height
  *  rows on purpose (e.g. a fixed set of side-by-side metric tiles). */
 export function Grid({
-  minColWidth = 280, columns, gap = "base", align = "start", style, children, ...box
+  minColWidth = 280, columns, maxColumns, gap = "base", align = "start", style, children, ...box
 }: GridProps) {
+  // Auto-fit track floor. Plain reflow: `min(minColWidth, 100%)` (never wider
+  // than the container so a single column can't overflow). With `maxColumns`:
+  // also force each track to be at least `container / maxColumns` wide, so the
+  // grid can't pack MORE than maxColumns — while still dropping to fewer when
+  // even `minColWidth`-wide columns no longer fit. `100% / n` overshoots by the
+  // gaps, so subtract them: (100% - (n-1)*gap) / n. (Well-known responsive-cap
+  // technique — no breakpoints, still intrinsically responsive.)
+  const g = space(gap)
+  const floor = `min(${space(minColWidth)}, 100%)`
+  const trackMin = maxColumns
+    ? `max(${floor}, calc((100% - ${maxColumns - 1} * ${g}) / ${maxColumns}))`
+    : floor
   return (
     <Box
       {...box}
@@ -176,8 +193,8 @@ export function Grid({
         width: "100%",
         gridTemplateColumns: columns
           ? `repeat(${columns}, minmax(0, 1fr))`
-          : `repeat(auto-fit, minmax(min(${space(minColWidth)}, 100%), 1fr))`,
-        gap: space(gap),
+          : `repeat(auto-fit, minmax(${trackMin}, 1fr))`,
+        gap: g,
         alignItems: align,
         // `align-content` is a SEPARATE property from `align-items` — it
         // decides what happens to leftover space across the whole set of

@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react"
 import { Badge } from "@/components/ui/badge"
-import { AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { color, semanticRoles } from "@/foundation"
 
 /*
@@ -59,6 +59,14 @@ export function StatusBadge({
   )
 }
 
+/*
+ * `SemanticAvatarFallback` — это СЛОТ (Radix `Avatar.Fallback`): он валиден
+ * ТОЛЬКО внутри `<Avatar>` и падает («AvatarFallback must be used within
+ * Avatar») сам по себе. Бери его напрямую, лишь когда у тебя есть настоящее
+ * фото и нужен цветной запасной вариант: `<Avatar><AvatarImage/>
+ * <SemanticAvatarFallback/></Avatar>`. Для обычного «цветной кружок с
+ * инициалами» — готовый `SemanticAvatar` ниже (сам оборачивает в `Avatar`).
+ */
 export function SemanticAvatarFallback({
   tone,
   children,
@@ -76,5 +84,35 @@ export function SemanticAvatarFallback({
     >
       {children}
     </AvatarFallback>
+  )
+}
+
+/*
+ * `SemanticAvatar` — готовый standalone-аватар: цветной кружок с инициалами
+ * (мягкая пара роли), уже обёрнутый в `Avatar`. Это то, что нужно в 90%
+ * случаев — состав команды, автор реплики в ленте, «кто на смене». Не путать
+ * с `SemanticAvatarFallback` (слот, падает вне `Avatar`). Если есть фото —
+ * передай `src`/`alt`, инициалы станут fallback'ом.
+ *
+ * Пропсы `Avatar` пробрасываются (`className`/`style`/размер), поэтому
+ * размерами и рамкой управляешь как у обычного shadcn-`Avatar`.
+ */
+export function SemanticAvatar({
+  tone,
+  children,
+  src,
+  alt,
+  ...props
+}: {
+  tone: StatusTone
+  children: ReactNode
+  src?: string
+  alt?: string
+} & Omit<ComponentProps<typeof Avatar>, "children">) {
+  return (
+    <Avatar {...props}>
+      {src != null && <AvatarImage src={src} alt={alt} />}
+      <SemanticAvatarFallback tone={tone}>{children}</SemanticAvatarFallback>
+    </Avatar>
   )
 }
